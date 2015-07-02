@@ -1,0 +1,21 @@
+body {
+	/*padding: 50px;*/
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+
+#container {
+	position: relative;
+	display: inline;
+}
+
+.parent{
+	/*width: 10%;*/
+}
+.overlay {
+	
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+}

@@ -1,0 +1,43 @@
+include layout_extracted
+block content
+	#container
+		#main_image
+		script(type='text/javascript').
+			var screenWidth 	= window.innerWidth;
+			var screenHeight 	= window.innerHeight;
+			var main_div = document.getElementById('main_image');
+			var transformedImage = document.createElement('img');
+			var x_values = [#{x_values}];
+			var y_values = [#{y_values}];
+			var isSymbol_values = [#{isSymbol_values}];
+			var extractedWidht = x_values[1]-2*x_values[0];
+			var extractedHeight = y_values[11]-2*y_values[0];
+			transformedImage.setAttribute('src','/images/'+#{img_id}+'/transformed/'+#{img_id}+'.jpg')
+			var overlayWidth  = Math.round(extractedWidht/5);
+			var overlayHeight = Math.round(extractedHeight/5);
+			var overlay = document.createElement('img');
+			overlay.setAttribute('src', '/styles/images/true.png');
+			overlay.style.position="absolute";
+			
+			
+			main_div.appendChild(transformedImage);
+			main_div.appendChild(overlay);
+			
+			
+			
+			
+			//img(src='/images/'+img_id+'/transformed/'+img_id+'.jpg')
+			//img(src='/styles/images/true.png' class='overlay')
+			
+			//img(src='/images/'+img_id+'/extracted/3.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/4.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/5.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/6.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/7.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/8.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/9.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/10.jpg' width=''+100/11+'%')
+			//img(src='/images/'+img_id+'/extracted/11.jpg' width=''+100/11+'%')
+			
+		//#innermap
+			//img(src='/images/'+img_id+'/transformed/'+img_id+'.jpg' width='100%')

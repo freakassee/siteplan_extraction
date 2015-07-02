@@ -1,0 +1,137 @@
+include layout_map
+block content
+	#map
+	#footer
+		input(id='polygon' type='button' value='select edges')
+		span(id='placeholder')
+		input(id='process' type='button' value='process')
+	script(type='text/javascript').
+		var edgesX;
+		var edgesY;
+		
+		var extent = [ 0, 0, #{img_width}, #{img_height} ];
+		var projection = new ol.proj.Projection({
+			code : 'xkcd-image',
+			units : 'pixels',
+			extent : extent
+		});
+	
+		var imageLayer = new ol.layer.Image({
+			source : new ol.source.ImageStatic({
+				url : '#{url}' + '#{img_file}',
+				projection : projection,
+				imageExtent : extent
+			})
+		});
+		var vectorSource = new ol.source.Vector();
+		var drawLayer = new ol.layer.Vector({
+			source : vectorSource,
+			style : new ol.style.Style({
+				fill : new ol.style.Fill({
+					color : 'rgba(255, 255, 255, 0.2)'
+				}),
+				stroke : new ol.style.Stroke({
+					color : '#ffcc33',
+					width : 2
+				}),
+				image : new ol.style.Circle({
+					radius : 7,
+					fill : new ol.style.Fill({
+						color : '#ffcc33'
+					})
+				})
+			})
+		});
+	
+		var map = new ol.Map({
+			layers : [ imageLayer, drawLayer ],
+			target : 'map',
+			view : new ol.View({
+				projection : projection,
+				center : ol.extent.getCenter(extent),
+				zoom : 2
+			})
+		});
+	
+		
+		vectorSource.on('addfeature', addFeature);
+		
+		function addFeature(evt){
+			geometry = evt.feature.getGeometry();
+			geometryType = geometry.getType();
+			features = geometry.getCoordinates()[0];
+			for (var int = 0; int < features.length-1; int++) {
+				var feature = features[int];
+				console.log('Point ' + int + ' - X: ' + feature[0] 
+					+' , Y: '+ (projection.getExtent()[3]-feature[1]));
+				edgesX.push(feature[0]);
+				edgesY.push(projection.getExtent()[3]-feature[1]);
+					
+			}
+			edgesX.splice(0,1);
+			edgesY.splice(0,1);
+			map.removeInteraction(draw);
+		}
+		
+		
+
+		
+		var processButton = document.getElementById('process');
+		
+		processButton.onclick = function(event){
+			console.log(edgesX);
+			console.log(edgesY);
+			// edgesX, edgesY, Image
+			
+			var form = document.createElement("form");
+			form.setAttribute('method', 'post');
+			form.setAttribute('action', '/process');
+			form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+			//debugger;
+			var params = {
+					X:edgesX,
+					Y:edgesY,
+					image:'#{img_file}',
+					img_id: '#{img_id}'
+					}
+			
+			for (var key in params) {
+				if(params.hasOwnProperty(key)) {
+					var hiddenField = document.createElement('input');
+					hiddenField.setAttribute('type', 'hidden');
+					hiddenField.setAttribute('name', key);
+					hiddenField.setAttribute('value', params[key]);
+					form.appendChild(hiddenField);
+				}
+			}
+			document.body.appendChild(form);
+			form.submit();
+			
+		}
+		
+		
+		
+		
+		var selectPolygon = document.getElementById('polygon');
+		
+		selectPolygon.onclick = function(event){
+			vectorSource.clear();
+			edgesX=[0];
+			edgesY=[0];
+			addInteraction();
+			
+		}
+		
+		var draw; // global so we can remove it later
+		function addInteraction() {
+			var value = 'Polygon'
+			draw = new ol.interaction.Draw({
+				source : vectorSource,
+				type : /** @type {ol.geom.GeometryType} */(value),
+				maxPoints:4
+			});
+			map.addInteraction(draw);
+			
+			
+		}
+		

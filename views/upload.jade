@@ -1,0 +1,8 @@
+html
+	head
+		title Hello client
+		
+	body
+		form(id='uploadForm'  enctype='multipart/form-data' action='/upload' method='post')
+			input(type='file' name='userImage' accept='.png,.jpg')
+			input(type='submit' value='Upload image' name='submit')
