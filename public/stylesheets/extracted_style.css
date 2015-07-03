@@ -4,18 +4,3 @@ body {
 }
 
 
-#container {
-	position: relative;
-	display: inline;
-}
-
-.parent{
-	/*width: 10%;*/
-}
-.overlay {
-	
-	position: absolute;
-	top: 0;
-	left: 0;
-	
-}

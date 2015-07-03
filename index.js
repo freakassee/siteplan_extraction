@@ -133,8 +133,7 @@ app.post('/process', function(req, res) {
 		var successWatcher = fs.watch('./model/' + successLog, function(event,
 				next) {
 			fs.readFile('./model/' + successLog, function(err, data) {
-				console.log('vorbei');
-				res.redirect('/extracted?imageId=' + req.body.img_id)
+				res.redirect('/extracted_rg?imageId=' + req.body.img_id)
 
 			});
 			errorWatcher.close();
@@ -148,8 +147,76 @@ app.post('/process', function(req, res) {
 	});
 });
 
-app.get('/extracted', function(req, res) {
+app.get('/extracted_rg', function(req, res) {
+	prepare(req,res,'extracted_rg');
+});
+app.get('/extracted_og', function(req, res) {
+	prepare(req,res,'extracted_og');
+//	var query = req.query;
+//	var x_values = [];
+//	var y_values = [];
+//	var isSymbol_values = [];
+//
+//	var x_loaded = false;
+//	var y_loaded = false;
+//	var symbol_loaded = false;
+//	if (query.imageId) {
+//		fs.readFile('./public/images/' + query.imageId + '/data/x_values.txt',
+//				function(err, data) {
+//					if (!err) {
+//						_parser(x_values, data);
+//						x_loaded = true;
+//						if (x_loaded && y_loaded && symbol_loaded) {
+//							res.render('extracted_with_red', {
+//								img_id : query.imageId,
+//								x_values : x_values,
+//								y_values : y_values,
+//								isSymbol_values : isSymbol_values
+//							});
+//						}
+//					} else {
+//						console.log(err.toString());
+//					}
+//				});
+//		fs.readFile('./public/images/' + query.imageId + '/data/y_values.txt',
+//				function(err, data) {
+//					if (!err) {
+//						_parser(y_values, data);
+//						y_loaded = true;
+//						if (x_loaded && y_loaded && symbol_loaded) {
+//							res.render('extracted_with_red', {
+//								img_id : query.imageId,
+//								x_values : x_values,
+//								y_values : y_values,
+//								isSymbol_values : isSymbol_values
+//							});
+//						}
+//					} else {
+//						console.log(err.toString());
+//					}
+//				});
+//
+//		fs.readFile('./public/images/' + query.imageId
+//				+ '/data/isSymbol_values.txt', function(err, data) {
+//			if (!err) {
+//				_parser(isSymbol_values, data);
+//				symbol_loaded = true;
+//				if (x_loaded && y_loaded && symbol_loaded) {
+//					res.render('extracted_with_red', {
+//						img_id : query.imageId,
+//						x_values : x_values,
+//						y_values : y_values,
+//						isSymbol_values : isSymbol_values
+//					});
+//				}
+//			} else {
+//				console.log(err.toString());
+//			}
+//		});
+//	}
+});
 
+function prepare(req,res,jadeFile){
 	var query = req.query;
 	var x_values = [];
 	var y_values = [];
@@ -165,7 +232,7 @@ app.get('/extracted', function(req, res) {
 						_parser(x_values, data);
 						x_loaded = true;
 						if (x_loaded && y_loaded && symbol_loaded) {
-							res.render('extracted', {
+							res.render(jadeFile, {
 								img_id : query.imageId,
 								x_values : x_values,
 								y_values : y_values,
@@ -182,7 +249,7 @@ app.get('/extracted', function(req, res) {
 						_parser(y_values, data);
 						y_loaded = true;
 						if (x_loaded && y_loaded && symbol_loaded) {
-							res.render('extracted', {
+							res.render(jadeFile, {
 								img_id : query.imageId,
 								x_values : x_values,
 								y_values : y_values,
@@ -200,7 +267,7 @@ app.get('/extracted', function(req, res) {
 				_parser(isSymbol_values, data);
 				symbol_loaded = true;
 				if (x_loaded && y_loaded && symbol_loaded) {
-					res.render('extracted', {
+					res.render(jadeFile, {
 						img_id : query.imageId,
 						x_values : x_values,
 						y_values : y_values,
@@ -212,7 +279,7 @@ app.get('/extracted', function(req, res) {
 			}
 		});
 	}
-});
+}
 
 app.listen(8080);
 
@@ -220,8 +287,8 @@ function _parser(arrayToFill, content) {
 	var text = content.toString();
 
 	var lines = text.split('\n');
-	for (var i = 1; i < lines.length; i++) {
-		arrayToFill[i - 1] = lines[i];
+	for (var i = 0; i < lines.length-1; i++) {
+		arrayToFill[i] = lines[i];
 
 	}
 	console.log(arrayToFill);

@@ -93,9 +93,9 @@ targetFolder = '../uploads/';
        [height, width, ~] = size(output_image);
        width=width-margin_left;
        height = height-2*margin_top;
-       
-       segmentW= round(width / 11);
-       segmentH= round(height / 8);
+       %round down
+       segmentW= floor(width / 11);
+       segmentH= floor(height / 8);
        
 %        width=width-margin_left;
 %        height = height-margin_top;
