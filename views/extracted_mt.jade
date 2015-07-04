@@ -44,20 +44,63 @@ block content
 			for (var i = 0; i <  x_values.length; i++) {
 				var div = document.createElement('div');
 				div.setAttribute('id','ovrDiv_'+i);
-				div.style.backgroundColor='black';
+				div.style.backgroundColor='transparent';
+				div.style.opacity = 0.8;
 				div.style.position='absolute';
-				div.style.left = (x_values[i]-x_values[0])/scalingFactor+ovr_W+'px';
-				div.style.top = (y_values[i]-y_values[0])/scalingFactor+ovr_H+'px';
-					
-				div.style.width = extracted_W2/scalingFactor+'px';
-				div.style.height = extracted_H2/scalingFactor+'px';
-				div.style.zIndex=2;
+				var d_left = (x_values[i]-x_values[0])/scalingFactor+ovr_W;
+				var d_top = (y_values[i]-y_values[0])/scalingFactor+ovr_H;
+				div.style.left = d_left+'px';
+				div.style.top = d_top +'px';
 				
-				setStyleAccordingToSymbolValue(i,div);
+				var d_width = extracted_W2/scalingFactor;
+				var d_height = extracted_H2/scalingFactor;
+				div.style.width = d_width + 'px';
+				div.style.height = d_height + 'px';
+				div.style.zIndex=3;
+				
+				//setStyleAccordingToSymbolValue(i,div);
 				main_div.appendChild(div);
 			
 				
 				div.addEventListener('click',function(event){
+					
+					var targetID = event.target.id;
+					var id = targetID.split('_')[1];
+					isSymbol_values[id]=!isSymbol_values[id];
+					var target = document.getElementById('markerDiv_'+id);
+					setStyleAccordingToSymbolValue(id, target);
+				
+				});
+				
+				var markerDiv = document.createElement('div');
+				markerDiv.setAttribute('id','markerDiv_'+i);
+				markerDiv.style.backgroundColor = '#6699FF';
+				markerDiv.style.position='absolute';
+				
+				if(i < 11 || (i>16 && i<28)){
+					markerDiv.style.left = d_left + 'px';
+					markerDiv.style.width = d_width + 'px';
+					markerDiv.style.height =  -y_values[0]/scalingFactor + 'px';
+					
+					if(i<11){
+						markerDiv.style.top = d_top + y_values[0]/scalingFactor + 'px';
+						
+					}else{
+						markerDiv.style.top = d_top + d_height  + 'px';
+					}
+				}else{
+					markerDiv.style.top = d_top + 'px';
+					markerDiv.style.width = -y_values[0]/scalingFactor + 'px';
+					markerDiv.style.height = d_height + 'px';					
+					if(i<28){
+						markerDiv.style.left = d_left + d_width +'px';
+					} else {
+						markerDiv.style.left = d_left + x_values[0]/scalingFactor+ 'px';
+					}
+				}
+				markerDiv.style.zIndex=2;
+				setStyleAccordingToSymbolValue(i,markerDiv);
+				markerDiv.addEventListener('click',function(event){
 					
 					var targetID = event.target.id;
 					var id = targetID.split('_')[1];
@@ -67,14 +110,16 @@ block content
 				
 				});
 				
+				main_div.appendChild(markerDiv);
 			}
 			
 			
 			function setStyleAccordingToSymbolValue(id,div){
+				
 				if(!isSymbol_values[id]){
-					div.style.opacity=0.5;
-				} else {
 					div.style.opacity=0.0;
+				} else {
+					div.style.opacity=1.0;
 				}
 			}
 			

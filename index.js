@@ -151,6 +151,10 @@ app.get('/extracted_rg', function(req, res) {
 	prepare(req,res,'extracted_rg');
 });
 
+app.get('/extracted_mt', function(req, res) {
+	prepare(req,res,'extracted_mt');
+});
+
 app.get('/extracted_trn', function(req, res) {
 	prepare(req,res,'extracted_trn');
 });
