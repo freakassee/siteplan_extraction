@@ -5,8 +5,8 @@ block content
 			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
 		script(type='text/javascript').
 			var scaleFactor;
-			var scr_W 	= window.innerWidth;
-			var scr_H 	= window.innerHeight;
+			var scr_W 	= window.innerWidth-20;
+			var scr_H 	= window.innerHeight-20;
 			
 			var trImg = document.getElementById('transformedImage');
 			
@@ -31,16 +31,43 @@ block content
 			var extracted_H = y_values[11]-2*y_values[0];
 			
 			var extracted_W2 = x_values[1]-x_values[0];
-			var extracted_H = y_values[11]-y_values[0];
+			var extracted_H2 = y_values[11]-y_values[0];
 			
 			var ovr_W = roundDown(extracted_W/5/scaleFactor);
 			var ovr_H = ovr_W;
 
 			var ovr_list = [];
-			for (var i = 0; i <  x_values.length; i++) {
+			var div_list = [];
+			
+			
+			
+			for (var i = 0; i < 34/* x_values.length*/; i++) {
+				var div = document.createElement('div');
+				div.setAttribute('id','ovrDiv_'+i);
+				div.style.backgroundColor='transparent';
+				div.style.position='absolute';
+				div.style.left = (x_values[i]-x_values[0])/scaleFactor+ovr_W+'px';
+				div.style.top = (y_values[i]-y_values[0])/scaleFactor+ovr_H+'px';
+					
+				
+				div.style.width = extracted_W2/scaleFactor+'px';
+				div.style.height = extracted_H2/scaleFactor+'px';
+				div.style.zIndex=2;
+				
+				main_div.appendChild(div);
+				
+				
+				div.addEventListener('click',function(event){
+					targetID = event.target.id;
+					var id = targetID.split('_')[1];
+					isSymbol_values[id]=!isSymbol_values[id];
+					var overlayElement = document.getElementById('overlay_'+id);
+					overlayElement.setAttribute('src', '/styles/images/'+isSymbol_values[id]+'.png');
+					
+				});
 				var ovr = document.createElement('img');
 				ovr.setAttribute('src', '/styles/images/'+isSymbol_values[i]+'.png');
-				ovr.setAttribute('id','overlay_'+i+1);
+				ovr.setAttribute('id','overlay_'+i);
 				
 				ovr.style.width=ovr_W+'px';
 
@@ -51,8 +78,9 @@ block content
 				main_div.appendChild(ovr);
 				ovr_list[i]=ovr;
 				
-				function roundDown(number, decimals) {
-				    decimals = decimals || 0;
-				    return ( Math.floor( number * Math.pow(10, decimals) ) / Math.pow(10, decimals) );
-				}
+				
+			}
+			function roundDown(number, decimals) {
+			    decimals = decimals || 0;
+			    return ( Math.floor( number * Math.pow(10, decimals) ) / Math.pow(10, decimals) );
 			}

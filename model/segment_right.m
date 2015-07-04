@@ -33,7 +33,7 @@ for n=1:6
 	[bool nr]=isSymbol(right);
 
     xValues(n+11) = xValue-margin_left;
-    yValues(n+11) = yValue-1/2*margin_top;
+    yValues(n+11) = yValue-margin_top;
     isSymbolValues(n+11) = bool;
 
     if ~bool
@@ -52,3 +52,13 @@ for n=1:6
 end
 % lengths
 %end
+
+
+
+
+
+
+
+
+
+

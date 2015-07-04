@@ -3,6 +3,7 @@ block content
 	#container
 		#main_image
 			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
+			// TODO: button for more and less contrast
 		script(type='text/javascript').
 			var scaleFactor;
 			var scr_W 	= window.innerWidth;
@@ -17,6 +18,7 @@ block content
 				scaleFactor = trImg.width / scr_W;
 				trImg.style.width = scr_W+'px';
 			}
+			trImg.style.webkitFilter  ='brightness(150%)';
 			
 			var main_div = document.getElementById('main_image');
 			main_div.appendChild(trImg);
@@ -37,62 +39,45 @@ block content
 	
 			var ovr_list = [];
 			var div_list = [];
+			
+			
 			for (var i = 0; i <  x_values.length; i++) {
 				var div = document.createElement('div');
 				div.setAttribute('id','ovrDiv_'+i);
-				div.style.backgroundColor='transparent';
+				div.style.backgroundColor='black';
 				div.style.position='absolute';
 				div.style.left = (x_values[i]-x_values[0])/scaleFactor+ovr_W+'px';
 				div.style.top = (y_values[i]-y_values[0])/scaleFactor+ovr_H+'px';
 					
-				
 				div.style.width = extracted_W2/scaleFactor+'px';
-				div.style.height = extracted_H2/scaleFactor+'px';
+				div.style.height = (extracted_H2+y_values[0])/scaleFactor+'px';
 				div.style.zIndex=2;
 				
+				setStyleAccordingToSymbolValue(i,div);
 				main_div.appendChild(div);
-				
+			
 				
 				div.addEventListener('click',function(event){
 					
-					targetID = event.target.id;
+					var targetID = event.target.id;
 					var id = targetID.split('_')[1];
 					isSymbol_values[id]=!isSymbol_values[id];
-					var overlayElement = document.getElementById('overlay_'+id);
-					if(!isSymbol_values[id]){
-						overlayElement.style.visibility='hidden';
-						overlayElement.style.opacity=0.2;
-					}else{
-						
-						overlayElement.style.visibility='visible';
-						overlayElement.style.opacity=0.2;
-					}
+					var target = document.getElementById(targetID);
+					setStyleAccordingToSymbolValue(id, target);
+				
 				});
 				
-				
-				var ovr = document.createElement('img');
-				ovr.setAttribute('src', '/styles/images/true.png');
-				ovr.setAttribute('id','overlay_'+i);
-				ovr.style.width=ovr_W+'px';
-
-				ovr.style.position='absolute';
-				ovr.style.left=(x_values[i]+extracted_W2)/scaleFactor+'px';
-				ovr.style.top=(y_values[i]+extracted_H)/scaleFactor+'px';
-				
-				if(!isSymbol_values[i]){
-					ovr.style.visibility='hidden';
-					ovr.style.opacity=0.2;
-				}else{
-					ovr.style.visibility='visible';
-					ovr.style.opacity=0.2;
-				}
-				
-				main_div.appendChild(ovr);
-				ovr_list[i]=ovr;
-				
-				
-				
 			}
+			
+			
+			function setStyleAccordingToSymbolValue(id,div){
+				if(!isSymbol_values[id]){
+					div.style.opacity=0.5;
+				} else {
+					div.style.opacity=0.0;
+				}
+			}
+			
 			
 			function roundDown(number, decimals) {
 			    decimals = decimals || 0;

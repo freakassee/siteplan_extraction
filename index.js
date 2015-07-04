@@ -150,6 +150,10 @@ app.post('/process', function(req, res) {
 app.get('/extracted_rg', function(req, res) {
 	prepare(req,res,'extracted_rg');
 });
+
+app.get('/extracted_trn', function(req, res) {
+	prepare(req,res,'extracted_trn');
+});
 app.get('/extracted_og', function(req, res) {
 	prepare(req,res,'extracted_og');
 //	var query = req.query;
