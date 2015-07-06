@@ -1,7 +1,7 @@
 include layout_extracted
 block content
 	#container
-		#main_image
+		#main
 			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
 			// TODO: button for more and less contrast
 		script(type='text/javascript').
@@ -20,8 +20,8 @@ block content
 			}
 			trImg.style.webkitFilter  ='brightness(150%)';
 			
-			var main_div = document.getElementById('main_image');
-			main_div.appendChild(trImg);
+			var mainDiv = document.getElementById('main');
+			mainDiv.appendChild(trImg);
 			
 			
 			var x_values = [#{x_values}];
@@ -40,6 +40,20 @@ block content
 			var ovr_list = [];
 			var div_list = [];
 			
+			var innerDiv = document.createElement('div');
+			innerDiv.setAttribute('id','innerDiv');
+			innerDiv.style.position = 'absolute';
+			innerDiv.style.backgroundColor= 'black';
+			innerDiv.style.opacity=0.8;
+			innerDiv.style.left = (extracted_W2)/scalingFactor+ovr_W+'px';
+			innerDiv.style.top= (extracted_H2)/scalingFactor+ovr_H+'px';
+			innerDiv.style.width = (x_values[10]-x_values[1])/scalingFactor+'px';
+			innerDiv.style.height= (y_values[17]-y_values[11])/scalingFactor+'px';
+			
+			mainDiv.appendChild(innerDiv);
+			
+			
+			
 			
 			for (var i = 0; i <  x_values.length; i++) {
 				var div = document.createElement('div');
@@ -51,10 +65,12 @@ block content
 					
 				div.style.width = extracted_W2/scalingFactor+'px';
 				div.style.height = extracted_H2/scalingFactor+'px';
+				
+				
 				div.style.zIndex=2;
 				
 				setStyleAccordingToSymbolValue(i,div);
-				main_div.appendChild(div);
+				mainDiv.appendChild(div);
 			
 				
 				div.addEventListener('click',function(event){

@@ -42,6 +42,7 @@ block content
 			
 			
 			for (var i = 0; i <  x_values.length; i++) {
+				//- div definition start
 				var div = document.createElement('div');
 				div.setAttribute('id','ovrDiv_'+i);
 				div.style.backgroundColor='transparent';
@@ -58,8 +59,6 @@ block content
 				div.style.height = d_height + 'px';
 				div.style.zIndex=3;
 				
-				//setStyleAccordingToSymbolValue(i,div);
-				main_div.appendChild(div);
 			
 				
 				div.addEventListener('click',function(event){
@@ -71,7 +70,10 @@ block content
 					setStyleAccordingToSymbolValue(id, target);
 				
 				});
+				main_div.appendChild(div);
+				//-div definition end
 				
+				//-markerDiv definition start
 				var markerDiv = document.createElement('div');
 				markerDiv.setAttribute('id','markerDiv_'+i);
 				markerDiv.style.backgroundColor = '#6699FF';
@@ -111,11 +113,11 @@ block content
 				});
 				
 				main_div.appendChild(markerDiv);
+				//-markerDiv definition end
 			}
 			
 			
 			function setStyleAccordingToSymbolValue(id,div){
-				
 				if(!isSymbol_values[id]){
 					div.style.opacity=0.0;
 				} else {
