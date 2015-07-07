@@ -3,6 +3,7 @@ var fs = require('fs');
 var multer = require('multer');
 var sizeOf = require('image-size');
 var bodyParser = require('body-parser');
+var exec = require('child_process');
 
 var app = express();
 var done = false;
@@ -106,7 +107,7 @@ app.post('/process', function(req, res) {
 
 	// console.log(req.body)
 
-	var exec = require('child_process').exec;
+	exec.exec;
 	//
 	var errorLog = 'error.log';
 	var successLog = 'success.log';
