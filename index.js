@@ -269,8 +269,7 @@ function prepare(req,res,jadeFile){
 					}
 				});
 
-		fs.readFile('./public/images/' + query.imageId
-				+ '/data/isSymbol_values.txt', function(err, data) {
+		fs.readFile('./public/images/' + query.imageId	+ '/data/isSymbol_values.txt', function(err, data) {
 			if (!err) {
 				_parser(isSymbol_values, data);
 				symbol_loaded = true;
@@ -289,6 +288,22 @@ function prepare(req,res,jadeFile){
 	}
 }
 
+app.post('/resize',function(req,res){
+	var query = req.body;
+	var string = ''+query.isSymbol_values;
+	var find = ',';
+	var re = new RegExp(find, 'g');
+
+	string = string.replace(re, '\n');
+	fs.writeFile('./public/images/' + query.img_id	+ '/data/isSymbol_values.txt', string, 'utf-8', function (err) {
+	      if (err) throw err;
+	      console.log('filelistAsync complete');
+	      res.redirect(query.pathname+'?imageId='+query.img_id);
+	    });
+	
+});
+
+
 app.listen(8080);
 
 function _parser(arrayToFill, content) {
@@ -299,5 +314,5 @@ function _parser(arrayToFill, content) {
 		arrayToFill[i] = lines[i];
 
 	}
-	console.log(arrayToFill);
+	//console.log(arrayToFill);
 }

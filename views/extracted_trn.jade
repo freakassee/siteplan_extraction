@@ -5,109 +5,102 @@ block content
 			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
 			//- TODO: button for more and less contrast
 		script(type='text/javascript').
-			
 			var trImg = document.getElementById('transformedImage');
 			var origin_W = trImg.width;
 			var origin_H =trImg.height;
 			var x_values = [#{x_values}];
 			var y_values = [#{y_values}];
 			var isSymbol_values = [#{isSymbol_values}];
+			var mainDiv = document.getElementById('main');
+			var ovr_list = [];
+			var scalingFactor;
+			var scr_W;
+			var scr_H;
+			var extracted_W = x_values[1] - 2 * x_values[0];
+			var extracted_H = y_values[11] - 2 * y_values[0];
+			var extracted_W2 = x_values[1] - x_values[0];
+			var extracted_H2 = y_values[11] - y_values[0];
+			var ovr_W;
+			var ovr_H;
+			var originIsSymbol = [#{isSymbol_values}];
+			var pathname = window.location.pathname;
+
+			
+			trImg.style.webkitFilter = 'brightness(150%)';
 			
 			window.onload = function(){
-				load(x_values,y_values,isSymbol_values);
+				createDocument(x_values,y_values,isSymbol_values);
 			}
 			window.onresize = function() {
 				waitForFinalEvent(function(){
-					console.log(window.innerWidth);
-					console.log(window.innerHeight);
-					load(x_values,y_values,isSymbol_values);
-				}, 200, "resizing");
+					if(originIsSymbol.equals(isSymbol_values,true)){
+						location.reload();
+					}else{
+						var form = document.createElement('form');
+						form.setAttribute('method', 'post');
+						form.setAttribute('action', '/resize');
+						form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+						var params = {
+								x_values:x_values,
+								y_values:y_values,
+								isSymbol_values:isSymbol_values,
+								img_id: '#{img_id}',
+								pathname: pathname
+								}
+						
+						for (var key in params) {
+							if(params.hasOwnProperty(key)) {
+								var hiddenField = document.createElement('input');
+								hiddenField.setAttribute('type', 'hidden');
+								hiddenField.setAttribute('name', key);
+								hiddenField.setAttribute('value', params[key]);
+								form.appendChild(hiddenField);
+							}
+						}
+						form.submit();
+					}
+				}, 50, "resizing");
 			};
 			
 			
-			function load(x_values,y_values,isSymbol_values){
+			function updateDocument(newScale){
 				
-				var mainDiv = document.getElementById('main');
-				//console.log(mainDiv);
-				while (mainDiv.firstChild !== mainDiv.lastChild) {
-					//console.log(mainDiv.lastChild.id);
-					mainDiv.removeChild(mainDiv.lastChild);
-				}
-				var scalingFactor;
+			}
+			
+			function createDocument(x_values,y_values,isSymbol_values){
 				
-				var scr_W = window.innerWidth - 20;
-				var scr_H = window.innerHeight - 20;
-
+				scr_W = window.innerWidth - 20;
+				scr_H = window.innerHeight - 20;
+				
+				
 				
 
-				if (origin_H / scr_H > origin_W/ scr_W) {
+				if (origin_H / scr_H > origin_W / scr_W) {
 					scalingFactor = origin_H / scr_H;
 					trImg.style.height = scr_H + 'px';
+					
+					createNextButton('/extracted_mt?imageId=', trImg.width + 20, scr_H/2);
 				} else {
 					scalingFactor = origin_W / scr_W;
 					trImg.style.width = scr_W + 'px';
+					
+					createNextButton('/extracted_mt?imageId=', 50, trImg.height + 20);
 				}
-				trImg.style.webkitFilter = 'brightness(150%)';
-
-				mainDiv.appendChild(trImg);
 
 
-				var extracted_W = x_values[1] - 2 * x_values[0];
-				var extracted_H = y_values[11] - 2 * y_values[0];
+				ovr_W = roundDown(extracted_W / 5 / scalingFactor);
+				ovr_H = ovr_W;
 
-				var extracted_W2 = x_values[1] - x_values[0];
-				var extracted_H2 = y_values[11] - y_values[0];
-
-				var ovr_W = roundDown(extracted_W / 5 / scalingFactor);
-				var ovr_H = ovr_W;
-
-				var ovr_list = [];
-				var div_list = [];
-
-				var innerDiv = document.createElement('div');
-				innerDiv.setAttribute('id', 'innerDiv');
-				innerDiv.style.position = 'absolute';
-				innerDiv.style.backgroundColor = 'black';
-				innerDiv.style.opacity = 0.8;
-				innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W + 'px';
-				innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H + 'px';
-				innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
-				innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor
-						+ 'px';
-
-				mainDiv.appendChild(innerDiv);
+				
+				createInnerDiv();
+				
 
 				for (var i = 0; i < x_values.length; i++) {
-					var div = document.createElement('div');
-					div.setAttribute('id', 'ovrDiv_' + i);
-					div.style.backgroundColor = 'black';
-					div.style.position = 'absolute';
-					div.style.left = (x_values[i] - x_values[0]) / scalingFactor + ovr_W
-							+ 'px';
-					div.style.top = (y_values[i] - y_values[0]) / scalingFactor + ovr_H
-							+ 'px';
-
-					div.style.width = extracted_W2 / scalingFactor + 'px';
-					div.style.height = extracted_H2 / scalingFactor + 'px';
-
-					div.style.zIndex = 2;
-
-					setStyleAccordingToSymbolValue(i, div);
-					mainDiv.appendChild(div);
-
-					div.addEventListener('click', function(event) {
-
-						var targetID = event.target.id;
-						var id = targetID.split('_')[1];
-						isSymbol_values[id] = !isSymbol_values[id];
-						var target = document.getElementById(targetID);
-						setStyleAccordingToSymbolValue(id, target);
-
-					});
-
+					ovr_list[i] = createOverlayDiv(i);
 				}
 				
 			}
+			
 			var waitForFinalEvent = (function () {
 				  var timers = {};
 				  return function (callback, ms, uniqueId) {
@@ -121,6 +114,60 @@ block content
 				  };
 				})();
 			
+			function createOverlayDiv(index){
+				var div = document.createElement('div');
+				div.setAttribute('id', 'ovrDiv_' + index);
+				div.style.backgroundColor = 'black';
+				div.style.position = 'absolute';
+				div.style.left = (x_values[index] - x_values[0]) / scalingFactor + ovr_W+'px';
+				div.style.top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H+'px';
+				div.style.width = extracted_W2 / scalingFactor + 'px';
+				div.style.height = extracted_H2 / scalingFactor + 'px';
+				div.style.zIndex = 2;
+				div.addEventListener('click', function(event) {
+					var targetID = event.target.id;
+					var id = targetID.split('_')[1];
+					isSymbol_values[id] = !isSymbol_values[id];
+					var target = document.getElementById(targetID);
+					setStyleAccordingToSymbolValue(id, target);
+				});
+
+				setStyleAccordingToSymbolValue(index, div);
+				mainDiv.appendChild(div);
+				return div;
+			}
+			
+			function createNextButton(url, left, top){
+				var textNode = document.createTextNode('Weiter');
+				var button = document.createElement('button');
+				button.style.position = 'absolute';
+				button.style.width = '75px';
+				button.style.height = '30px';
+				button.style.left =  left +'px';
+				button.style.top = top + 'px';
+				button.appendChild(textNode);     
+
+				button.onclick = function(){
+					location.href = url+#{img_id};
+				}
+
+				mainDiv.appendChild(button);
+			}
+			function createInnerDiv(){
+				var innerDiv = document.createElement('div');
+				innerDiv.setAttribute('id', 'innerDiv');
+				innerDiv.style.position = 'absolute';
+				innerDiv.style.backgroundColor = 'black';
+				innerDiv.style.opacity = 0.8;
+				innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W + 'px';
+				innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H + 'px';
+				innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
+				innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor + 'px';
+
+				mainDiv.appendChild(innerDiv);
+			}
+			
+			
 			function setStyleAccordingToSymbolValue(id, div) {
 				if (!isSymbol_values[id]) {
 					div.style.opacity = 0.5;
@@ -133,4 +180,29 @@ block content
 				decimals = decimals || 0;
 				return (Math.floor(number * Math.pow(10, decimals)) / Math.pow(10,
 						decimals));
+			}
+			
+			Array.prototype.equals = function (array, strict) {
+			    if (!array)
+			        return false;
+
+			    if (arguments.length == 1)
+			        strict = true;
+
+			    if (this.length != array.length)
+			        return false;
+
+			    for (var i = 0; i < this.length; i++) {
+			        if (this[i] instanceof Array && array[i] instanceof Array) {
+			            if (!this[i].equals(array[i], strict))
+			                return false;
+			        }
+			        else if (strict && this[i] != array[i]) {
+			            return false;
+			        }
+			        else if (!strict) {
+			            return this.sort().equals(array.sort(), true);
+			        }
+			    }
+			    return true;
 			}
