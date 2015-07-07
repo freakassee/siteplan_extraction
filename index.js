@@ -297,7 +297,6 @@ app.post('/resize',function(req,res){
 	string = string.replace(re, '\n');
 	fs.writeFile('./public/images/' + query.img_id	+ '/data/isSymbol_values.txt', string, 'utf-8', function (err) {
 	      if (err) throw err;
-	      console.log('filelistAsync complete');
 	      res.redirect(query.pathname+'?imageId='+query.img_id);
 	    });
 	
