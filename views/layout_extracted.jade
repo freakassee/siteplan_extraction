@@ -1,12 +1,39 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/styles/extracted_style.css')
-    link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
-    link(rel='stylesheet', href='http://ol3js.org/en/master/css/ol.css')
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
-    script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')
-    script(src='http://ol3js.org/en/master/build/ol.js')
-    body
-    block content
+	head
+		title= title
+		link(rel='stylesheet', href='/styles/extracted_style.css')
+		link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
+		link(rel='stylesheet', href='http://ol3js.org/en/master/css/ol.css')
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+		script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')
+		script(src='http://ol3js.org/en/master/build/ol.js')
+		script(type='text/javascript' src='/js/util.js')
+		script(type='text/javascript' src='/js/commonElements.js')
+		body
+			#container 
+				#main
+					img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
+					//- TODO: button for more and less contrast
+				script(type='text/javascript').
+					var x_values = [#{x_values}];
+					var y_values = [#{y_values}];
+					var isSymbol_values = [#{isSymbol_values}];
+					var originIsSymbol = [#{isSymbol_values}];
+					var ovr_list = [];
+					var scalingFactor;
+					var scr_W;
+					var scr_H;
+					var extracted_W = x_values[1] - 2 * x_values[0];
+					var extracted_H = y_values[11] - 2 * y_values[0];
+					var extracted_W2 = x_values[1] - x_values[0];
+					var extracted_H2 = y_values[11] - y_values[0];
+					var ovr_W;
+					var ovr_H;
+					var pathname = window.location.pathname;
+					var trImg = document.getElementById('transformedImage');
+					var origin_W = trImg.width;
+					var origin_H = trImg.height;
+					var mainDiv = document.getElementById('main');
+					trImg.style.webkitFilter = 'brightness(150%)';
+				block content

@@ -1,132 +1,253 @@
 include layout_extracted
 block content
-	#container
-		#main_image
-			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
-			// TODO: button for more and less contrast
-		script(type='text/javascript').
-			var scalingFactor;
-			var scr_W 	= window.innerWidth-20;
-			var scr_H 	= window.innerHeight-20;
-			
-			var trImg = document.getElementById('transformedImage');
+	script(type='text/javascript').
+		var mrk_list = [];
+		var targetStr = 'markerDiv_'
+		/*var trImg = document.getElementById('transformedImage');
+		var origin_W = trImg.width;
+		var origin_H = trImg.height;
+		var x_values = [#{x_values}];
+		var y_values = [#{y_values}];
+		var isSymbol_values = [#{isSymbol_values}];
+		var mainDiv = document.getElementById('main_image');
+		var ovr_list = [];
+		var scalingFactor;
+		var scr_W;
+		var scr_H;
+		var extracted_W = x_values[1]-2*x_values[0];
+		var extracted_H = y_values[11]-2*y_values[0];
+		var extracted_W2 = x_values[1]-x_values[0];
+		var extracted_H2 = y_values[11]-y_values[0];
+		var ovr_W;
+		var ovr_H;
+		var originIsSymbol = [#{isSymbol_values}];
+		var pathname = window.location.pathname;*/
+		
+		
+		//trImg.style.webkitFilter  ='brightness(150%)';
+		
+		init('#{img_id}',[#{x_values}],[#{y_values}],[#{isSymbol_values}]);
+		
+		/*window.onload = function(){
+			createDocument(x_values,y_values,isSymbol_values);
+		}
+		
+		window.onresize = function() {
+			waitForFinalEvent(function(){
+				
+				if(originIsSymbol.equals(isSymbol_values,true)){
+					location.reload();
+				}else{
+					var form = document.createElement('form');
+					form.setAttribute('method', 'post');
+					form.setAttribute('action', '/resize');
+					form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+					var params = {
+							x_values:x_values,
+							y_values:y_values,
+							isSymbol_values:isSymbol_values,
+							img_id: '#{img_id}',
+							pathname: pathname
+							}
+					
+					for (var key in params) {
+						if(params.hasOwnProperty(key)) {
+							var hiddenField = document.createElement('input');
+							hiddenField.setAttribute('type', 'hidden');
+							hiddenField.setAttribute('name', key);
+							hiddenField.setAttribute('value', params[key]);
+							form.appendChild(hiddenField);
+						}
+					}
+					form.submit();
+				}
+			}, 50, "resizing");
+		};*/
+		
+		function createDocument(x_values,y_values,isSymbol_values){
+			scr_W 	= window.innerWidth-20;
+			scr_H 	= window.innerHeight-20;
 			
 			if(trImg.height / scr_H > trImg.width / scr_W){
 				scalingFactor = trImg.height / scr_H;
 				trImg.style.height = scr_H+'px';
+				
+				createNextButton('/extracted_og?imageId='+#{img_id}, trImg.width + 20, scr_H/2);
 			} else {
 				scalingFactor = trImg.width / scr_W;
 				trImg.style.width = scr_W+'px';
+				
+				createNextButton('/extracted_og?imageId='+#{img_id}, 50, trImg.height + 20);
 			}
-			trImg.style.webkitFilter  ='brightness(150%)';
-			
-			var main_div = document.getElementById('main_image');
-			main_div.appendChild(trImg);
 			
 			
-			var x_values = [#{x_values}];
-			var y_values = [#{y_values}];
-			var isSymbol_values = [#{isSymbol_values}];
-			
-			var extracted_W = x_values[1]-2*x_values[0];
-			var extracted_H = y_values[11]-2*y_values[0];
-			
-			var extracted_W2 = x_values[1]-x_values[0];
-			var extracted_H2 = y_values[11]-y_values[0];
-			
-			var ovr_W = roundDown(extracted_W/5/scalingFactor);
-			var ovr_H = ovr_W;
-	
-			var ovr_list = [];
-			var div_list = [];
-			
+			ovr_W = roundDown(extracted_W/5/scalingFactor);
+			ovr_H = ovr_W;
 			
 			for (var i = 0; i <  x_values.length; i++) {
-				//- div definition start
-				var div = document.createElement('div');
-				div.setAttribute('id','ovrDiv_'+i);
-				div.style.backgroundColor='transparent';
-				div.style.opacity = 0.8;
-				div.style.position='absolute';
-				var d_left = (x_values[i]-x_values[0])/scalingFactor+ovr_W;
-				var d_top = (y_values[i]-y_values[0])/scalingFactor+ovr_H;
-				div.style.left = d_left+'px';
-				div.style.top = d_top +'px';
-				
-				var d_width = extracted_W2/scalingFactor;
-				var d_height = extracted_H2/scalingFactor;
-				div.style.width = d_width + 'px';
-				div.style.height = d_height + 'px';
-				div.style.zIndex=3;
-				
+				ovr_list[i] = createOverlayDiv(i,'transparent');
+				mrk_list[i] = createMarkerDiv(i,'#6699FF');
+			}
+		}
+		
+		function createOverlayDiv(index,color){
+			var div = document.createElement('div');
+			div.setAttribute('id', 'ovrDiv_' + index);
+			div.style.backgroundColor = color;
+			div.style.position = 'absolute';
 			
+			d_left = (x_values[index] - x_values[0]) / scalingFactor + ovr_W;
+			d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H;
+			
+			div.style.left = d_left+'px';
+			div.style.top = d_top +'px';
+			//div.style.left = 	(x_values[index] - x_values[0]) / scalingFactor + ovr_W+'px';
+			//div.style.top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H+'px';
+			
+			d_width = extracted_W2/scalingFactor;
+			d_height = extracted_H2/scalingFactor;
+			
+			div.style.width = d_width + 'px';
+			div.style.height = d_height + 'px';
+			//div.style.width = extracted_W2 / scalingFactor + 'px';	
+			//div.style.height = extracted_H2 / scalingFactor + 'px';
+			
+			
+			div.style.zIndex = 2;
+			
+			//div.addEventListener('click', function(event) {
+				//var targetID = event.target.id;
+				//var id = targetID.split('_')[1];
+				//isSymbol_values[id] = !isSymbol_values[id];
+				//var target = document.getElementById(targetID);
+				//setStyleAccordingToSymbolValue(id, target);
+			//});
+			
+			div.addEventListener('click',function(event){
+				onDivClick(event);
+			});
+	
+			//setStyleAccordingToSymbolValue(index, div);
+			mainDiv.appendChild(div);
+			
+			///////////////
+			
+
+			
+			//div.addEventListener('click',function(event){
 				
-				div.addEventListener('click',function(event){
+				//var targetID = event.target.id;
+				//var id = targetID.split('_')[1];
+				//isSymbol_values[id]=!isSymbol_values[id];
+				//var target = document.getElementById('markerDiv_'+id);
+				//setStyleAccordingToSymbolValue(id, target);
+			
+			//});
+			
+			
+			
+			return div;
+		}
+		
+		
+		
+		function onDivClick(event){
+			//debugger;
+			var targetID = event.target.id;
+			var id = targetID.split('_')[1];
+			isSymbol_values[id] = !isSymbol_values[id];
+			var target = document.getElementById(targetStr+id);
+			setStyleAccordingToSymbolValue(id, target, 1.0, true);
+			
+		}
+		
+
+		
+
+		
+		
+		
+		/*for (var i = 0; i <  x_values.length; i++) {
+			//- div definition start
+			var div = document.createElement('div');
+			div.setAttribute('id','ovrDiv_'+i);
+			div.style.backgroundColor='transparent';
+			div.style.position='absolute';
+			
+			var d_left = (x_values[i]-x_values[0])/scalingFactor+ovr_W;
+			var d_top = (y_values[i]-y_values[0])/scalingFactor+ovr_H;
+			div.style.left = d_left+'px';
+			div.style.top = d_top +'px';
+			
+			var d_width = extracted_W2/scalingFactor;
+			var d_height = extracted_H2/scalingFactor;
+			div.style.width = d_width + 'px';
+			div.style.height = d_height + 'px';
+			div.style.zIndex=3;
+			
+		
+			
+			div.addEventListener('click',function(event){
+				
+				var targetID = event.target.id;
+				var id = targetID.split('_')[1];
+				isSymbol_values[id]=!isSymbol_values[id];
+				var target = document.getElementById(targetStr+id);
+				setStyleAccordingToSymbolValue(id, target);
+			
+			});
+			mainDiv.appendChild(div);
+			//-div definition end
+			
+			
+		}*/
+		
+		function createMarkerDiv(index, color){
+			//-markerDiv definition start
+			
+			var markerDiv = document.createElement('div');
+			markerDiv.setAttribute('id','markerDiv_'+index);
+			markerDiv.style.backgroundColor = color;
+			markerDiv.style.position='absolute';
+			
+			if(index < 11 || (index>16 && index<28)){
+				markerDiv.style.left = d_left + 'px';
+				markerDiv.style.width = d_width + 'px';
+				markerDiv.style.height =  -y_values[0]/scalingFactor + 'px';
+				
+				if(index<11){
+					markerDiv.style.top = d_top + y_values[0]/scalingFactor + 'px';
 					
-					var targetID = event.target.id;
-					var id = targetID.split('_')[1];
-					isSymbol_values[id]=!isSymbol_values[id];
-					var target = document.getElementById('markerDiv_'+id);
-					setStyleAccordingToSymbolValue(id, target);
-				
-				});
-				main_div.appendChild(div);
-				//-div definition end
-				
-				//-markerDiv definition start
-				var markerDiv = document.createElement('div');
-				markerDiv.setAttribute('id','markerDiv_'+i);
-				markerDiv.style.backgroundColor = '#6699FF';
-				markerDiv.style.position='absolute';
-				
-				if(i < 11 || (i>16 && i<28)){
-					markerDiv.style.left = d_left + 'px';
-					markerDiv.style.width = d_width + 'px';
-					markerDiv.style.height =  -y_values[0]/scalingFactor + 'px';
-					
-					if(i<11){
-						markerDiv.style.top = d_top + y_values[0]/scalingFactor + 'px';
-						
-					}else{
-						markerDiv.style.top = d_top + d_height  + 'px';
-					}
 				}else{
-					markerDiv.style.top = d_top + 'px';
-					markerDiv.style.width = -y_values[0]/scalingFactor + 'px';
-					markerDiv.style.height = d_height + 'px';					
-					if(i<28){
-						markerDiv.style.left = d_left + d_width +'px';
-					} else {
-						markerDiv.style.left = d_left + x_values[0]/scalingFactor+ 'px';
-					}
+					markerDiv.style.top = d_top + d_height  + 'px';
 				}
-				markerDiv.style.zIndex=2;
-				setStyleAccordingToSymbolValue(i,markerDiv);
-				markerDiv.addEventListener('click',function(event){
-					
-					var targetID = event.target.id;
-					var id = targetID.split('_')[1];
-					isSymbol_values[id]=!isSymbol_values[id];
-					var target = document.getElementById(targetID);
-					setStyleAccordingToSymbolValue(id, target);
-				
-				});
-				
-				main_div.appendChild(markerDiv);
-				//-markerDiv definition end
-			}
-			
-			
-			function setStyleAccordingToSymbolValue(id,div){
-				if(!isSymbol_values[id]){
-					div.style.opacity=0.0;
+			}else{
+				markerDiv.style.top = d_top + 'px';
+				markerDiv.style.width = -y_values[0]/scalingFactor + 'px';
+				markerDiv.style.height = d_height + 'px';					
+				if(index<28){
+					markerDiv.style.left = d_left + d_width +'px';
 				} else {
-					div.style.opacity=1.0;
+					markerDiv.style.left = d_left + x_values[0]/scalingFactor+ 'px';
 				}
 			}
+			markerDiv.style.zIndex=2;
+			setStyleAccordingToSymbolValue(index,markerDiv,1.0,true);
+			/*markerDiv.addEventListener('click',function(event){
+				
+				var targetID = event.target.id;
+				var id = targetID.split('_')[1];
+				isSymbol_values[id]=!isSymbol_values[id];
+				var target = document.getElementById(targetID);
+				setStyleAccordingToSymbolValue(id, target);
+			
+			});*/
 			
 			
-			function roundDown(number, decimals) {
-			    decimals = decimals || 0;
-			    return ( Math.floor( number * Math.pow(10, decimals) ) / Math.pow(10, decimals) );
-			}
+			markerDiv.addEventListener('click',function(event){
+				onDivClick(event)
+			});
+			
+			mainDiv.appendChild(markerDiv);
+			//-markerDiv definition end
+		}
