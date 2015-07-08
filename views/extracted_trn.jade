@@ -3,6 +3,8 @@ block content
 	script(type='text/javascript').
 		var targetStr = 'ovrDiv_'
 		
+			
+			
 		init('#{img_id}',[#{x_values}],[#{y_values}],[#{isSymbol_values}]);
 		
 		function createDocument(x_values,y_values,isSymbol_values){
@@ -36,50 +38,18 @@ block content
 		}
 		
 		
-		
-		function createOverlayDiv(index,color){
-			var div = document.createElement('div');
-			div.setAttribute('id', 'ovrDiv_' + index);
-			div.style.backgroundColor = color;
-			div.style.position = 'absolute';
-			
-			d_left = (x_values[index] - x_values[0]) / scalingFactor + ovr_W;
-			d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H;
-			
-			div.style.left = d_left+'px';
-			div.style.top = d_top +'px';
-			//div.style.left = 	(x_values[index] - x_values[0]) / scalingFactor + ovr_W+'px';
-			//div.style.top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H+'px';
-			
-			d_width = extracted_W2/scalingFactor;
-			d_height = extracted_H2/scalingFactor;
-			
-			div.style.width = d_width + 'px';
-			div.style.height = d_height + 'px';
-			//div.style.width = extracted_W2 / scalingFactor + 'px';	
-			//div.style.height = extracted_H2 / scalingFactor + 'px';
-			
-			
-			div.style.zIndex = 2;
-			
-	
-			div.addEventListener('click',function(event){
-				onDivClick(event);
-			});
-			
-			setStyleAccordingToSymbolValue(index, div,0.5,false);
-			mainDiv.appendChild(div);
-			return div;
-		}
-		
-		function onDivClick(event){
+		function onDivClick(event) {
 			var targetID = event.target.id;
 			var id = targetID.split('_')[1];
-			isSymbol_values[id] = !isSymbol_values[id];
-			var target = document.getElementById(targetStr+id);
-			setStyleAccordingToSymbolValue(id, target,0.5,false);
-			
+			if (!inverted) {
+				isSymbol_values[id] = !isSymbol_values[id];
+			}
+			var target = document.getElementById(targetStr + id);
+			setStyleAccordingToSymbolValue(id, target, 0.5, inverted);
+
 		}
+		
+		
 		
 		function createInnerDiv(scalingFactor){
 			var innerDiv = document.createElement('div');
@@ -87,8 +57,8 @@ block content
 			innerDiv.style.position = 'absolute';
 			innerDiv.style.backgroundColor = 'black';
 			innerDiv.style.opacity = 0.8;
-			innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W + 'px';
-			innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H + 'px';
+			innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W -margin + 'px';
+			innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H - margin + 'px';
 			innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
 			innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor + 'px';
 	

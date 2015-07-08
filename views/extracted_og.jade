@@ -1,30 +1,74 @@
 include layout_extracted
 block content
-	#container
-		#main_image
-			img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
-		script(type='text/javascript').
-			var scalingFactor;
-			var scr_W 	= window.innerWidth-20;
-			var scr_H 	= window.innerHeight-20;
+	script(type='text/javascript').
+		var img_list = [];
+		inverted=!inverted;
+		var targetStr = 'overlay_';
+		init('#{img_id}',[#{x_values}],[#{y_values}],[#{isSymbol_values}]);
 			
-			var trImg = document.getElementById('transformedImage');
-			
-			if(trImg.height / scr_H > trImg.width / scr_W){
-				scalingFactor = trImg.height / scr_H;
-				trImg.style.height = scr_H+'px';
+		function createDocument(x_values,y_values,isSymbol_values){
+			scr_W = window.innerWidth - 20;
+			scr_H = window.innerHeight - 20;
+				
+			if (origin_H / scr_H > origin_W / scr_W) {
+				scalingFactor = origin_H / scr_H;
+				trImg.style.height = scr_H + 'px';
+				
+				//createNextButton('/extracted_mt?imageId='+#{img_id}, trImg.width + 20, scr_H/2);
 			} else {
-				scalingFactor = trImg.width / scr_W;
-				trImg.style.width = scr_W+'px';
+				scalingFactor = origin_W / scr_W;
+				trImg.style.width = scr_W + 'px';
+				
+				//createNextButton('/extracted_mt?imageId='+#{img_id}, 50, trImg.height + 20);
+			}
+		
+		
+			ovr_W = roundDown(extracted_W / 5 / scalingFactor);
+			ovr_H = ovr_W;
+		
+			
+			
+		
+			for (var i = 0; i < x_values.length; i++) {
+				ovr_list[i] = createOverlayDiv(i,'transparent');
+				
+				var ovr = document.createElement('img');
+				ovr.setAttribute('src', '/styles/images/true.png');
+				ovr.setAttribute('id','overlay_'+i);
+				ovr.style.width=ovr_W+'px';
+
+				ovr.style.position='absolute';
+				ovr.style.left=(x_values[i]+extracted_W2)/scalingFactor+'px';
+				ovr.style.top=(y_values[i]+extracted_H)/scalingFactor+'px';
+				setStyleAccordingToSymbolValue(i, ovr, 1.0, inverted);
+				/*if(!isSymbol_values[i]){
+					ovr.style.visibility='hidden';
+					ovr.style.opacity=0.2;
+				}else{
+					ovr.style.visibility='visible';
+					ovr.style.opacity=0.2;
+				}*/
+				
+				mainDiv.appendChild(ovr);
+				img_list[i]=ovr;
+				
 			}
 			
-			var main_div = document.getElementById('main_image');
-			main_div.appendChild(trImg);
+		}
+		
+		function onDivClick(event) {
+			//debugger;
+			var targetID = event.target.id;
+			var id = targetID.split('_')[1];
+			if (!inverted) {
+				isSymbol_values[id] = !isSymbol_values[id];
+			}
+			var target = document.getElementById(targetStr + id);
+			setStyleAccordingToSymbolValue(id, target, 1.0, inverted);
+
+		}
+		/*	
 			
-			
-			var x_values = [#{x_values}];
-			var y_values = [#{y_values}];
-			var isSymbol_values = [#{isSymbol_values}];
 			
 			var extracted_W = x_values[1]-2*x_values[0];
 			var extracted_H = y_values[11]-2*y_values[0];
@@ -94,7 +138,4 @@ block content
 				
 			}
 			
-			function roundDown(number, decimals) {
-			    decimals = decimals || 0;
-			    return ( Math.floor( number * Math.pow(10, decimals) ) / Math.pow(10, decimals) );
-			}
+			*/
