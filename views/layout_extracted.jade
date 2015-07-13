@@ -3,19 +3,25 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/styles/extracted_style.css')
-		link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
-		link(rel='stylesheet', href='http://ol3js.org/en/master/css/ol.css')
-		script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
-		script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')
-		script(src='http://ol3js.org/en/master/build/ol.js')
+		// link(rel='stylesheet',
+		// href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
+		// script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+		// script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js')
 		script(type='text/javascript' src='/js/util.js')
 		script(type='text/javascript' src='/js/commonElements.js')
 		body
 			#container 
 				#main
-					img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage')
-					//- TODO: button for more and less contrast
+					img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage',style='opacity:0.0')
+					// - TODO: button for more and less contrast
 				script(type='text/javascript').
+					var trImg = document.getElementById('transformedImage');
+					var origin_W =0;
+					var origin_H = 0;
+					trImg.onload = function(){
+							origin_W = trImg.width;
+							origin_H = trImg.height;
+					}
 					var x_values = [#{x_values}];
 					var y_values = [#{y_values}];
 					var isSymbol_values = [#{isSymbol_values}];
@@ -31,11 +37,12 @@ html
 					var ovr_W;
 					var ovr_H;
 					var pathname = window.location.pathname;
-					var trImg = document.getElementById('transformedImage');
-					var origin_W = trImg.width;
-					var origin_H = trImg.height;
+					
 					var mainDiv = document.getElementById('main');
-					//trImg.style.webkitFilter = 'brightness(150%)';
+					 trImg.style.webkitFilter = 'brightness(150%)';
 					var inverted = false;
 					var margin = 8;
+					function myFunction() {
+					    myVar = setTimeout({}, 25);
+					}
 				block content
