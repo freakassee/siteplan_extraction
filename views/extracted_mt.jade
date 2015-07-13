@@ -3,26 +3,27 @@ block content
 	script(type='text/javascript').
 		var mrk_list = [];
 		var targetStr = 'markerDiv_'
-		inverted = !inverted;	
+		inverted = true;	
 		
-		init('#{img_id}',[#{x_values}],[#{y_values}],[#{isSymbol_values}]);
+		init('#{img_id}');
 		
 		function createDocument(x_values,y_values,isSymbol_values){
 			scr_W 	= window.innerWidth-20;
 			scr_H 	= window.innerHeight-20;
 			
-			if(trImg.height / scr_H > trImg.width / scr_W){
+			if(trImg.height / scr_H > trImg.width / scr_W){	
 				scalingFactor = trImg.height / scr_H;
 				trImg.style.height = scr_H+'px';
 				
-				createNextButton('/extracted_og?imageId='+#{img_id}, trImg.width + 20, scr_H/2);
+				createNextButton('/extracted_og', #{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
 			} else {
 				scalingFactor = trImg.width / scr_W;
 				trImg.style.width = scr_W+'px';
 				
-				createNextButton('/extracted_og?imageId='+#{img_id}, 50, trImg.height + 20);
+				createNextButton('/extracted_og',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante C');
 			}
-				
+			
+			trImg.style.opacity=1.0;	
 			ovr_W = roundDown(extracted_W/5/scalingFactor);
 			ovr_H = ovr_W;
 			
@@ -36,9 +37,7 @@ block content
 		function onDivClick(event) {
 			var targetID = event.target.id;
 			var id = targetID.split('_')[1];
-			if (!inverted) {
-				isSymbol_values[id] = !isSymbol_values[id];
-			}
+			isSymbol_values[id] = !isSymbol_values[id];
 			var target = document.getElementById(targetStr + id);
 			setStyleAccordingToSymbolValue(id, target, 1.0, inverted);
 
@@ -69,7 +68,7 @@ block content
 				if(index<28){
 					markerDiv.style.left = d_left + d_width +'px';
 				} else {
-					markerDiv.style.left = d_left + x_values[0]/scalingFactor+ 'px';
+					markerDiv.style.left = d_left+ y_values[0]/scalingFactor + 'px';
 				}
 			}
 			markerDiv.style.zIndex=2;

@@ -27,11 +27,10 @@ function init(imageId) {
 	}
 	window.onresize = function() {
 		waitForFinalEvent(function() {
-
 			if (originIsSymbol.equals(isSymbol_values, true)) {
 				location.reload();
 			} else {
-				createHiddenFormAndSubmit(imageId);
+				createHiddenFormAndSubmit(location.pathname, imageId);
 			}
 		}, 50, "resizing");
 	};
@@ -50,12 +49,8 @@ var waitForFinalEvent = (function() {
 	};
 })();
 
-
-
 function roundDown(number, decimals) {
 	decimals = decimals || 0;
 	return (Math.floor(number * Math.pow(10, decimals)) / Math
 			.pow(10, decimals));
 }
-
-

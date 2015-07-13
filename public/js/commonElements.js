@@ -1,23 +1,25 @@
-function createNextButton(url, left, top) {
-	var textNode = document.createTextNode('Weiter');
+function createNextButton(pathname, imageId, left, top,text) {
+	var textNode = document.createTextNode(text);
 	var button = document.createElement('button');
 	button.style.position = 'absolute';
-	button.style.width = '75px';
+	button.style.width = '150px';
 	button.style.height = '30px';
 	button.style.left = left + 'px';
 	button.style.top = top + 'px';
 	button.appendChild(textNode);
 
 	button.onclick = function() {
-		location.href = url;
+		createHiddenFormAndSubmit(pathname, imageId);
 	}
 
 	mainDiv.appendChild(button);
 }
 
-function createHiddenFormAndSubmit(imageId) {
+function createHiddenFormAndSubmit(pathname, imageId) {
+
 	var form = document.createElement('form');
 	form.setAttribute('method', 'post');
+	form.setAttribute('id', 'hiddenForm');
 	form.setAttribute('action', '/resize');
 	form.setAttribute('enctype', 'application/x-www-form-urlencoded');
 	var params = {
@@ -37,19 +39,19 @@ function createHiddenFormAndSubmit(imageId) {
 			form.appendChild(hiddenField);
 		}
 	}
+	mainDiv.appendChild(form);
 	form.submit();
 }
 
 function createOverlayDiv(index, color) {
-	//debugger;
 	margin = 8;
 	var div = document.createElement('div');
 	div.setAttribute('id', 'ovrDiv_' + index);
 	div.style.backgroundColor = color;
 	div.style.position = 'absolute';
 
-	d_left = (x_values[index] - x_values[0]) / scalingFactor + +ovr_W-margin;
-	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H-margin;
+	d_left = (x_values[index] - x_values[0]) / scalingFactor + +ovr_W - margin;
+	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H; //+ margin;
 
 	div.style.left = d_left + 'px';
 	div.style.top = d_top + 'px';
@@ -68,20 +70,22 @@ function createOverlayDiv(index, color) {
 
 	setStyleAccordingToSymbolValue(index, div, 0.5, false);
 	mainDiv.appendChild(div);
+	
 	return div;
 }
 
-
-function setStyleAccordingToSymbolValue(id, element, opacity, inverted) {
-	if (inverted) {
-		isSymbol_values[id] = !isSymbol_values[id];
-	}
-
-	if (!isSymbol_values[id]) {
-		element.style.opacity = opacity;
+function setStyleAccordingToSymbolValue(id, element, opacity, isInverted) {
+	if (isInverted) {
+		if (!isSymbol_values[id]) {
+			element.style.opacity = 0.0;
+		} else {
+			element.style.opacity = opacity;
+		}
 	} else {
-		element.style.opacity = 0.0;
+		if (!isSymbol_values[id]) {
+			element.style.opacity = opacity;
+		} else {
+			element.style.opacity = 0.0;
+		}
 	}
 }
-
-
