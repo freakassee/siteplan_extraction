@@ -1,11 +1,16 @@
 include layout_extracted
 block content
+	script(type='text/javascript' src='/js/marker.js')
 	script(type='text/javascript').
 		var mrk_list = [];
 		var targetStr = 'markerDiv_'
 		inverted = true;	
+		trImg.onload = function(){
+			console.log('test1');
+			marker('#{img_id}');
+		}
 		
-		init('#{img_id}');
+		/*init('#{img_id}');
 		
 		function createDocument(x_values,y_values,isSymbol_values){
 			scr_W 	= window.innerWidth-20;
@@ -15,12 +20,22 @@ block content
 				scalingFactor = trImg.height / scr_H;
 				trImg.style.height = scr_H+'px';
 				
-				createNextButton('/extracted_og', #{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
+				// Right Version
+				//createNextButton('/extracted_og', #{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_og', 3, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
+				
 			} else {
 				scalingFactor = trImg.width / scr_W;
 				trImg.style.width = scr_W+'px';
 				
-				createNextButton('/extracted_og',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante C');
+				// Right Version
+				//createNextButton('/extracted_og',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante C');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_og',3, 50, trImg.height + 20,'Weiter zu Variante C');
+				
 			}
 			
 			trImg.style.opacity=1.0;	
@@ -29,7 +44,7 @@ block content
 			
 			for (var i = 0; i <  x_values.length; i++) {
 				ovr_list[i] = createOverlayDiv(i,'transparent');
-				mrk_list[i] = createMarkerDiv(i,'orange'/*'#6699FF'*/);
+				mrk_list[i] = createMarkerDiv(i,'orange');
 			}
 		}
 		
@@ -51,7 +66,7 @@ block content
 			markerDiv.style.position='absolute';
 			
 			if(index < 11 || (index>16 && index<28)){
-				markerDiv.style.left = d_left + 'px';
+				markerDiv.style.left = d_left + margin +'px';
 				markerDiv.style.width = d_width + 'px';
 				markerDiv.style.height =  -y_values[0]/scalingFactor + 'px';
 				
@@ -66,9 +81,9 @@ block content
 				markerDiv.style.width = -y_values[0]/scalingFactor + 'px';
 				markerDiv.style.height = d_height + 'px';					
 				if(index<28){
-					markerDiv.style.left = d_left + d_width +'px';
+					markerDiv.style.left = d_left + margin +d_width +'px';
 				} else {
-					markerDiv.style.left = d_left+ y_values[0]/scalingFactor + 'px';
+					markerDiv.style.left = d_left+ margin +y_values[0]/scalingFactor + 'px';
 				}
 			}
 			markerDiv.style.zIndex=2;
@@ -79,4 +94,4 @@ block content
 			
 			setStyleAccordingToSymbolValue(index,markerDiv,1.0,true);
 			mainDiv.appendChild(markerDiv);
-		}
+		}*/

@@ -1,6 +1,7 @@
 function createNextButton(pathname, imageId, left, top,text) {
 	var textNode = document.createTextNode(text);
 	var button = document.createElement('button');
+	button.setAttribute('id','button');
 	button.style.position = 'absolute';
 	button.style.width = '150px';
 	button.style.height = '30px';
@@ -9,14 +10,17 @@ function createNextButton(pathname, imageId, left, top,text) {
 	button.appendChild(textNode);
 
 	button.onclick = function() {
-		createHiddenFormAndSubmit(pathname, imageId);
+		createHiddenFormAndSubmit(pathname, imageId,false);
 	}
 
 	mainDiv.appendChild(button);
 }
 
-function createHiddenFormAndSubmit(pathname, imageId) {
-
+function createHiddenFormAndSubmit(pathname, imageId,isDemo) {
+	if(!isDemo){
+		window.location.href=pathname+'?imageId='+imageId;
+	}else{
+		
 	var form = document.createElement('form');
 	form.setAttribute('method', 'post');
 	form.setAttribute('id', 'hiddenForm');
@@ -41,6 +45,7 @@ function createHiddenFormAndSubmit(pathname, imageId) {
 	}
 	mainDiv.appendChild(form);
 	form.submit();
+	}
 }
 
 function createOverlayDiv(index, color) {

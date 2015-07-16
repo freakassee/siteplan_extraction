@@ -21,16 +21,18 @@ Array.prototype.equals = function(array, strict) {
 	return true;
 }
 
-function init(imageId) {
+function init( imageId) {
 	window.onload = function() {
-		createDocument(x_values, y_values, isSymbol_values);
+		//debugger;
+		createDocument(imageId,x_values, y_values, isSymbol_values);
 	}
 	window.onresize = function() {
 		waitForFinalEvent(function() {
 			if (originIsSymbol.equals(isSymbol_values, true)) {
 				location.reload();
 			} else {
-				createHiddenFormAndSubmit(location.pathname, imageId);
+				
+				createHiddenFormAndSubmit(location.pathname, imageId, true);
 			}
 		}, 50, "resizing");
 	};

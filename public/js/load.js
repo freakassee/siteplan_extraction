@@ -1,4 +1,4 @@
-function load(x_values,y_values,isSymbol_values) {
+/*function load(x_values,y_values,isSymbol_values) {
 	var mainDiv = document.getElementById('main');
 	console.log(mainDiv);
 	while (mainDiv.firstChild !== mainDiv.lastChild) {
@@ -94,4 +94,4 @@ function load(x_values,y_values,isSymbol_values) {
 		return (Math.floor(number * Math.pow(10, decimals)) / Math.pow(10,
 				decimals));
 	}
-};
+};*/

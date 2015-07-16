@@ -1,16 +1,20 @@
 include layout_extracted
 block content
+	script(type='text/javascript' src='/js/onlyGreen.js')
 	script(type='text/javascript').
 		var img_list = [];
 		inverted=true;
 		var targetStr = 'overlay_';
-		init('#{img_id}');
+		trImg.onload = function(){
+			console.log('test3');
+			onlyGreen('#{img_id}');
+		}
+		
+		/*init('#{img_id}');
 			
 		function createDocument(x_values,y_values,isSymbol_values){
 			scr_W = window.innerWidth - 20;
 			scr_H = window.innerHeight - 20;
-			
-			
 			
 			if (origin_H / scr_H > origin_W / scr_W) {
 				scalingFactor = origin_H / scr_H;
@@ -23,7 +27,8 @@ block content
 				
 				createNextButton('/bind'+#{img_id}, 50, trImg.height + 20);
 			}
-			
+			//nutzer untersuchen (wie viel it sie verwenden, etc.) 
+			//likert skala und irgendwas mit nasa
 			trImg.style.opacity=1.0;
 			ovr_W = roundDown(extracted_W / 5 / scalingFactor);
 			ovr_H = ovr_W;
@@ -58,4 +63,4 @@ block content
 			var target = document.getElementById(targetStr + id);
 			setStyleAccordingToSymbolValue(id, target, 1.0, inverted);
 
-		}
+		}*/

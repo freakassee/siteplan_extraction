@@ -3,7 +3,7 @@ var fs = require('fs');
 var multer = require('multer');
 var sizeOf = require('image-size');
 var bodyParser = require('body-parser');
-var exec = require('child_process');
+var exec = require('child_process').exec;
 
 var app = express();
 var done = false;
@@ -105,16 +105,13 @@ app.get('/showmap', function(req, res) {
 /** Talking to MatLabs Section */
 app.post('/process', function(req, res) {
 
-	// console.log(req.body)
-
-	exec.exec;
-	//
+	
 	var errorLog = 'error.log';
 	var successLog = 'success.log';
-	// // var outputFile = 'primes.txt';
-	//
-	console.log(req.body.X);
-	console.log(req.body.Y);
+
+	//console.log(req.body.X);
+	//console.log(req.body.Y);
+	//console.log(req.body.img_id);
 
 	exec('cd model && matlab -nodisplay -nosplash -nodesktop -r image_name=\''
 			+ req.body.img_id + '.jpg\';process_image(image_name,['
@@ -134,8 +131,7 @@ app.post('/process', function(req, res) {
 		var successWatcher = fs.watch('./model/' + successLog, function(event,
 				next) {
 			fs.readFile('./model/' + successLog, function(err, data) {
-				res.redirect('/extracted_rg?imageId=' + req.body.img_id)
-
+				res.redirect('/extracted_trn?imageId=' + req.body.img_id); 
 			});
 			errorWatcher.close();
 			successWatcher.close();
@@ -161,68 +157,6 @@ app.get('/extracted_trn', function(req, res) {
 });
 app.get('/extracted_og', function(req, res) {
 	prepare(req,res,'extracted_og');
-//	var query = req.query;
-//	var x_values = [];
-//	var y_values = [];
-//	var isSymbol_values = [];
-//
-//	var x_loaded = false;
-//	var y_loaded = false;
-//	var symbol_loaded = false;
-//	if (query.imageId) {
-//		fs.readFile('./public/images/' + query.imageId + '/data/x_values.txt',
-//				function(err, data) {
-//					if (!err) {
-//						_parser(x_values, data);
-//						x_loaded = true;
-//						if (x_loaded && y_loaded && symbol_loaded) {
-//							res.render('extracted_with_red', {
-//								img_id : query.imageId,
-//								x_values : x_values,
-//								y_values : y_values,
-//								isSymbol_values : isSymbol_values
-//							});
-//						}
-//					} else {
-//						console.log(err.toString());
-//					}
-//				});
-//		fs.readFile('./public/images/' + query.imageId + '/data/y_values.txt',
-//				function(err, data) {
-//					if (!err) {
-//						_parser(y_values, data);
-//						y_loaded = true;
-//						if (x_loaded && y_loaded && symbol_loaded) {
-//							res.render('extracted_with_red', {
-//								img_id : query.imageId,
-//								x_values : x_values,
-//								y_values : y_values,
-//								isSymbol_values : isSymbol_values
-//							});
-//						}
-//					} else {
-//						console.log(err.toString());
-//					}
-//				});
-//
-//		fs.readFile('./public/images/' + query.imageId
-//				+ '/data/isSymbol_values.txt', function(err, data) {
-//			if (!err) {
-//				_parser(isSymbol_values, data);
-//				symbol_loaded = true;
-//				if (x_loaded && y_loaded && symbol_loaded) {
-//					res.render('extracted_with_red', {
-//						img_id : query.imageId,
-//						x_values : x_values,
-//						y_values : y_values,
-//						isSymbol_values : isSymbol_values
-//					});
-//				}
-//			} else {
-//				console.log(err.toString());
-//			}
-//		});
-//	}
 });
 
 function prepare(req,res,jadeFile){
@@ -294,12 +228,19 @@ app.post('/resize',function(req,res){
 	var string = ''+query.isSymbol_values;
 	var find = ',';
 	var re = new RegExp(find, 'g');
-
+	
 	string = string.replace(re, '\n');
+	string = string + '\n';
+	
 	fs.writeFile('./public/images/' + query.img_id	+ '/data/isSymbol_values.txt', string, 'utf-8', function (err) {
 	      if (err) throw err;
 	      res.redirect(query.pathname+'?imageId='+query.img_id);
 	    });
+	
+});
+
+app.post('/bind',function(req,res){
+	var query = req.body;
 	
 });
 

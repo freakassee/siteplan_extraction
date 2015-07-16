@@ -1,7 +1,14 @@
 include layout_extracted
 block content
+	script(type='text/javascript' src='/js/transparent.js')
 	script(type='text/javascript').
-		var targetStr = 'ovrDiv_'
+		var targetStr = 'ovrDiv_';	
+		trImg.onload = function(){
+			//console.log('test');
+			transparent('#{img_id}');
+		}
+
+		/*var targetStr = 'ovrDiv_'
 		
 			
 			
@@ -16,13 +23,33 @@ block content
 				scalingFactor = origin_H / scr_H;
 				trImg.style.height = scr_H + 'px';
 				
-				createNextButton('/extracted_mt',#{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante B');
+				// Right Version
+				//createNextButton('/extracted_mt',#{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante B');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_mt',2, trImg.width + 20, scr_H/2,'Weiter zu Variante B');
 			} else {
 				scalingFactor = origin_W / scr_W;
 				trImg.style.width = scr_W + 'px';
 				
-				createNextButton('/extracted_mt',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante B');
+				// Right Version
+				//createNextButton('/extracted_mt',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante B');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_mt',2, 50, trImg.height + 20,'Weiter zu Variante B');
+
+				
 			}
+			//var x = document.createElement('button');
+			//x.style.position ='absolute';
+			//x.style.left = '0px';
+			//x.style.top= '0px';
+			//x.style.width= 100+ 'px';
+			//x.style.height= 100+ 'px';
+			//x.style.zindex= 5000900000;
+			//var textNode = document.createTextNode('width: '+ window.innerWidth+' height: '+ window.innerHeight);
+			//x.appendChild(textNode);
+			//mainDiv.appendChild(x);
 	
 			trImg.style.opacity=1.0;
 			ovr_W = roundDown(extracted_W / 5 / scalingFactor);
@@ -58,8 +85,8 @@ block content
 			innerDiv.style.opacity = 0.8;
 			innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W -margin + 'px';
 			innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H + /*margin +*/ 'px';
-			innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
+			/*innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
 			innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor + 'px';
 	
 			mainDiv.appendChild(innerDiv);
-		}			
+		}			*/
