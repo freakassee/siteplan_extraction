@@ -1,0 +1,865 @@
+var symbols = {
+	"fileType": "image/jpeg",
+	"extension": ".jpg",
+	"root": "/styles/images/symbols/",
+	"categories": 
+	[
+		{
+			"id": "feuerwehr",
+			"title": "Feuerwehr",
+			"prefix": "FW_",
+			"images": 
+			[
+				{
+					"fileName": "Anhaenger",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "blanko",
+					"additionalTags": 
+					[
+						"leer",
+						"nichts"
+					]
+				},
+
+				{
+					"fileName": "Dekon-P",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "DLK",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "ELW1",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "ELW2",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fzg_blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "GW-G",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "GW-L1",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "GW-L2",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "HLF10",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "HLF20",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LF_blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LF10",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LF16-TS",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LF20",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LG",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_ABC",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_BF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_FF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_IuK",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_Wasser",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ_WF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LZ",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "MTF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "RW",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "SW2000",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TLF3000",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TSF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TSFW",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Wasserfahrzeug",
+					"additionalTags": 
+					[
+						
+					]
+				}
+			]
+		},
+
+		{
+			"id": "fuehrung",
+			"title": "Führung",
+			"prefix": "",
+			"images": 
+			[
+				{
+					"fileName": "Bereitstellungsraum",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "EAL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Einsatzabschnittsleiter",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Einsatzleiter",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "EL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fachberater",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fuehrungsstelle",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Hubschrauberlandeplatz",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "KatSL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "KEL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LNA",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LtS",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "LuK",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Meldekopf",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "OEEL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "OrgLeiter",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "techn_Einsatzleiter",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TEL",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "UEAL",
+					"additionalTags": 
+					[
+						
+					]
+				}
+			]
+		},
+
+		{
+			"id": "rettungsdienst",
+			"title": "Rettungsdienst",
+			"prefix": "RD_",
+			"images": 
+			[
+				{
+					"fileName": "Behandlungsplatz",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Betreuungsstelle",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Krankenhaus",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "KTW",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "NEF",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Patientanablage_arztbesetzt",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Patientanablage",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "RettD",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Rettungsmittelhalteplatz",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "RTW",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Sammelplatz_Betroffene",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Sammelstelle",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "SEG_Betreuung",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "SEG_Verpflegung",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "SEG",
+					"additionalTags": 
+					[
+						
+					]
+				}
+			]
+		},
+
+		{
+			"id": "sonstige",
+			"title": "Sonstige",
+			"prefix": "",
+			"images": 
+			[
+				{
+					"fileName": "A_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "akute_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "angeschlagen_beschaedigt",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "B_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "betroffene_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "C_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "elektrische_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Entstehungsbrand",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "EX_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "fortentwickelter_Brand",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "gefaehrliche_Stoffe",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "gerettete_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "teilzerstoert",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "tote_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "transportierte_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "verletzte_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "vermisste_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "vermutete_Gefahr",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "verschuettete_Person",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Vollbrand",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Wasserfahrzeug",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "zerstoert",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "zu_transportierende_Person",
+					"additionalTags": 
+					[
+						
+					]
+				}
+			]
+		},
+
+		{
+			"id": "thw",
+			"title": "THW",
+			"prefix": "THW_",
+			"images": 
+			[
+				{
+					"fileName": "Anhaenger_ASH",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Anhaenger_blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "B1",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "B2",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "BRmG",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fachberater",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fachgruppe_Beleuchtung",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Fachgruppe_Wasserschaden_Pumpen",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "FZG_blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "Gruppe",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TZ_blanko",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TZ-Abstuetzsystem_Holz",
+					"additionalTags": 
+					[
+						
+					]
+				},
+
+				{
+					"fileName": "TZ-Raeumen",
+					"additionalTags": 
+					[
+						
+					]
+				}
+			]
+		
+		}
+	]
+}

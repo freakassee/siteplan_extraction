@@ -27,7 +27,7 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		// TO DELETE
 		// debugger;
 		createNextButton('/extracted_mt', 2, origin_W / scalingFactor+20, scr_H / 2,
-				'Weiter zu Variante B');
+				'Weiter zu Variante B',true);
 
 	} else {
 		scalingFactor = origin_W / scr_W;
@@ -44,7 +44,7 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		
 		
 		createNextButton('/extracted_mt', 2, 50, origin_H / scalingFactor+20,
-				'Weiter zu Variante B');
+				'Weiter zu Variante B',true);
 
 	}
 	// var x = document.createElement('button');

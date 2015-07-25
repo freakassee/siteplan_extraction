@@ -1,7 +1,7 @@
-function createNextButton(pathname, imageId, left, top,text) {
+function createNextButton(pathname, imageId, left, top, text, isDemo) {
 	var textNode = document.createTextNode(text);
 	var button = document.createElement('button');
-	button.setAttribute('id','button');
+	button.setAttribute('id', 'button');
 	button.style.position = 'absolute';
 	button.style.width = '150px';
 	button.style.height = '30px';
@@ -10,41 +10,50 @@ function createNextButton(pathname, imageId, left, top,text) {
 	button.appendChild(textNode);
 
 	button.onclick = function() {
-		createHiddenFormAndSubmit(pathname, imageId,false);
+		createHiddenFormAndSubmit(pathname, imageId, isDemo);
 	}
 
 	mainDiv.appendChild(button);
 }
 
-function createHiddenFormAndSubmit(pathname, imageId,isDemo) {
-	if(!isDemo){
-		window.location.href=pathname+'?imageId='+imageId;
-	}else{
-		
-	var form = document.createElement('form');
-	form.setAttribute('method', 'post');
-	form.setAttribute('id', 'hiddenForm');
-	form.setAttribute('action', '/resize');
-	form.setAttribute('enctype', 'application/x-www-form-urlencoded');
-	var params = {
-		x_values : x_values,
-		y_values : y_values,
-		isSymbol_values : isSymbol_values,
-		img_id : imageId,
-		pathname : pathname
-	}
-
-	for ( var key in params) {
-		if (params.hasOwnProperty(key)) {
-			var hiddenField = document.createElement('input');
-			hiddenField.setAttribute('type', 'hidden');
-			hiddenField.setAttribute('name', key);
-			hiddenField.setAttribute('value', params[key]);
-			form.appendChild(hiddenField);
+function createHiddenFormAndSubmit(pathname, imageId, isDemo) {
+	if (isDemo) {
+//		debugger;
+		if(pathname.indexOf('/close')>-1){
+			window.location.href = pathname;
+		}else{
+			window.location.href = pathname + '?imageId=' + imageId;			
 		}
-	}
-	mainDiv.appendChild(form);
-	form.submit();
+	} else {
+		
+		var form = document.createElement('form');
+		form.setAttribute('method', 'post');
+		form.setAttribute('id', 'hiddenForm');
+		var actionPath = '/resize';
+		if(pathname=='/bind'){
+			actionPath = '/bind'
+		}
+		form.setAttribute('action', actionPath);
+		form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+		var params = {
+			x_values : x_values,
+			y_values : y_values,
+			isSymbol_values : isSymbol_values,
+			img_id : imageId,
+			pathname : pathname
+		}
+
+		for ( var key in params) {
+			if (params.hasOwnProperty(key)) {
+				var hiddenField = document.createElement('input');
+				hiddenField.setAttribute('type', 'hidden');
+				hiddenField.setAttribute('name', key);
+				hiddenField.setAttribute('value', params[key]);
+				form.appendChild(hiddenField);
+			}
+		}
+		mainDiv.appendChild(form);
+		form.submit();
 	}
 }
 
@@ -56,7 +65,8 @@ function createOverlayDiv(index, color) {
 	div.style.position = 'absolute';
 
 	d_left = (x_values[index] - x_values[0]) / scalingFactor + +ovr_W - margin;
-	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H; //+ margin;
+	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H; // +
+																		// margin;
 
 	div.style.left = d_left + 'px';
 	div.style.top = d_top + 'px';
@@ -75,7 +85,7 @@ function createOverlayDiv(index, color) {
 
 	setStyleAccordingToSymbolValue(index, div, 0.5, false);
 	mainDiv.appendChild(div);
-	
+
 	return div;
 }
 

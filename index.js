@@ -239,11 +239,18 @@ app.post('/resize',function(req,res){
 	
 });
 
-app.post('/bind',function(req,res){
+app.all('/bind',function(req,res){
+	//console.log('hier');
 	var query = req.body;
-	
+	res.render('bind', {
+		//isSymbol_values : query.isSymbol_values
+	});
 });
 
+app.get('/close',function(req,res){
+	res.set({ 'content-type': 'text/text; charset=utf-8' })
+	res.end('Bitte jetzt den Browser schließen und dann auf Weiter klicken!');
+});
 
 app.listen(8080);
 

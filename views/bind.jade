@@ -1,0 +1,35 @@
+doctype html5
+html
+	head
+		link(rel='stylesheet', href='/styles/bind.css')
+		// script(type='text/javascript' src='node_modules/angular')
+		// script(type='text/javascript' src='/js/binding/binding.js')
+		// script(type='text/javascript').
+		// var isSymbol_values = [#{isSymbol_values}];
+		// createSite(isSymbol_values);
+		body
+			script(type='text/javascript' src='/js/util.js')
+			script(type='text/javascript' src='/js/binding/my_list.js')
+			script(type='text/javascript' src='/styles/images/symbols.json')
+			
+			#container.containerCss
+				//#leftContainer
+					
+				#rightContainer
+					h1(id='header') Liste der Symbole
+					#searchBox
+					.tabs
+						ul(id='tabList').tab-links
+						.scrolling
+							ul(id='imgList')
+			script(type='text/javascript').
+				var imgList = document.getElementById('imgList');
+				var tabList = document.getElementById('tabList');
+				var header = document.getElementById('header');
+				createFilter(createList());
+				
+				document.addEventListener('DOMContentLoaded',function(){
+					onDOMContentLoaded();
+				});
+				
+				

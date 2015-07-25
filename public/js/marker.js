@@ -21,7 +21,7 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		// version below is for questionnaire only
 		// TO DELETE
 		createNextButton('/extracted_og', 3,  origin_W / scalingFactor+20, scr_H / 2,
-				'Weiter zu Variante C');
+				'Weiter zu Variante C',true);
 
 	} else {
 		scalingFactor = trImg.width / scr_W;
@@ -33,7 +33,7 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		// version below is for questionnaire only
 		// TO DELETE
 		createNextButton('/extracted_og', 3, 50, origin_H / scalingFactor+20,
-				'Weiter zu Variante C');
+				'Weiter zu Variante C',true);
 
 	}
 

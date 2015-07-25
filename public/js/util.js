@@ -32,7 +32,7 @@ function init( imageId) {
 				location.reload();
 			} else {
 				
-				createHiddenFormAndSubmit(location.pathname, imageId, true);
+				createHiddenFormAndSubmit(location.pathname, imageId, false);
 			}
 		}, 50, "resizing");
 	};

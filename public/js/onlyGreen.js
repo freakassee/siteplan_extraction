@@ -14,12 +14,12 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		scalingFactor = origin_H / scr_H;
 		trImg.style.height = scr_H + 'px';
 
-		createNextButton('/bind', image_Id,  origin_W / scalingFactor+20, scr_H / 2);
+		createNextButton(/*'/bind'*/'/close', image_Id,  origin_W / scalingFactor+20, scr_H / 2,'Weiter', true);
 	} else {
 		scalingFactor = origin_W / scr_W;
 		trImg.style.width = scr_W + 'px';
 
-		createNextButton('/bind', image_Id, 50, origin_H / scalingFactor+20);
+		createNextButton(/*'/bind'*/'/close', image_Id, 50, origin_H / scalingFactor+20,'Weiter',true);
 	}
 	// nutzer untersuchen (wie viel it sie verwenden, etc.)
 	// likert skala und irgendwas mit nasa
