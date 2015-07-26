@@ -11,7 +11,7 @@ var symbols = {
 			"images": 
 			[
 				{
-					"fileName": "Anhaenger",
+					"name": "Anhaenger",
 					"additionalTags": 
 					[
 						
@@ -19,7 +19,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "blanko",
+					"name": "blanko",
 					"additionalTags": 
 					[
 						"leer",
@@ -28,7 +28,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Dekon-P",
+					"name": "Dekon-P",
 					"additionalTags": 
 					[
 						
@@ -36,7 +36,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "DLK",
+					"name": "DLK",
 					"additionalTags": 
 					[
 						
@@ -44,7 +44,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "ELW1",
+					"name": "ELW1",
 					"additionalTags": 
 					[
 						
@@ -52,7 +52,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "ELW2",
+					"name": "ELW2",
 					"additionalTags": 
 					[
 						
@@ -60,7 +60,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fzg_blanko",
+					"name": "Fzg_blanko",
 					"additionalTags": 
 					[
 						
@@ -68,7 +68,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "GW-G",
+					"name": "GW-G",
 					"additionalTags": 
 					[
 						
@@ -76,7 +76,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "GW-L1",
+					"name": "GW-L1",
 					"additionalTags": 
 					[
 						
@@ -84,7 +84,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "GW-L2",
+					"name": "GW-L2",
 					"additionalTags": 
 					[
 						
@@ -92,7 +92,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "HLF10",
+					"name": "HLF10",
 					"additionalTags": 
 					[
 						
@@ -100,7 +100,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "HLF20",
+					"name": "HLF20",
 					"additionalTags": 
 					[
 						
@@ -108,7 +108,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LF_blanko",
+					"name": "LF_blanko",
 					"additionalTags": 
 					[
 						
@@ -116,7 +116,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LF10",
+					"name": "LF10",
 					"additionalTags": 
 					[
 						
@@ -124,7 +124,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LF16-TS",
+					"name": "LF16-TS",
 					"additionalTags": 
 					[
 						
@@ -132,7 +132,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LF20",
+					"name": "LF20",
 					"additionalTags": 
 					[
 						
@@ -140,7 +140,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LG",
+					"name": "LG",
 					"additionalTags": 
 					[
 						
@@ -148,7 +148,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_ABC",
+					"name": "LZ_ABC",
 					"additionalTags": 
 					[
 						
@@ -156,7 +156,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_BF",
+					"name": "LZ_BF",
 					"additionalTags": 
 					[
 						
@@ -164,7 +164,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_FF",
+					"name": "LZ_FF",
 					"additionalTags": 
 					[
 						
@@ -172,7 +172,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_IuK",
+					"name": "LZ_IuK",
 					"additionalTags": 
 					[
 						
@@ -180,7 +180,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_Wasser",
+					"name": "LZ_Wasser",
 					"additionalTags": 
 					[
 						
@@ -188,7 +188,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ_WF",
+					"name": "LZ_WF",
 					"additionalTags": 
 					[
 						
@@ -196,7 +196,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LZ",
+					"name": "LZ",
 					"additionalTags": 
 					[
 						
@@ -204,7 +204,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "MTF",
+					"name": "MTF",
 					"additionalTags": 
 					[
 						
@@ -212,7 +212,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "RW",
+					"name": "RW",
 					"additionalTags": 
 					[
 						
@@ -220,7 +220,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "SW2000",
+					"name": "SW2000",
 					"additionalTags": 
 					[
 						
@@ -228,7 +228,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TLF3000",
+					"name": "TLF3000",
 					"additionalTags": 
 					[
 						
@@ -236,7 +236,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TSF",
+					"name": "TSF",
 					"additionalTags": 
 					[
 						
@@ -244,7 +244,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TSFW",
+					"name": "TSFW",
 					"additionalTags": 
 					[
 						
@@ -252,7 +252,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Wasserfahrzeug",
+					"name": "Wasserfahrzeug",
 					"additionalTags": 
 					[
 						
@@ -268,7 +268,7 @@ var symbols = {
 			"images": 
 			[
 				{
-					"fileName": "Bereitstellungsraum",
+					"name": "Bereitstellungsraum",
 					"additionalTags": 
 					[
 						
@@ -276,7 +276,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "EAL",
+					"name": "EAL",
 					"additionalTags": 
 					[
 						
@@ -284,7 +284,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Einsatzabschnittsleiter",
+					"name": "Einsatzabschnittsleiter",
 					"additionalTags": 
 					[
 						
@@ -292,7 +292,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Einsatzleiter",
+					"name": "Einsatzleiter",
 					"additionalTags": 
 					[
 						
@@ -300,7 +300,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "EL",
+					"name": "EL",
 					"additionalTags": 
 					[
 						
@@ -308,7 +308,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fachberater",
+					"name": "Fachberater",
 					"additionalTags": 
 					[
 						
@@ -316,7 +316,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fuehrungsstelle",
+					"name": "Fuehrungsstelle",
 					"additionalTags": 
 					[
 						
@@ -324,7 +324,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Hubschrauberlandeplatz",
+					"name": "Hubschrauberlandeplatz",
 					"additionalTags": 
 					[
 						
@@ -332,7 +332,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "KatSL",
+					"name": "KatSL",
 					"additionalTags": 
 					[
 						
@@ -340,7 +340,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "KEL",
+					"name": "KEL",
 					"additionalTags": 
 					[
 						
@@ -348,7 +348,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LNA",
+					"name": "LNA",
 					"additionalTags": 
 					[
 						
@@ -356,7 +356,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LtS",
+					"name": "LtS",
 					"additionalTags": 
 					[
 						
@@ -364,7 +364,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "LuK",
+					"name": "LuK",
 					"additionalTags": 
 					[
 						
@@ -372,7 +372,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Meldekopf",
+					"name": "Meldekopf",
 					"additionalTags": 
 					[
 						
@@ -380,7 +380,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "OEEL",
+					"name": "OEEL",
 					"additionalTags": 
 					[
 						
@@ -388,7 +388,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "OrgLeiter",
+					"name": "OrgLeiter",
 					"additionalTags": 
 					[
 						
@@ -396,7 +396,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "techn_Einsatzleiter",
+					"name": "techn_Einsatzleiter",
 					"additionalTags": 
 					[
 						
@@ -404,7 +404,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TEL",
+					"name": "TEL",
 					"additionalTags": 
 					[
 						
@@ -412,7 +412,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "UEAL",
+					"name": "UEAL",
 					"additionalTags": 
 					[
 						
@@ -423,12 +423,12 @@ var symbols = {
 
 		{
 			"id": "rettungsdienst",
-			"title": "Rettungsdienst",
+			"title": "Rettung",
 			"prefix": "RD_",
 			"images": 
 			[
 				{
-					"fileName": "Behandlungsplatz",
+					"name": "Behandlungsplatz",
 					"additionalTags": 
 					[
 						
@@ -436,7 +436,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Betreuungsstelle",
+					"name": "Betreuungsstelle",
 					"additionalTags": 
 					[
 						
@@ -444,7 +444,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Krankenhaus",
+					"name": "Krankenhaus",
 					"additionalTags": 
 					[
 						
@@ -452,7 +452,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "KTW",
+					"name": "KTW",
 					"additionalTags": 
 					[
 						
@@ -460,7 +460,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "NEF",
+					"name": "NEF",
 					"additionalTags": 
 					[
 						
@@ -468,7 +468,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Patientanablage_arztbesetzt",
+					"name": "Patientanablage_arztbesetzt",
 					"additionalTags": 
 					[
 						
@@ -476,7 +476,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Patientanablage",
+					"name": "Patientanablage",
 					"additionalTags": 
 					[
 						
@@ -484,7 +484,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "RettD",
+					"name": "RettD",
 					"additionalTags": 
 					[
 						
@@ -492,7 +492,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Rettungsmittelhalteplatz",
+					"name": "Rettungsmittelhalteplatz",
 					"additionalTags": 
 					[
 						
@@ -500,7 +500,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "RTW",
+					"name": "RTW",
 					"additionalTags": 
 					[
 						
@@ -508,7 +508,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Sammelplatz_Betroffene",
+					"name": "Sammelplatz_Betroffene",
 					"additionalTags": 
 					[
 						
@@ -516,7 +516,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Sammelstelle",
+					"name": "Sammelstelle",
 					"additionalTags": 
 					[
 						
@@ -524,7 +524,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "SEG_Betreuung",
+					"name": "SEG_Betreuung",
 					"additionalTags": 
 					[
 						
@@ -532,7 +532,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "SEG_Verpflegung",
+					"name": "SEG_Verpflegung",
 					"additionalTags": 
 					[
 						
@@ -540,7 +540,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "SEG",
+					"name": "SEG",
 					"additionalTags": 
 					[
 						
@@ -556,7 +556,7 @@ var symbols = {
 			"images": 
 			[
 				{
-					"fileName": "A_Gefahr",
+					"name": "A_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -564,7 +564,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "akute_Gefahr",
+					"name": "akute_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -572,7 +572,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "angeschlagen_beschaedigt",
+					"name": "angeschlagen_beschaedigt",
 					"additionalTags": 
 					[
 						
@@ -580,7 +580,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "B_Gefahr",
+					"name": "B_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -588,7 +588,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "betroffene_Person",
+					"name": "betroffene_Person",
 					"additionalTags": 
 					[
 						
@@ -596,7 +596,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "C_Gefahr",
+					"name": "C_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -604,7 +604,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "elektrische_Gefahr",
+					"name": "elektrische_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -612,7 +612,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Entstehungsbrand",
+					"name": "Entstehungsbrand",
 					"additionalTags": 
 					[
 						
@@ -620,7 +620,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "EX_Gefahr",
+					"name": "EX_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -628,7 +628,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "fortentwickelter_Brand",
+					"name": "fortentwickelter_Brand",
 					"additionalTags": 
 					[
 						
@@ -636,7 +636,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "gefaehrliche_Stoffe",
+					"name": "gefaehrliche_Stoffe",
 					"additionalTags": 
 					[
 						
@@ -644,7 +644,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "gerettete_Person",
+					"name": "gerettete_Person",
 					"additionalTags": 
 					[
 						
@@ -652,7 +652,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "teilzerstoert",
+					"name": "teilzerstoert",
 					"additionalTags": 
 					[
 						
@@ -660,7 +660,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "tote_Person",
+					"name": "tote_Person",
 					"additionalTags": 
 					[
 						
@@ -668,7 +668,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "transportierte_Person",
+					"name": "transportierte_Person",
 					"additionalTags": 
 					[
 						
@@ -676,7 +676,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "verletzte_Person",
+					"name": "verletzte_Person",
 					"additionalTags": 
 					[
 						
@@ -684,7 +684,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "vermisste_Person",
+					"name": "vermisste_Person",
 					"additionalTags": 
 					[
 						
@@ -692,7 +692,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "vermutete_Gefahr",
+					"name": "vermutete_Gefahr",
 					"additionalTags": 
 					[
 						
@@ -700,7 +700,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "verschuettete_Person",
+					"name": "verschuettete_Person",
 					"additionalTags": 
 					[
 						
@@ -708,7 +708,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Vollbrand",
+					"name": "Vollbrand",
 					"additionalTags": 
 					[
 						
@@ -716,7 +716,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Wasserfahrzeug",
+					"name": "Wasserfahrzeug",
 					"additionalTags": 
 					[
 						
@@ -724,7 +724,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "zerstoert",
+					"name": "zerstoert",
 					"additionalTags": 
 					[
 						
@@ -732,7 +732,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "zu_transportierende_Person",
+					"name": "zu_transportierende_Person",
 					"additionalTags": 
 					[
 						
@@ -748,7 +748,7 @@ var symbols = {
 			"images": 
 			[
 				{
-					"fileName": "Anhaenger_ASH",
+					"name": "Anhaenger_ASH",
 					"additionalTags": 
 					[
 						
@@ -756,7 +756,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Anhaenger_blanko",
+					"name": "Anhaenger_blanko",
 					"additionalTags": 
 					[
 						
@@ -764,7 +764,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "B1",
+					"name": "B1",
 					"additionalTags": 
 					[
 						
@@ -772,7 +772,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "B2",
+					"name": "B2",
 					"additionalTags": 
 					[
 						
@@ -780,7 +780,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "blanko",
+					"name": "blanko",
 					"additionalTags": 
 					[
 						
@@ -788,7 +788,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "BRmG",
+					"name": "BRmG",
 					"additionalTags": 
 					[
 						
@@ -796,7 +796,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fachberater",
+					"name": "Fachberater",
 					"additionalTags": 
 					[
 						
@@ -804,7 +804,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fachgruppe_Beleuchtung",
+					"name": "Fachgruppe_Beleuchtung",
 					"additionalTags": 
 					[
 						
@@ -812,7 +812,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Fachgruppe_Wasserschaden_Pumpen",
+					"name": "Fachgruppe_Wasserschaden_Pumpen",
 					"additionalTags": 
 					[
 						
@@ -820,7 +820,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "FZG_blanko",
+					"name": "FZG_blanko",
 					"additionalTags": 
 					[
 						
@@ -828,7 +828,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "Gruppe",
+					"name": "Gruppe",
 					"additionalTags": 
 					[
 						
@@ -836,7 +836,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TZ_blanko",
+					"name": "TZ_blanko",
 					"additionalTags": 
 					[
 						
@@ -844,7 +844,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TZ-Abstuetzsystem_Holz",
+					"name": "TZ-Abstuetzsystem_Holz",
 					"additionalTags": 
 					[
 						
@@ -852,7 +852,7 @@ var symbols = {
 				},
 
 				{
-					"fileName": "TZ-Raeumen",
+					"name": "TZ-Raeumen",
 					"additionalTags": 
 					[
 						

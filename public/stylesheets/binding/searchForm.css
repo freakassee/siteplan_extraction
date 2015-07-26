@@ -1,0 +1,39 @@
+.searchBoxDiv {
+	width: 35%;
+	margin: 2.25vmax 1vw;
+	display: inline-block;
+}
+
+.surrounding {
+	
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#checkbox {
+	width: 2vmax;
+  	height: 2vmax;
+	vertical-align: bottom;
+}
+
+#checkboxLabel {
+	font-size: 2vmax;
+	margin-left:1vmax;
+	vertical-align: super;
+}
+
+#inputSearch {
+	width: 100%;
+	padding: 0 1vw;
+	font: bold 2vmax 'lucida sans', 'trebuchet MS', 'Tahoma';
+	border: 1px solid #ccc;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	border-radius: 25px;
+	height: 3.5vmax;
+}
+
+#inputSearch:focus {
+	outline: 0;
+	border-color: #aaa;
+	box-shadow: 0 1px 1px #bbb inset;
+}

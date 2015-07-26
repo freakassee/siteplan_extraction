@@ -239,11 +239,11 @@ app.post('/resize',function(req,res){
 	
 });
 
-app.all('/bind',function(req,res){
-	//console.log('hier');
+app.post('/bind',function(req,res){
+	
 	var query = req.body;
 	res.render('bind', {
-		//isSymbol_values : query.isSymbol_values
+		isSymbol_values : query.isSymbol_values
 	});
 });
 

@@ -4,8 +4,6 @@ function transparent(imageId) {
 	origin_W = trImg.naturalWidth;
 	origin_H = trImg.naturalHeight;
 
-	//console.log(trImg.naturalWidth);
-	//console.log(trImg.naturalHeight);
 	init(imageId);
 
 }
@@ -18,46 +16,19 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 		scalingFactor = origin_H / scr_H;
 
 		trImg.style.height = scr_H + 'px';
-		//trImg.style.width = origin_W / scalingFactor;
-		
-		// Right Version
-		// createNextButton('/extracted_mt',image_Id, origin_W / scalingFactor + 20,
-		// scr_H/2,'Weiter zu Variante B');
-		// version below is for questionnaire only
-		// TO DELETE
-		// debugger;
-		createNextButton('/extracted_mt', 2, origin_W / scalingFactor+20, scr_H / 2,
-				'Weiter zu Variante B',true);
+
+		createNextButton('/bind', image_Id, origin_W / scalingFactor + 20,
+				scr_H / 2, 'Weiter zur Zuordnung', false);
 
 	} else {
 		scalingFactor = origin_W / scr_W;
 
-		
 		trImg.style.width = scr_W + 'px';
-		//trImg.style.height = origin_H / scalingFactor;
-		// Right Version
-		// createNextButton('/extracted_mt',image_Id, 50, origin_H / scalingFactor +
-		// 20,'Weiter zu Variante B');
-		// version below is for questionnaire only
-		// TO DELETE
-		// debugger;
-		
-		
-		createNextButton('/extracted_mt', 2, 50, origin_H / scalingFactor+20,
-				'Weiter zu Variante B',true);
+
+		createNextButton('/bind', image_Id, 50, origin_H / scalingFactor + 20,
+				'Weiter zur Zuordnung', false);
 
 	}
-	// var x = document.createElement('button');
-	// x.style.position ='absolute';
-	// x.style.left = '0px';
-	// x.style.top= '0px';
-	// x.style.width= 100+ 'px';
-	// x.style.height= 100+ 'px';
-	// x.style.zindex= 5000900000;
-	// var textNode = document.createTextNode('width: '+ window.innerWidth+'
-	// height: '+ window.innerHeight);
-	// x.appendChild(textNode);
-	// mainDiv.appendChild(x);
 
 	trImg.style.opacity = 1.0;
 	ovr_W = roundDown(extracted_W / 5 / scalingFactor);
