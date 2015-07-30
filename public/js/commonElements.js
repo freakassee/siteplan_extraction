@@ -83,7 +83,14 @@ function createOverlayDiv(index, color) {
 	div.addEventListener('click', function(event) {
 		onDivClick(event);
 	});
-
+	
+	div.style.border = '2px solid black';
+	//  background: url('styles/images/cross.png') no-repeat;
+	// background-size: contain;
+	div.innerText= 'Ändern';
+	div.style.lineHeight= d_height + 'px';
+	div.style.color  = 'white';
+	div.style.textAlign = 'center';
 	setStyleAccordingToSymbolValue(index, div, 0.5, false);
 	mainDiv.appendChild(div);
 

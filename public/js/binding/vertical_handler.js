@@ -21,7 +21,7 @@ function divMove(e) {
 	var x = window.innerWidth -e.clientX -50;
 	var xt = x/window.innerWidth*100;
 	//console.log(xt);
-	if(xt>30&&xt<80){
+	if(xt>30&&xt<78){
 		var verticalSideBar = document.getElementById('verticalSideBar');
 		var leftContainer = document.getElementById('leftContainer'); 
 		var rightContainer = document.getElementById('rightContainer');

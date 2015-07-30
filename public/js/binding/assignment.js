@@ -10,7 +10,7 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 
 			origin.setAttribute('src', rootOrigin + i + '.jpg');
 			origin.setAttribute('id', 'origin');
-			origin.className = 'originals';
+			origin.className = 'pictures';
 
 			images.push(origin);
 
@@ -22,7 +22,7 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 	if (images.length > 0) {
 		imageIterator = createIteratorFor(images);
 		addImage(imageIterator.current());
-		_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]))
+		//_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]))
 	}
 
 }
@@ -62,11 +62,11 @@ function addImage(imageElem) {
 
 	placeholder.setAttribute('src', symbols.root + '/universal/universal.jpg');
 	placeholder.setAttribute('id', 'placeholder');
-	placeholder.className = 'placeholder';
+	placeholder.className = 'pictures';
 
 	selectedPictureDiv.appendChild(placeholder);
 
-	selected.className = 'optimized';
+	selected.className = 'pictures';
 	selected.setAttribute('id', 'selected');
 	selected.style.display = 'none';
 	selectedPictureDiv.appendChild(selected);

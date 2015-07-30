@@ -16,12 +16,13 @@ html
 				#leftContainer
 					#topContainer
 					#contentContainer
-						#originalPicture
-						#emptyContainer
-						#selectedPicture
-					#bottomContainer
-						input(type='button' id='prevBtn' value='previous' onclick='onPreviousClick()')
-						input(type='button' id='nextBtn' value='next' onclick='onNextClick()')
+						#pictureContainer.cCon.cLR
+							#originalPicture
+							#buttonContainer
+								input(type='button' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
+								input(type='button' id='nextBtn' value='' onclick='onNextClick()').btn.right
+						#emptyContainer.cCon.cE
+						#selectedPicture.cCon.cLR
 				#verticalSideBar.handler
 				#rightContainer
 					#searchContainer
@@ -32,7 +33,10 @@ html
 			script(type='text/javascript').
 				var imageIterator;
 				var categoryIndexes = [];
-				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}],createList(createRightContainerContent()));
+				//getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}],createList(createRightContainerContent()));
+				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}]);
+				_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]),createList(createRightContainerContent()));
+				
 				
 				document.addEventListener('DOMContentLoaded',function(){
 					addListeners();

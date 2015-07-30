@@ -1,4 +1,4 @@
-function createList(callback) {
+function createList() {
 	var tabList = document.getElementById('tabList');
 
 	for (var i = 0; i < symbols.categories.length; i++) {
