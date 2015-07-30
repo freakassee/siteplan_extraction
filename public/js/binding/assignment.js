@@ -1,8 +1,11 @@
 function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
+	
 	var images = [];
+	
 	var rootOrigin = '/images/' + imageId + '/extracted/';
 	for (var i = 1; i <= isSymbol_vals.length; i++) {
 		if (isSymbol_vals[i - 1] == true) {
+			categoryIndexes.push(catIndex_vals[i - 1])
 			var origin = document.createElement('img');
 
 			origin.setAttribute('src', rootOrigin + i + '.jpg');
@@ -10,13 +13,16 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 			origin.className = 'originals';
 
 			images.push(origin);
+
 		}
 
 	}
 
+	console.log(images);
 	if (images.length > 0) {
 		imageIterator = createIteratorFor(images);
 		addImage(imageIterator.current());
+		_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]))
 	}
 
 }
@@ -24,12 +30,15 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 function onNextClick(event) {
 	removeImage(imageIterator.current());
 	addImage(imageIterator.next());
+	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]))
 };
 
 function onPreviousClick(event) {
 	removeImage(imageIterator.current());
 	addImage(imageIterator.previous());
+	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]))
 };
+
 function removeImage(imageElem) {
 	var originalPictureDiv = document.getElementById('originalPicture');
 	var selectedPictureDiv = document.getElementById('selectedPicture');
@@ -61,6 +70,7 @@ function addImage(imageElem) {
 	selected.setAttribute('id', 'selected');
 	selected.style.display = 'none';
 	selectedPictureDiv.appendChild(selected);
+
 }
 
 function _replacePlaceholder(event) {
@@ -71,4 +81,9 @@ function _replacePlaceholder(event) {
 	selectedImg.style.display = '';
 	placeholderImg.style.display = 'none';
 
+}
+
+function _getCategoryFromIndex(index) {
+	var categories = [ 'empty', 'sonstige', 'fuehrung', 'feuerwehr', 'thw' ];
+	return categories[index];
 }

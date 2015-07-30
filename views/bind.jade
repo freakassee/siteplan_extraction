@@ -20,8 +20,8 @@ html
 						#emptyContainer
 						#selectedPicture
 					#bottomContainer
-						input(type='button' id='prevBtn' value='previous' onlick='onPreviousClick')
-						input(type='button' id='nextBtn' value='next' onlick='onNextClick')
+						input(type='button' id='prevBtn' value='previous' onclick='onPreviousClick()')
+						input(type='button' id='nextBtn' value='next' onclick='onNextClick()')
 				#verticalSideBar.handler
 				#rightContainer
 					#searchContainer
@@ -31,13 +31,10 @@ html
 						ul(id='imgList')
 			script(type='text/javascript').
 				var imageIterator;
-				//var categoryIndex_values = [#{catIndex_values}];
-				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}]);
-				//console.log(categoryIndex_values);
-				createRightContainerContent(createList());
+				var categoryIndexes = [];
+				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}],createList(createRightContainerContent()));
 				
 				document.addEventListener('DOMContentLoaded',function(){
-					onDOMContentLoaded();
 					addListeners();
 				});
 				

@@ -1,4 +1,4 @@
-function createList() {
+function createList(callback) {
 	var tabList = document.getElementById('tabList');
 
 	for (var i = 0; i < symbols.categories.length; i++) {
@@ -8,20 +8,23 @@ function createList() {
 		var subdex = 0;
 		var tabElem = document.createElement('li');
 		var link = document.createElement('a');
-		var imgArea = document.createElement('div');
 
 		link.setAttribute('href', cat_Id);
+		link.setAttribute('id', cat_Id);
 		link.innerText = category.title;
-
-		if (i == 0) {
-			tabElem.className = 'active';
-
-		} else {
-			tabElem.className = '';
-		}
 
 		tabElem.appendChild(link);
 		tabList.appendChild(tabElem);
+
+		tabElem.onclick = function(event) {
+			var input = document.getElementById('inputSearch');
+			
+			if(!input.value == ''){
+				checkbox.checked = true;
+			}
+			event.preventDefault();
+			_onlyShowSelectedTab(event.target.id)
+		}
 
 		for (var j = 0; j < category.images.length; j++) {
 			var image = category.images[j];
@@ -37,9 +40,7 @@ function createList() {
 			imgElem.setAttribute('src', path + file);
 			imgElem.setAttribute('class', 'img');
 			imgElem.setAttribute('id', cat_Id + '_' + j);
-			imgElem.onclick = function(event){
-				_replacePlaceholder(event);
-			}
+			
 
 			filterElem.innerText = cat_Id;
 
@@ -58,13 +59,17 @@ function createList() {
 
 			imgList.appendChild(listElement);
 
+			imgElem.onclick = function(event) {
+				_replacePlaceholder(event);
+			}
+
 		}
 
 	}
-
+	_onlyShowSelectedTab('feuerwehr');
 }
 
-function createRightContainerContent(callback) {
+function createRightContainerContent() {
 
 	var HTMLStr = 'Suche nur in Kategorie: <b>'
 	var search = document.getElementById('searchContainer');
@@ -79,6 +84,24 @@ function createRightContainerContent(callback) {
 	input.setAttribute('type', 'search');
 	input.setAttribute('id', 'inputSearch');
 	input.className = 'clearable';
+
+	searchBoxDiv.setAttribute('class', 'searchBoxDiv');
+	searchBoxDiv.appendChild(input);
+
+	checkbox.setAttribute('type', 'checkbox');
+	checkbox.setAttribute('id', 'checkbox');
+	checkbox.setAttribute('value', 'false');
+
+	labelFor.setAttribute('for', 'checkbox');
+	labelFor.setAttribute('id', 'checkboxLabel')
+
+	surrounding.setAttribute('class', 'surrounding');
+	surrounding.appendChild(checkbox);
+	surrounding.appendChild(labelFor);
+
+	search.appendChild(searchBoxDiv);
+	search.appendChild(surrounding);
+
 	input.onsearch = function() {
 		// var float_ts = new Date().getTime();
 		_search();
@@ -91,71 +114,45 @@ function createRightContainerContent(callback) {
 	}
 
 	input.onkeyup = function() {
-		input.onsearch();
+		_search();
 	}
-	
-	searchBoxDiv.setAttribute('class', 'searchBoxDiv');
-	searchBoxDiv.appendChild(input);
-
-	checkbox.setAttribute('type', 'checkbox');
-	checkbox.setAttribute('id', 'checkbox');
-	checkbox.setAttribute('value', 'false');
 	checkbox.onclick = function() {
-		input.onsearch();
+		_search();
 	}
-
-	labelFor.setAttribute('for', 'checkbox');
-	labelFor.setAttribute('id', 'checkboxLabel')
-	labelFor.innerHTML = HTMLStr + ' <b>' + activeTab[0].innerText + '</b>';
-
-	surrounding.setAttribute('class', 'surrounding');
-	surrounding.appendChild(checkbox);
-	surrounding.appendChild(labelFor);
-
-	search.appendChild(searchBoxDiv);
-	search.appendChild(surrounding);
-
 	
 }
 
 function _search() {
 	var input = document.getElementById('inputSearch');
-	var filterWord = input.value.toLowerCase();
+	var searchWord = input.value.toLowerCase();
 	var checkbox = document.getElementById('checkbox');
 	var imgList = document.getElementById('imgList');
-	var selectedTab = document.getElementsByClassName('active')[0];
-	var value = selectedTab.children[0].getAttribute('href');
-	var filtered = document.getElementsByTagName(value);
+	
+	var activeTab = document.getElementsByClassName('active')[0];
+	var activeTab_val = activeTab.children[0].getAttribute('href');
 	var tags = document.getElementsByTagName('tags');
+	
 
 	for (var i = 0; i < imgList.children.length; i++) {
-		imgList.children[i].style.display = 'none';
-	}
-
-
-	for (var i = 0; i < tags.length; i++) {
 		var listElem = imgList.children[i];
 		var tag = tags[i];
-		var text = tag.innerText.toLowerCase();
-
+		var tagText = tag.innerText.toLowerCase();
+		var filter = listElem.getElementsByTagName('filter')[0].innerText;
+		//debugger
+		listElem.style.display = 'none';
+		;	
 		if (!checkbox.checked) {
-
-			if (text.indexOf(filterWord) > -1) {
-				// console.log(i + ' ' + listElem + ' ' + filterWord);
-				listElem.style.display = '';
+			if (searchWord == '') {
+				_onlyShowSelectedTab(activeTab_val);
+				break;
+			} else {
+				if (tagText.indexOf(searchWord) > -1) {
+					listElem.style.display = '';
+				}
 			}
 		} else {
-
-			filter = listElem.getElementsByTagName('filter')[0].innerText;
-
-			if (value == filter) {
-
-				if (text.indexOf(filterWord) > -1) {
-					// console
-					// .log(filterWord
-					// + ' '
-					// + listElem.getElementsByTagName('tags')[0].innerText
-					// + ' ' + i);
+			if (activeTab_val == filter) {
+				if (tagText.indexOf(searchWord) > -1) {
 					listElem.style.display = '';
 				}
 			}
@@ -164,51 +161,39 @@ function _search() {
 	}
 }
 
-function onDOMContentLoaded() {
-	var checkbox = document.getElementById('checkbox');
-	var activeTab = document.getElementsByClassName('active')[0]
-	var tabs = document.getElementById('tabList').children;
 
-	_onlyShowSelected(activeTab.children[0].getAttribute('href'));
 
-	for (var i = 0; i < tabs.length; i++) {
-		tabs[i].onclick = function(event) {
-			var clickedTab = event.target.getAttribute('href');
-			var labelFor = document.getElementById('checkboxLabel');
-			var HTMLStr = 'Suche nur in Kategorie: <b>'
-			var targetText = event.target.innerText;
-			var prevSelectedTab = document.getElementsByClassName('active')[0];
-			event.preventDefault();
-			prevSelectedTab.className = '';
-			event.target.parentElement.className = 'active';
-			
-			_onlyShowSelected(clickedTab);
-			labelFor.innerHTML = HTMLStr + ' <b>' + targetText + '</b>';
-			
+function _onlyShowSelectedTab(clickedTab) {
+	var target = document.getElementById(clickedTab);
+	var HTMLStr = 'Suche nur in Kategorie: <b>'
+	var labelFor = document.getElementById('checkboxLabel');
+	var targetText = target.innerText;
 
-			if (checkbox.checked) {
-				var input = document.getElementById('inputSearch');
-				input.onsearch();
-			}
+	var selectedElements = document.getElementsByTagName('filter');
 
-		}
+	var prevSelectedTab = document.getElementsByClassName('active')[0];
+	if (prevSelectedTab) {
+		prevSelectedTab.className = '';
 	}
 
-}
-
-function _onlyShowSelected(clickedTab) {
-	var selectedElements = document.getElementsByTagName('filter');
+	target.parentElement.className = 'active';
+	labelFor.innerHTML = HTMLStr + ' <b>' + targetText + '</b>';
 
 	for (var i = 0; i < imgList.children.length; i++) {
 		imgList.children[i].style.display = 'none';
-	}
-
-	for (var i = 0; i < selectedElements.length; i++) {
-
 		selectedElem = selectedElements[i];
 		if (selectedElem.innerText == clickedTab) {
 			selectedElem.parentElement.style.display = '';
 		}
 	}
 
+	if (checkbox.checked) {
+		_search();
+	}
+
+}
+
+function onCallback(firstFunction,callbackFunction){
+	firstFunction;
+	return callbackFunction;
 }
