@@ -1,21 +1,23 @@
 
 
-% for n=6
 lengths = zeros(1,11);
-for n=0:10
+ for n=0:10
    xValue = n*segmentW;
    yValue = 0;
   
   
    top = imcrop(output_image,[xValue, yValue, segmentW+margin_left,segmentH+margin_top]);
    
-   [bool, nr]=isSymbol(top);
+   [bool, nr,indexOfCategory]=isSymbol(top);
+   
    
    xValues(n+1) = xValue-margin_left;
    yValues(n+1) = yValue-1/2*margin_top;
    isSymbolValues(n+1)=bool;
+   catIndex_Values(n+1)=indexOfCategory;
    
-    if ~bool
+    if bool
+       
         if showImage    
         figure,imshow(top);
         extractedSymbols= extractedSymbols+1;

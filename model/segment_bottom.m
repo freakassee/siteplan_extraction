@@ -29,13 +29,14 @@ for n=0:10
 %         segmentW+margin_left, ...
 %         segmentH+margin_top]);
     
-    [bool nr]=isSymbol(bottom);
+    [bool, nr,indexOfCategory]=isSymbol(bottom);
     
     xValues(n+18) = xValue-margin_left;
     yValues(n+18) = yValue-margin_top;
     isSymbolValues(n+18) = bool;
-   
-    if ~bool
+    catIndex_Values(n+18)=indexOfCategory;
+    if bool
+        
         if showImage 
             figure;imshow(bottom);
             extractedSymbols= extractedSymbols+1;

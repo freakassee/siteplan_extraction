@@ -37,6 +37,9 @@ function createList() {
 			imgElem.setAttribute('src', path + file);
 			imgElem.setAttribute('class', 'img');
 			imgElem.setAttribute('id', cat_Id + '_' + j);
+			imgElem.onclick = function(event){
+				_replacePlaceholder(event);
+			}
 
 			filterElem.innerText = cat_Id;
 

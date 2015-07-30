@@ -18,19 +18,19 @@ function createNextButton(pathname, imageId, left, top, text, isDemo) {
 
 function createHiddenFormAndSubmit(pathname, imageId, isDemo) {
 	if (isDemo) {
-//		debugger;
-		if(pathname.indexOf('/close')>-1){
+		// debugger;
+		if (pathname.indexOf('/close') > -1) {
 			window.location.href = pathname;
-		}else{
-			window.location.href = pathname + '?imageId=' + imageId;			
+		} else {
+			window.location.href = pathname + '?imageId=' + imageId;
 		}
 	} else {
-		
+
 		var form = document.createElement('form');
 		form.setAttribute('method', 'post');
 		form.setAttribute('id', 'hiddenForm');
 		var actionPath = '/resize';
-		if(pathname=='/bind'){
+		if (pathname == '/bind') {
 			actionPath = '/bind'
 		}
 		form.setAttribute('action', actionPath);
@@ -39,6 +39,7 @@ function createHiddenFormAndSubmit(pathname, imageId, isDemo) {
 			x_values : x_values,
 			y_values : y_values,
 			isSymbol_values : isSymbol_values,
+			catIndex_values : catIndex_values,
 			img_id : imageId,
 			pathname : pathname
 		}
@@ -66,7 +67,7 @@ function createOverlayDiv(index, color) {
 
 	d_left = (x_values[index] - x_values[0]) / scalingFactor + +ovr_W - margin;
 	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H; // +
-																		// margin;
+	// margin;
 
 	div.style.left = d_left + 'px';
 	div.style.top = d_top + 'px';

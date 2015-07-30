@@ -3,41 +3,41 @@ html
 	head
 		link(rel='stylesheet', href='/styles/binding/assignment.css')
 		link(rel='stylesheet', href='/styles/binding/bind.css')
-		link(rel='stylesheet', href='/styles/binding/searchForm.css')
+		link(rel='stylesheet', href='/styles/binding/searchBox.css')
 		link(rel='stylesheet', href='/styles/binding/tabs.css')
 		link(rel='stylesheet', href='/styles/binding/imageList.css')
-		// script(type='text/javascript' src='node_modules/angular')
-		// script(type='text/javascript' src='/js/binding/binding.js')
-		// script(type='text/javascript').
-		// var isSymbol_values = [#{isSymbol_values}];
-		// createSite(isSymbol_values);
 		body
-			//script(type='text/javascript' src='/js/util.js')
+			script(type='text/javascript' src='/js/iterator.js')
 			script(type='text/javascript' src='/js/binding/my_list.js')
 			script(type='text/javascript' src='/js/binding/assignment.js')
+			script(type='text/javascript' src='/js/binding/vertical_handler.js')
 			script(type='text/javascript' src='/styles/images/symbols.json')
-			
 			#container.containerCss
 				#leftContainer
 					#topContainer
-					#originalPicture
-					#selectedPicture
+					#contentContainer
+						#originalPicture
+						#emptyContainer
+						#selectedPicture
 					#bottomContainer
+						input(type='button' id='prevBtn' value='previous' onlick='onPreviousClick')
+						input(type='button' id='nextBtn' value='next' onlick='onNextClick')
+				#verticalSideBar.handler
 				#rightContainer
-					//#headerContainer
-						//h1(id='header') Liste aller Symbole
 					#searchContainer
 					#tabContainer
 						ul(id='tabList')
 					#imgContainer
 						ul(id='imgList')
 			script(type='text/javascript').
-				//var imgList = document.getElementById('imgList');
-				//var tabList = document.getElementById('tabList');
-				showExtractedImages('#{isSymbol_values}');
+				var imageIterator;
+				//var categoryIndex_values = [#{catIndex_values}];
+				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}]);
+				//console.log(categoryIndex_values);
 				createRightContainerContent(createList());
 				
 				document.addEventListener('DOMContentLoaded',function(){
 					onDOMContentLoaded();
+					addListeners();
 				});
 				

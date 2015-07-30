@@ -4,10 +4,29 @@
 }
 
 #leftContainer {
-	width: 35%;
+	width: 30%;
 	height: 100%;
 	background-color: #c0c0c0;
 	float: left;
+}
+
+#verticalSideBar {
+	display: inline-block;
+	left: 30%;
+	float: left;
+	width: 8px;
+	height: 100%; 
+	margin-left: 0.5%;
+	margin-top: -1%;
+	margin-right: 0.5%;
+	cursor: col-resize;
+	top: -5px;
+	border: 1px solid #D6D6D6;
+	background: url(/styles/images/handle-v.png) 50% 50% no-repeat #eee;
+}
+
+.handler {
+	
 }
 
 #rightContainer {
@@ -21,31 +40,6 @@
 
 #headerContainer {
 	height: 10vh;
-}
-
-#searchContainer {
-	border-color: #dedede #bababa #aaa #bababa;
-	border-radius: 10px;
-	background-color: #f6f6f6;
-	border-width: 1px;
-	border-style: solid;
-	margin: 0% 1vw;
-	padding: 0% 1vw 0% 1vw;
-	font-size: 2vw;
-	height: 8vmax;
-}
-
-#tabContainer {
-	height: 5vmax;
-	margin: 1vmax 1vw;
-}
-
-#imgContainer {
-	overflow-x: auto;
-	margin-top: 1vmax;
-	padding: 0% 1vw 0% 2vw;
-	margin-left: 2vmax;
-	/* border: 1px solid; */
 }
 
 ul {

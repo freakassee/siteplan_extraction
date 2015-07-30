@@ -2,25 +2,63 @@
 	display: inline-block;
 	background-color: green;
 	width: 100%;
-	height: 25%;
+	height: 33%;
+	float: left;
 }
+
+#contentContainer {
+	display: inline-block;
+	background-color: fuchsia;
+	width: 100%;
+	height: 33%;
+}
+
 #originalPicture {
 	background-color: maroon;
-	width: 50%;
-	height: 50%;
+	width: 45%;
+	height: 100%;
 	display: inline-block;
+	float: left;
+}
+
+#emptyContainer {
+	background-color: yellow;
+	width: 10%;
+	height: 100%;
+	display: inline-block;
+	float: left;
 }
 
 #selectedPicture {
 	background-color: orange;
-	width: 50%;
-	height: 50%;
+	width: 45%;
+	height: 100%;
 	display: inline-block;
+	float: left;
 }
 
-#bottomContainer{
+#bottomContainer {
 	background-color: teal;
 	width: 100%;
 	height: 25%;
 	display: inline-block;
+	float: left;
+}
+
+.originals {
+	padding-left: 10%;
+	padding-top: 10%;
+	width: 80%;
+}
+
+.optimized {
+	padding-left: 10%;
+	padding-top: 10%;
+	width: 80%;
+}
+
+.placeholder {
+	padding-left: 10%;
+	padding-top: 10%;
+	width: 80%;
 }

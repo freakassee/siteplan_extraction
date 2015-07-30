@@ -88,6 +88,7 @@ targetFolder = '../uploads/';
 	   xValues = zeros(34,1);
 	   yValues = zeros(34,1);
 	   isSymbolValues = false(34,1);
+       catIndex_Values = zeros(34,1);
        output_image = imread([pathTransformed image_file]);
        extractedSymbols=0;
        [height, width, ~] = size(output_image);
@@ -110,14 +111,17 @@ targetFolder = '../uploads/';
        
        fileIDX = fopen([pathData 'x_values.txt'],'w');
        fileIDY = fopen([pathData 'y_values.txt'],'w');
+       fileIDCategory = fopen([pathData 'catIndex_values.txt'],'w');
        fileIDEmpty = fopen([pathData 'isSymbol_values.txt'],'w');
        for i=1:size(xValues)
            fprintf(fileIDX, [num2str(xValues(i)) '\n']);
            fprintf(fileIDY, [num2str(yValues(i)) '\n']);
+           fprintf(fileIDCategory, [num2str(catIndex_Values(i)) '\n']);
            fprintf(fileIDEmpty, [log2str(isSymbolValues(i)) '\n']);
        end
        fclose(fileIDX);
        fclose(fileIDY);
+       fclose(fileIDCategory);
        fclose(fileIDEmpty);
     
     %bool= numberS == numberOfTSymbols

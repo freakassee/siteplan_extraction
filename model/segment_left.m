@@ -15,13 +15,15 @@ for n=1:6
         
     left = imcrop(output_image,[xValue, yValue, segmentW + margin_left, segmentH + margin_top]);
     
-    [bool, nr] = isSymbol(left);
+    [bool, nr,indexOfCategory] = isSymbol(left);
     
     xValues(n+28) = xValue-margin_left;
     yValues(n+28) = yValue-margin_top;
     isSymbolValues(n+28) = bool;
+     catIndex_Values(n+28)=indexOfCategory;
     
-    if ~bool
+    if bool
+        indexOfCategory
         if showImage
             figure,imshow(left);
             extractedSymbols= extractedSymbols+1;
