@@ -14,7 +14,8 @@ html
 				#main
 					// - TODO: button for more and less contrast
 				script(type='text/javascript').
-					//img(src='/images/#{img_id}/transformed/#{img_id}.jpg' id='transformedImage'/*,style='opacity:0.0'*/)
+					// img(src='/images/#{img_id}/transformed/#{img_id}.jpg'
+					// id='transformedImage'/*,style='opacity:0.0'*/)
 					var trImg = document.createElement('img');
 					trImg.setAttribute('src','/images/#{img_id}/transformed/#{img_id}.jpg');
 					trImg.setAttribute('id','transformedImage');
@@ -39,4 +40,7 @@ html
 					var pathname = window.location.pathname;
 					var inverted = false;
 					var margin = 8;
+					document.addEventListener('mousedown', function(e) {
+						e.preventDefault();
+					});
 				block content

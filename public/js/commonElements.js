@@ -8,15 +8,22 @@ function createNextButton(pathname, imageId, left, top, text, isDemo) {
 	button.style.left = left + 'px';
 	button.style.top = top + 'px';
 	button.appendChild(textNode);
-
+	var params = {
+		x_values : x_values,
+		y_values : y_values,
+		isSymbol_values : isSymbol_values,
+		catIndex_values : catIndex_values,
+		img_id : imageId,
+		pathname : pathname
+	}
 	button.onclick = function() {
-		createHiddenFormAndSubmit(pathname, imageId, isDemo);
+		createHiddenFormAndSubmit(pathname, imageId, params, isDemo);
 	}
 
 	mainDiv.appendChild(button);
 }
 
-function createHiddenFormAndSubmit(pathname, imageId, isDemo) {
+function createHiddenFormAndSubmit(pathname, imageId, params, isDemo) {
 	if (isDemo) {
 		// debugger;
 		if (pathname.indexOf('/close') > -1) {
@@ -35,14 +42,6 @@ function createHiddenFormAndSubmit(pathname, imageId, isDemo) {
 		}
 		form.setAttribute('action', actionPath);
 		form.setAttribute('enctype', 'application/x-www-form-urlencoded');
-		var params = {
-			x_values : x_values,
-			y_values : y_values,
-			isSymbol_values : isSymbol_values,
-			catIndex_values : catIndex_values,
-			img_id : imageId,
-			pathname : pathname
-		}
 
 		for ( var key in params) {
 			if (params.hasOwnProperty(key)) {
@@ -79,17 +78,18 @@ function createOverlayDiv(index, color) {
 	div.style.height = d_height + 'px';
 
 	div.style.zIndex = 2;
-
+	div.style.cursor = 'pointer';
 	div.addEventListener('click', function(event) {
 		onDivClick(event);
 	});
+
 	
 	div.style.border = '2px solid black';
-	//  background: url('styles/images/cross.png') no-repeat;
+	// background: url('styles/images/cross.png') no-repeat;
 	// background-size: contain;
-	div.innerText= 'Ändern';
-	div.style.lineHeight= d_height + 'px';
-	div.style.color  = 'white';
+	div.innerText = 'Ändern';
+	div.style.lineHeight = d_height + 'px';
+	div.style.color = 'white';
 	div.style.textAlign = 'center';
 	setStyleAccordingToSymbolValue(index, div, 0.5, false);
 	mainDiv.appendChild(div);

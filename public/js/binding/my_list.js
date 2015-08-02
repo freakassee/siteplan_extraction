@@ -1,5 +1,6 @@
 function createList() {
 	var tabList = document.getElementById('tabList');
+	var imgList = document.getElementById('imgList');
 
 	for (var i = 0; i < symbols.categories.length; i++) {
 		var category = symbols.categories[i];
@@ -16,16 +17,6 @@ function createList() {
 		tabElem.appendChild(link);
 		tabList.appendChild(tabElem);
 
-		tabElem.onclick = function(event) {
-			var input = document.getElementById('inputSearch');
-			
-			if(!input.value == ''){
-				checkbox.checked = true;
-			}
-			event.preventDefault();
-			_onlyShowSelectedTab(event.target.id)
-		}
-
 		for (var j = 0; j < category.images.length; j++) {
 			var image = category.images[j];
 			var file = category.prefix + image.name + symbols.extension;
@@ -40,7 +31,6 @@ function createList() {
 			imgElem.setAttribute('src', path + file);
 			imgElem.setAttribute('class', 'img');
 			imgElem.setAttribute('id', cat_Id + '_' + j);
-			
 
 			filterElem.innerText = cat_Id;
 
@@ -63,6 +53,22 @@ function createList() {
 				_replacePlaceholder(event);
 			}
 
+			imgElem.ondblclick = function(event) {
+				_replacePlaceholder(event);
+
+				onNextClick(event);
+			}
+
+		}
+
+		tabElem.onclick = function(event) {
+			var input = document.getElementById('inputSearch');
+
+			if (!input.value == '') {
+				checkbox.checked = true;
+			}
+			event.preventDefault();
+			_onlyShowSelectedTab(event.target.id)
 		}
 
 	}
@@ -119,7 +125,7 @@ function createRightContainerContent() {
 	checkbox.onclick = function() {
 		_search();
 	}
-	
+
 }
 
 function _search() {
@@ -127,20 +133,18 @@ function _search() {
 	var searchWord = input.value.toLowerCase();
 	var checkbox = document.getElementById('checkbox');
 	var imgList = document.getElementById('imgList');
-	
+
 	var activeTab = document.getElementsByClassName('active')[0];
 	var activeTab_val = activeTab.children[0].getAttribute('href');
 	var tags = document.getElementsByTagName('tags');
-	
 
 	for (var i = 0; i < imgList.children.length; i++) {
 		var listElem = imgList.children[i];
 		var tag = tags[i];
 		var tagText = tag.innerText.toLowerCase();
 		var filter = listElem.getElementsByTagName('filter')[0].innerText;
-		//debugger
 		listElem.style.display = 'none';
-		;	
+		;
 		if (!checkbox.checked) {
 			if (searchWord == '') {
 				_onlyShowSelectedTab(activeTab_val);
@@ -160,8 +164,6 @@ function _search() {
 		}
 	}
 }
-
-
 
 function _onlyShowSelectedTab(clickedTab) {
 	var target = document.getElementById(clickedTab);
@@ -191,9 +193,4 @@ function _onlyShowSelectedTab(clickedTab) {
 		_search();
 	}
 
-}
-
-function onCallback(firstFunction,callbackFunction){
-	firstFunction;
-	return callbackFunction;
 }

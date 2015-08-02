@@ -15,14 +15,27 @@ html
 			#container.containerCss
 				#leftContainer
 					#topContainer
+						h2 Zuweisung
+						.text Die nächste Aufgabe besteht darin, den erkannten Symbolen die identischen taktischen Symbol zuzuweisen. <br> <br>
+						|Mit Hilfe der Pfeile können Sie zwischen den erkannten Symbolen wechseln. Eine Zuweisung findet mit einem Klick auf ein Symbol auf der rechten Seite statt. <br><br>
+						| Außerdem können Titel und Beschreibung übertragen werden. <br>
 					#contentContainer
-						#pictureContainer.cCon.cLR
+						#pictureContainer.con.left
 							#originalPicture
 							#buttonContainer
-								input(type='button' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
-								input(type='button' id='nextBtn' value='' onclick='onNextClick()').btn.right
-						#emptyContainer.cCon.cE
-						#selectedPicture.cCon.cLR
+								img(src='/styles/images/arrow_left.png' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
+								#counter
+								img(src='/styles/images/arrow_right.png' id='nextBtn' value='' onclick='onNextClick()').btn.right
+						#selectedPicture.con.right
+						.finishDiv 
+							img(src='/styles/images/weiter.png' id='finish' value='' onclick='console.log("hier")')
+					#bottom
+						h3 Allgemeine Tipps
+						.text.tipps 
+							ul.t
+								li Die taktischen Symbole sind unterteilt in verschiedene Kategorien. 
+								li Finden Sie Symbole schneller mit Hilfe der Suche.
+								li Weder Titel noch Beschreibung müssen übertragen werden? Klicken Sie doppelt auf das zugewiesene Symbol, um fortzufahren.
 				#verticalSideBar.handler
 				#rightContainer
 					#searchContainer
@@ -33,11 +46,15 @@ html
 			script(type='text/javascript').
 				var imageIterator;
 				var categoryIndexes = [];
-				//getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}],createList(createRightContainerContent()));
+				// identified images will be stored in here
+				var resultImages = [];
+				var resultTitle = [];
+				var resultDescription = [];
+				// indexArray describes, where an image is placed (possibilities
+				// 1-34)
+				var indexArray = [];
 				getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}]);
-				_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.currentIndex()]),createList(createRightContainerContent()));
-				
-				
+				_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator.getCurrentIndex()]),createList(createRightContainerContent()));
 				document.addEventListener('DOMContentLoaded',function(){
 					addListeners();
 				});

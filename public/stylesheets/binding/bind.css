@@ -5,8 +5,9 @@
 
 #leftContainer {
 	width: 30%;
-	height: 100%;
+	min-height: 100%; 
 	background-color: #c0c0c0;
+	background-color: lightyellow;
 	float: left;
 }
 
@@ -15,18 +16,14 @@
 	left: 30%;
 	float: left;
 	width: 8px;
-	height: 100%; 
+	min-height: 100%;
 	margin-left: 0.5%;
-	margin-top: -1%;
+	/* margin-top: -1%; */
 	margin-right: 0.5%;
 	cursor: col-resize;
 	top: -5px;
 	border: 1px solid #D6D6D6;
 	background: url(/styles/images/handle-v.png) 50% 50% no-repeat #eee;
-}
-
-.handler {
-	
 }
 
 #rightContainer {

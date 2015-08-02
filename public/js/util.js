@@ -31,8 +31,16 @@ function init( imageId) {
 			if (originIsSymbol.equals(isSymbol_values, true)) {
 				location.reload();
 			} else {
+				var params = {
+						x_values : x_values,
+						y_values : y_values,
+						isSymbol_values : isSymbol_values,
+						catIndex_values : catIndex_values,
+						img_id : imageId,
+						pathname : pathname
+					};
 				
-				createHiddenFormAndSubmit(location.pathname, imageId, false);
+				createHiddenFormAndSubmit(location.pathname, imageId, params, false);
 			}
 		}, 50, "resizing");
 	};

@@ -38,8 +38,12 @@ var createIteratorFor = function(collection) {
 			current : function() {
 				return collection[index];
 			},
-			currentIndex : function() {
+			getCurrentIndex : function() {
 				return index;
+			}
+			,
+			length : function() {
+				return length;
 			}
 		};
 	})(collection);
