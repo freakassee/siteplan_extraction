@@ -11,7 +11,7 @@ html
 			script(type='text/javascript' src='/js/binding/my_list.js')
 			script(type='text/javascript' src='/js/binding/assignment.js')
 			script(type='text/javascript' src='/js/binding/vertical_handler.js')
-			script(type='text/javascript' src='/styles/images/symbols.json')
+			script(type='text/javascript' src='/js/binding/symbols.json')
 			#container.containerCss
 				#leftContainer
 					#topContainer
@@ -23,12 +23,12 @@ html
 						#pictureContainer.con.left
 							#originalPicture
 							#buttonContainer
-								img(src='/styles/images/arrow_left.png' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
+								img(src='/styles/img/arrow_left.png' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
 								#counter
-								img(src='/styles/images/arrow_right.png' id='nextBtn' value='' onclick='onNextClick()').btn.right
+								img(src='/styles/img/arrow_right.png' id='nextBtn' value='' onclick='onNextClick()').btn.right
 						#selectedPicture.con.right
 						.finishDiv 
-							img(src='/styles/images/weiter.png' id='finish' value='' onclick='console.log("hier")')
+							img(src='/styles/img/weiter.png' id='finish' value='' onclick='console.log("hier")')
 					#bottom
 						h3 Allgemeine Tipps
 						.text.tipps 
