@@ -1,7 +1,7 @@
 var symbols = {
 	"fileType": "image/jpeg",
 	"extension": ".jpg",
-	"root": "/styles/images/symbols/",
+	"root": "/styles/img/symbols/",
 	"categories": 
 	[
 		{
