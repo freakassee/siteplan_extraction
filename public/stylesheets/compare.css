@@ -1,41 +1,67 @@
-#topLayer {
-	height: 100%;
-	width: 100%;
-	display: block;
+body {
+	margin: 0;
+	padding: 0;
 }
 
-#from_map_block {
-	width: 48%;
-	position: relative;
-	z-index: 20;
+#topLayer {
+	margin: 8px;
+}
+
+#from_map_container {
+	background-color: #666666;
+	background-color: transparent;
 	float: left;
 }
 
 #from_map {
-	position: relative;
-	z-index: 2;
-	height: 700px;
 	cursor: all-scroll;
 }
 
-#extracted {
+/* #extracted {
 	width: 100%;
-}
-
-#to_map_block {
-	background-color: #333333;
+} */
+#to_map_container {
+	/* position: relative; */
 	background-color: transparent;
-	width: 48%;
+	background-color: #333333;
 	float: left;
 }
 
-#to_map {
-	position: relative;
-	z-index: 2;
-	height: 700px;
+#map {
 	cursor: all-scroll;
 }
 
 .map-off {
 	border: 2px solid #999999;
+}
+
+#centerDiv {
+	margin-top:2px;
+	/* background-color: green; */
+	float:left;
+}
+
+#leftDiv {
+	/* background-color: red; */
+	float:left
+}
+
+#mapDiv{
+	float:left
+}
+
+#rightDiv {
+	
+	/* background-color: blue; */
+	float:left;
+}
+
+#vertical_handler {
+	display: inline-block;
+	float: left;
+	cursor: col-resize;
+	top: -5px;
+	border: 1px solid #D6D6D6;
+	background: url(/styles/img/handle-v.png) 50% 50% no-repeat #eee;
+}
 }
