@@ -172,3 +172,7 @@ function _updateCounter() {
 	counter.innerText = indexStr + ' / ' + imageIterator.length();
 	
 }
+
+function _test(){
+	window.location.href = '../compare'
+}

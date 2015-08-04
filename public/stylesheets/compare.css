@@ -1,0 +1,41 @@
+#topLayer {
+	height: 100%;
+	width: 100%;
+	display: block;
+}
+
+#from_map_block {
+	width: 48%;
+	position: relative;
+	z-index: 20;
+	float: left;
+}
+
+#from_map {
+	position: relative;
+	z-index: 2;
+	height: 700px;
+	cursor: all-scroll;
+}
+
+#extracted {
+	width: 100%;
+}
+
+#to_map_block {
+	background-color: #333333;
+	background-color: transparent;
+	width: 48%;
+	float: left;
+}
+
+#to_map {
+	position: relative;
+	z-index: 2;
+	height: 700px;
+	cursor: all-scroll;
+}
+
+.map-off {
+	border: 2px solid #999999;
+}

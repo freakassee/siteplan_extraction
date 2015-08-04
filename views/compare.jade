@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		link(rel='stylesheet', href='/openlayers/ol.css')
+		link(rel='stylesheet', href='/styles/compare.css')
+		link(rel='stylesheet', href='/styles/vertical_handler.css')
+		script(src='/openlayers/ol.js')
+		script(type='text/javascript' src='/js/util.js')
+		script(type='text/javascript' src='/js/compare/from_map.js')
+		script(type='text/javascript' src='/js/compare/to_map.js')
+		body
+			#topLayer
+				#from_map_block
+					#from_map.map-off 
+				#vertical_handler
+				#to_map_block
+					#to_map.map-off 
+		script(type='text/javascript').
+			var mouseIn = false;
+			document.addEventListener('DOMContentLoaded',function(){
+				create_from();
+				create_to();
+			});

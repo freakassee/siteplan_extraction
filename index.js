@@ -13,6 +13,8 @@ var uploadsWebDir = '/uploads';
 app.use('/', express.static(__dirname + '/public'));
 app.use('/styles', express.static(__dirname + '/public/stylesheets'));
 app.use('/model', express.static(__dirname + '/model'));
+app.use('/openlayers', express.static(__dirname
+		+ '/node_modules/openlayers/dist'));
 app.use(uploadsWebDir, express.static(uploadServDir));
 
 app.use(bodyParser.json());
@@ -80,27 +82,33 @@ app.post('/upload', function(req, res) {
 	// res.end();
 });
 
-app.get('/showmap', function(req, res) {
-	var query = req.query;
-	if (query.imageId && query.format && query.width && query.height) {
-		res.render('map', {
-			url : uploadsWebDir + '/',
-			img_id : query.imageId,
-			img_file : query.imageId + '.' + query.format,
-			img_width : query.width,
-			img_height : query.height
-		});
+app
+		.get(
+				'/showmap',
+				function(req, res) {
+					var query = req.query;
+					if (query.imageId && query.format && query.width
+							&& query.height) {
+						res.render('map', {
+							url : uploadsWebDir + '/',
+							img_id : query.imageId,
+							img_file : query.imageId + '.' + query.format,
+							img_width : query.width,
+							img_height : query.height
+						});
 
-	} else {
-		/**
-		 * TODO send back error message and status code (see examples)
-		 */
-		res.send('One Parameter is missing. Verify that "imageId",'
-				+ '"format", "width", as well as "height" are deed correctly.');
-	}
-	res.end();
+					} else {
+						/**
+						 * TODO send back error message and status code (see
+						 * examples)
+						 */
+						res
+								.send('One Parameter is missing. Verify that "imageId",'
+										+ '"format", "width", as well as "height" are deed correctly.');
+					}
+					res.end();
 
-});
+				});
 
 /** Talking to MatLabs Section */
 app.post('/process', function(req, res) {
@@ -169,7 +177,7 @@ function prepare(req, res, jadeFile) {
 	var y_loaded = false;
 	var symbol_loaded = false;
 	var catIndex_loaded = false;
-	
+
 	if (query.imageId) {
 		fs.readFile('./public/images/' + query.imageId
 				+ '/data/catIndex_values.txt', function(err, data) {
@@ -277,6 +285,17 @@ app.post('/bind', function(req, res) {
 		catIndex_values : query.catIndex_values,
 		img_id : query.img_id
 	});
+
+});
+
+app.all('/compare', function(req, res) {
+	// var query = req.body;
+
+	res.render('compare'/*
+						 * , { isSymbol_values : query.isSymbol_values,
+						 * catIndex_values : query.catIndex_values, img_id :
+						 * query.img_id }
+						 */);
 
 });
 

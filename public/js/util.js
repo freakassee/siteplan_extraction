@@ -21,10 +21,10 @@ Array.prototype.equals = function(array, strict) {
 	return true;
 }
 
-function init( imageId) {
+function init(imageId) {
 	window.onload = function() {
-		//debugger;
-		createDocument(imageId,x_values, y_values, isSymbol_values);
+		// debugger;
+		createDocument(imageId, x_values, y_values, isSymbol_values);
 	}
 	window.onresize = function() {
 		waitForFinalEvent(function() {
@@ -32,15 +32,16 @@ function init( imageId) {
 				location.reload();
 			} else {
 				var params = {
-						x_values : x_values,
-						y_values : y_values,
-						isSymbol_values : isSymbol_values,
-						catIndex_values : catIndex_values,
-						img_id : imageId,
-						pathname : pathname
-					};
-				
-				createHiddenFormAndSubmit(location.pathname, imageId, params, false);
+					x_values : x_values,
+					y_values : y_values,
+					isSymbol_values : isSymbol_values,
+					catIndex_values : catIndex_values,
+					img_id : imageId,
+					pathname : pathname
+				};
+
+				createHiddenFormAndSubmit(location.pathname, imageId, params,
+						false);
 			}
 		}, 50, "resizing");
 	};

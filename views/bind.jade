@@ -1,8 +1,9 @@
 doctype html5
 html
 	head
-		link(rel='stylesheet', href='/styles/binding/assignment.css')
 		link(rel='stylesheet', href='/styles/binding/bind.css')
+		link(rel='stylesheet', href='/styles/binding/assignment.css')
+		link(rel='stylesheet', href='/styles/vertical_handler.css')
 		link(rel='stylesheet', href='/styles/binding/searchBox.css')
 		link(rel='stylesheet', href='/styles/binding/tabs.css')
 		link(rel='stylesheet', href='/styles/binding/imageList.css')
@@ -28,7 +29,7 @@ html
 								img(src='/styles/img/arrow_right.png' id='nextBtn' value='' onclick='onNextClick()').btn.right
 						#selectedPicture.con.right
 						.finishDiv 
-							img(src='/styles/img/weiter.png' id='finish' value='' onclick='console.log("hier")')
+							img(src='/styles/img/weiter.png' id='finish' value='' onclick='_test()')
 					#bottom
 						h3 Allgemeine Tipps
 						.text.tipps 
@@ -36,7 +37,7 @@ html
 								li Die taktischen Symbole sind unterteilt in verschiedene Kategorien. 
 								li Finden Sie Symbole schneller mit Hilfe der Suche.
 								li Weder Titel noch Beschreibung müssen übertragen werden? Klicken Sie doppelt auf das zugewiesene Symbol, um fortzufahren.
-				#verticalSideBar.handler
+				#vertical_handler.handler
 				#rightContainer
 					#searchContainer
 					#tabContainer

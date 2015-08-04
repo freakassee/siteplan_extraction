@@ -11,20 +11,6 @@
 	float: left;
 }
 
-#verticalSideBar {
-	display: inline-block;
-	left: 30%;
-	float: left;
-	width: 8px;
-	min-height: 100%;
-	margin-left: 0.5%;
-	/* margin-top: -1%; */
-	margin-right: 0.5%;
-	cursor: col-resize;
-	top: -5px;
-	border: 1px solid #D6D6D6;
-	background: url(/styles/images/handle-v.png) 50% 50% no-repeat #eee;
-}
 
 #rightContainer {
 	background-color: #333333;
