@@ -35,24 +35,31 @@ body {
 	border: 2px solid #999999;
 }
 
+#topDiv{
+	position:relative;
+}
 #centerDiv {
-	margin-top:2px;
-	/* background-color: green; */
-	float:left;
+	position:relative;
+	float: left;
 }
 
 #leftDiv {
-	/* background-color: red; */
-	float:left
+	position:relative;
+	float: left
 }
 
-#mapDiv{
-	float:left
+#mapDiv {
+	position:relative;
+	float: left
 }
 
 #rightDiv {
-	
-	/* background-color: blue; */
+	position:relative;
+	float: left;
+}
+
+#bottomDiv{
+	position:relative;
 	float:left;
 }
 
@@ -62,6 +69,5 @@ body {
 	cursor: col-resize;
 	top: -5px;
 	border: 1px solid #D6D6D6;
-	background: url(/styles/img/handle-v.png) 50% 50% no-repeat #eee;
-}
+	background: /* url(/styles/img/handle-v.png) */ 50% 50% no-repeat #eee;
 }

@@ -54,9 +54,9 @@ function createList() {
 			}
 
 			imgElem.ondblclick = function(event) {
-				_replacePlaceholder(event);
-
+				
 				onNextClick(event);
+
 			}
 
 		}

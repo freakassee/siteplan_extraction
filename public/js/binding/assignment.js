@@ -2,14 +2,15 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 	var images = [];
 	var selectedPictureDiv = document.getElementById('selectedPicture');
 	var placeholder = document.createElement('img');
-	
+	var rootOrigin = '/images/' + imageId + '/extracted/';
+	var tmpBot = 0;
+	var tmpLeft = 0;
 	placeholder.setAttribute('src', symbols.root + '/universal/universal.jpg');
 	placeholder.setAttribute('id', 'placeholder');
 	placeholder.className = 'pictures';
 
 	selectedPictureDiv.appendChild(placeholder);
 
-	var rootOrigin = '/images/' + imageId + '/extracted/';
 	for (var i = 1; i <= isSymbol_vals.length; i++) {
 		if (isSymbol_vals[i - 1] == true) {
 			var origin = document.createElement('img');
@@ -103,7 +104,9 @@ function addImage(imageElem) {
 		selectedPictureDiv.appendChild(selected);
 
 		selected.onload = function() {
+
 			addTitleAndDescription(imageIterator.getCurrentIndex());
+
 		}
 	}
 }
@@ -111,32 +114,35 @@ function addImage(imageElem) {
 function addTitleAndDescription(index) {
 	var selected = document.getElementById('selected');
 	var parent = selected.parentElement;
+	if (selected.hasAttribute('src')) {
+		if (resultDescription[index]) {
+			parent.appendChild(resultTitle[index]);
+			parent.appendChild(resultDescription[index]);
+		} else {
+			var title = document.createElement('input');
+			var description = document.createElement('input');
+			title.setAttribute('type', 'text');
+			title.setAttribute('id', 'title_' + index);
+			title.setAttribute('value', imageIterator.getCurrentIndex());
+			title.className = 'titleDescr top';
+			title.placeholder = 'Titel einfügen';
 
-	if (resultDescription[index]) {
-		parent.appendChild(resultTitle[index]);
-		parent.appendChild(resultDescription[index]);
-	} else {
-		var title = document.createElement('input');
-		var description = document.createElement('input');
-		title.setAttribute('type', 'text');
-		title.setAttribute('id', 'title_' + index);
-		title.className = 'titleDescr top';
-		title.placeholder = 'Titel einfügen';
-		title.style.height = selected.width * 0.17 + 'px';
+			title.style.height = selected.width * 0.17 + 'px';
 
-		description.setAttribute('type', 'text');
-		description.setAttribute('id', 'descr_' + index);
-		description.className = 'titleDescr bottom';
-		description.placeholder = 'Beschriftung einfügen';
-		description.style.height = selected.width * 0.17 + 'px';
+			description.setAttribute('type', 'text');
+			description.setAttribute('id', 'descr_' + index);
+			description.setAttribute('value', imageIterator.getCurrentIndex());
+			description.className = 'titleDescr bottom';
+			description.placeholder = 'Beschriftung einfügen';
+			description.style.height = selected.width * 0.17 + 'px';
 
-		parent.appendChild(title);
-		parent.appendChild(description);
+			parent.appendChild(title);
+			parent.appendChild(description);
 
-		resultTitle[index] = title;
-		resultDescription[index] = description;
+			resultTitle[index] = title;
+			resultDescription[index] = description;
+		}
 	}
-
 }
 
 function removeTitleAndDescription(index) {
@@ -148,6 +154,7 @@ function removeTitleAndDescription(index) {
 }
 
 function _replacePlaceholder(event) {
+
 	var placeholderImg = document.getElementById('placeholder');
 	var selectedImg = document.getElementById('selected');
 
@@ -163,16 +170,55 @@ function _getCategoryFromIndex(index) {
 }
 
 function _updateCounter() {
-	var index = imageIterator.getCurrentIndex()+1;
+	var index = imageIterator.getCurrentIndex() + 1;
 	var counter = document.getElementById('counter');
 	var indexStr = '' + index;
 	if (index < 10) {
 		indexStr = 0 + indexStr;
 	}
 	counter.innerText = indexStr + ' / ' + imageIterator.length();
-	
+
 }
 
-function _test(){
-	window.location.href = '../compare'
+function _test() {
+
+	var selected = document.getElementById('selected');
+	if (selected.hasAttribute('src')) {
+		var image = selected.cloneNode();
+		resultImages[imageIterator.getCurrentIndex()] = image;
+	}
+	var sources = [];
+	var titles = [];
+	var descriptions = [];
+	for (var i = 0; i < indexArray.length; i++) {
+		var title = '';
+		var descr = '';
+		if (resultImages[i]) {
+			sources.push('\'' + resultImages[i].src + '\'');
+
+			if (resultTitle[i].hasAttribute('value')) {
+				title = resultTitle[i].value;
+			}
+
+			if (resultDescription[i].hasAttribute('value')) {
+				descr = resultDescription[i].value
+			}
+		} else {
+			sources.push('\'' + imageIterator.get(i).src + '\'');
+		}
+		sources[i] = sources[i].replace(window.location.origin, "");
+
+		titles.push('\'' + title + '\'');
+		descriptions.push('\'' + descr + '\'');
+	}
+
+	var params = {
+		imgSources : sources,
+		titles : titles,
+		descriptions : descriptions,
+		positions : indexArray,
+		img_id : imageId
+	};
+
+	createHiddenFormAndSubmit('/compare', imageId, params);
 }

@@ -1,5 +1,6 @@
 function [bool, lengths,indexOfCategory] = isSymbol(image)
     indexOfCategory = 0;
+    %figure;imshow(image);
     bool = true;
     [height, width, ~] = size(image);
     height  = height - 1;

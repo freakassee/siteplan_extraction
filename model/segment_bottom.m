@@ -19,7 +19,7 @@ for n=0:10
 
     newN = 10-n;
     
-    xValue = newN*segmentW;
+    xValue = n*segmentW;
     yValue = 7*segmentH+1/2*margin_top;
     
      bottom = imcrop(output_image,[xValue, yValue, segmentW+margin_left,segmentH+margin_top]);
@@ -40,7 +40,7 @@ for n=0:10
         if showImage 
             figure;imshow(bottom);
             extractedSymbols= extractedSymbols+1;
-            warning(['bottom ' num2str(newN+1)]);
+            warning(['bottom ' num2str(n+1)]);
         end
 		 imwrite(bottom,[pathExtracted int2str(18+n) '.jpg']);
     else

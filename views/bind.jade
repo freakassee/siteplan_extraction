@@ -9,6 +9,7 @@ html
 		link(rel='stylesheet', href='/styles/binding/imageList.css')
 		body
 			script(type='text/javascript' src='/js/iterator.js')
+			script(type='text/javascript' src='/js/commonElements.js')
 			script(type='text/javascript' src='/js/binding/my_list.js')
 			script(type='text/javascript' src='/js/binding/assignment.js')
 			script(type='text/javascript' src='/js/binding/vertical_handler.js')
@@ -46,6 +47,7 @@ html
 						ul(id='imgList')
 			script(type='text/javascript').
 				var imageIterator;
+				var imageId = #{img_id};
 				var categoryIndexes = [];
 				// identified images will be stored in here
 				var resultImages = [];

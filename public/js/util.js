@@ -40,8 +40,7 @@ function init(imageId) {
 					pathname : pathname
 				};
 
-				createHiddenFormAndSubmit(location.pathname, imageId, params,
-						false);
+				createHiddenFormAndSubmit(location.pathname, imageId, params);
 			}
 		}, 50, "resizing");
 	};

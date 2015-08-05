@@ -17,17 +17,17 @@ for n=1:6
     
     [bool, nr,indexOfCategory] = isSymbol(left);
     
-    xValues(n+28) = xValue-margin_left;
-    yValues(n+28) = yValue-margin_top;
-    isSymbolValues(n+28) = bool;
-     catIndex_Values(n+28)=indexOfCategory;
+    xValues(28+n) = xValue-margin_left;
+    yValues(28+n) = yValue-margin_top;
+    isSymbolValues(28+n) = bool;
+     catIndex_Values(28+n)=indexOfCategory;
     
     if bool
         indexOfCategory
         if showImage
             figure,imshow(left);
             extractedSymbols= extractedSymbols+1;
-            warning(['left ' num2str(newN)]);
+            warning(['left ' num2str(n)]);
         end
         imwrite(left,[pathExtracted int2str(28+n) '.jpg']);
     else

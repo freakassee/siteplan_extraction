@@ -289,13 +289,14 @@ app.post('/bind', function(req, res) {
 });
 
 app.all('/compare', function(req, res) {
-	// var query = req.body;
-
-	res.render('compare'/*
-						 * , { isSymbol_values : query.isSymbol_values,
-						 * catIndex_values : query.catIndex_values, img_id :
-						 * query.img_id }
-						 */);
+	var query = req.body;
+	res.render('compare', {
+		imgSources : query.imgSources,
+		titles : query.titles,
+		descriptions : query.descriptions,
+		positions : query.positions,
+		img_id : query.img_id
+	});
 
 });
 

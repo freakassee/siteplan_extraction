@@ -3,9 +3,9 @@ html
 	head
 		link(rel='stylesheet', href='/openlayers/ol.css')
 		link(rel='stylesheet', href='/styles/compare.css')
-		script(src='/openlayers/ol.js')
+		script(type='text/javascript' src='/openlayers/ol.js')
 		script(type='text/javascript' src='/js/util.js')
-		script(type='text/javascript' src='/js/compare/from_map.js')
+		script(type='text/javascript' src='/js/compare/compare.js')
 		
 		body
 			#topLayer
@@ -21,6 +21,17 @@ html
 							#rightDiv
 						#bottomDiv
 		script(type='text/javascript').
+			var imageId = #{img_id}
+			var positions = [#{positions}];
+			var imgSources = [#{imgSources}];
+			var titles = [#{titles}];
+			var descriptions = [#{descriptions}];
+			console.log(positions);
+			console.log(imgSources);
+			console.log(titles);
+			console.log(descriptions);
+			
+
 			var mouseIn = false;
 			var maxW;
 			var maxH;
@@ -28,6 +39,6 @@ html
 			var verticalW = 22;
 			var borderW = 2;
 			document.addEventListener('DOMContentLoaded',function(){
-				create(0.6);
+				create(0.3);
 				
 			});
