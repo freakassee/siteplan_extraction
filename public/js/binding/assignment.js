@@ -1,167 +1,161 @@
 function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
-	var images = [];
-	var selectedPictureDiv = document.getElementById('selectedPicture');
-	var placeholder = document.createElement('img');
+	var original_sources = [];
 	var rootOrigin = '/images/' + imageId + '/extracted/';
-	var tmpBot = 0;
-	var tmpLeft = 0;
-	placeholder.setAttribute('src', symbols.root + '/universal/universal.jpg');
-	placeholder.setAttribute('id', 'placeholder');
-	placeholder.className = 'pictures';
-
-	selectedPictureDiv.appendChild(placeholder);
-
+	var isFirst = true;
+	_createTitleAndDescr(_createOriginAndSelected());
+	selected.src = symbols.root + '/universal/universal.jpg';
 	for (var i = 1; i <= isSymbol_vals.length; i++) {
 		if (isSymbol_vals[i - 1] == true) {
-			var origin = document.createElement('img');
-
-			origin.setAttribute('src', rootOrigin + i + '.jpg');
-			origin.setAttribute('id', 'origin');
-			origin.className = 'pictures';
-
-			categoryIndexes.push(catIndex_vals[i - 1])
-			images.push(origin);
+			if (isFirst) {
+				origin.src = rootOrigin + i + '.jpg';
+				isFirst = false;
+			}
+			categoryIndices.push(catIndex_vals[i - 1])
+			original_sources.push(rootOrigin + i + '.jpg');
 			indexArray.push(i - 1);
 		}
 
 	}
+	imageIterator = createIteratorFor(original_sources);
 
-	if (images.length > 0) {
-		imageIterator = createIteratorFor(images);
-		addImage(imageIterator.current());
-		_updateCounter();
-	}
+	_updateCounter();
 
 }
 
-function onNextClick(event) {
+function getExtractedImagesAdvanced(catIndex_vals) {
 
-	var selected = document.getElementById('selected');
-	if (selected.hasAttribute('src')) {
-		var image = selected.cloneNode();
-		resultImages[imageIterator.getCurrentIndex()] = image;
-		removeTitleAndDescription(imageIterator.getCurrentIndex());
+	var index = imageIterator.getCurrentIndex();
+	_createTitleAndDescr(_createOriginAndSelected());
+
+	for (var i = 0; i < indexArray.length; i++) {
+		categoryIndices.push(catIndex_vals[indexArray[i]]);
+
 	}
-	removeImage(imageIterator.current());
-	addImage(imageIterator.next());
-	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator
-			.getCurrentIndex()]));
+	//debugger;
+	if (!resultSources[index]) {
+		selected.src = symbols.root + '/universal/universal.jpg';
+	} else {
+		selected.src = resultSources[index];
+	}
+	origin.src = imageIterator.current();
+
+}
+
+function _createOriginAndSelected() {
+
+	var selected = document.createElement('img');
+	var origin = document.createElement('img');
+
+	selected.id = 'selected';
+	selected.className = 'pictures';
+
+	origin.id = 'origin';
+	origin.className = 'pictures';
+
+	originalPicture.appendChild(origin);
+
+	selectedPicture.appendChild(selected);
+	
+	origin.onload = function() {
+		changeTitleAndDescription();
+	}
+	selected.onload  =function(){
+		if (selected.src.indexOf('universal') == -1) {
+		title.hidden = false;
+		description.hidden = false;
+	}
+	}
+}
+
+function _createTitleAndDescr() {
+	var title = document.createElement('input');
+	var description = document.createElement('input');
+	title.type = 'text';
+	title.id = 'title';
+	title.className = 'titleDescr top';
+	title.placeholder = 'Titel einfügen';
+	title.style.height = selected.width * 0.17 + 'px';
+	title.hidden = true;
+
+	description.type = 'text';
+	description.id = 'description';
+	description.className = 'titleDescr bottom';
+	description.placeholder = 'Beschriftung einfügen';
+	description.style.height = selected.width * 0.17 + 'px';
+	description.hidden = true;
+
+
+	selectedPicture.appendChild(title);
+	selectedPicture.appendChild(description);
+}
+
+
+function onNextClick(event) {
+	_storeImageSource();
+	imageIterator.next()
+	changeImage();
+	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndices[imageIterator.getCurrentIndex()]));
 	_updateCounter();
-};
+}
 
 function onPreviousClick(event) {
 
-	var selected = document.getElementById('selected');
-
-	if (selected.hasAttribute('src')) {
-		var image = selected.cloneNode();
-		resultImages[imageIterator.getCurrentIndex()] = image;
-		removeTitleAndDescription(imageIterator.getCurrentIndex());
-	}
-
-	removeImage(imageIterator.current());
-
-	addImage(imageIterator.previous());
-
-	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndexes[imageIterator
-			.getCurrentIndex()]));
+	_storeImageSource();
+	imageIterator.previous()
+	changeImage();
+	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndices[imageIterator.getCurrentIndex()]));
 	_updateCounter();
 
-};
-
-function removeImage(imageElem) {
-	var originalPictureDiv = document.getElementById('originalPicture');
-	var selectedPictureDiv = document.getElementById('selectedPicture');
-	var selected = document.getElementById('selected');
-
-	selectedPictureDiv.removeChild(selected);
-	originalPictureDiv.removeChild(imageElem);
 }
 
-function addImage(imageElem) {
-	var originalPictureDiv = document.getElementById('originalPicture');
-	var selectedPictureDiv = document.getElementById('selectedPicture');
-	var placeholder = document.getElementById('placeholder');
-	var selected;
-	var origin = imageIterator.current();
-	var tabs = '';
-
-	originalPictureDiv.appendChild(origin);
-
-	if (resultImages[imageIterator.getCurrentIndex()]) {
-
-		placeholder.style.display = 'none';
-		selected = resultImages[imageIterator.getCurrentIndex()];
-		selected.style.display = '';
-		selectedPictureDiv.appendChild(selected);
-		addTitleAndDescription(imageIterator.getCurrentIndex());
+function changeImage() {
+	origin.src = imageIterator.current();
+	if (resultSources[imageIterator.getCurrentIndex()]) {
+		selected.src = resultSources[imageIterator.getCurrentIndex()];
 	} else {
-		placeholder.style.display = '';
-		selected = document.createElement('img');
-		selected.className = 'pictures';
-		selected.setAttribute('id', 'selected');
-		selected.style.display = 'none';
-		selectedPictureDiv.appendChild(selected);
-
-		selected.onload = function() {
-
-			addTitleAndDescription(imageIterator.getCurrentIndex());
-
-		}
+		selected.src = symbols.root + '/universal/universal.jpg';
+		
 	}
 }
 
-function addTitleAndDescription(index) {
-	var selected = document.getElementById('selected');
-	var parent = selected.parentElement;
-	if (selected.hasAttribute('src')) {
-		if (resultDescription[index]) {
-			parent.appendChild(resultTitle[index]);
-			parent.appendChild(resultDescription[index]);
-		} else {
-			var title = document.createElement('input');
-			var description = document.createElement('input');
-			title.setAttribute('type', 'text');
-			title.setAttribute('id', 'title_' + index);
-			title.setAttribute('value', imageIterator.getCurrentIndex());
-			title.className = 'titleDescr top';
-			title.placeholder = 'Titel einfügen';
+function changeTitleAndDescription() {
+	var index = imageIterator.getCurrentIndex();
+	if(resultTitles[index]){
+		title.value = resultTitles[index];}
+		else{
+		resultTitles[index] = title.value;
+	
+	}
 
-			title.style.height = selected.width * 0.17 + 'px';
+	if(resultDescriptions[index]){
+		description.value = resultDescriptions[index];
+	}else{
+		resultDescriptions[index] = description.value;
+	}
 
-			description.setAttribute('type', 'text');
-			description.setAttribute('id', 'descr_' + index);
-			description.setAttribute('value', imageIterator.getCurrentIndex());
-			description.className = 'titleDescr bottom';
-			description.placeholder = 'Beschriftung einfügen';
-			description.style.height = selected.width * 0.17 + 'px';
+	
 
-			parent.appendChild(title);
-			parent.appendChild(description);
 
-			resultTitle[index] = title;
-			resultDescription[index] = description;
-		}
+}
+
+// krisenstab und einstazleitung symbologie
+
+function _storeImageSource() {
+	
+	if (selected.src.indexOf('universal') == -1) {
+		resultSources[imageIterator.getCurrentIndex()] = selected.src;
+		resultTitles[imageIterator.getCurrentIndex()] = ''+imageIterator.getCurrentIndex();//title.value;
+		title.hidden = true;
+		title.value = '';
+		resultDescriptions[imageIterator.getCurrentIndex()] =''+ imageIterator.getCurrentIndex();//description.value;
+		description.hidden = true;
+		description.value = '';
+
 	}
 }
 
-function removeTitleAndDescription(index) {
-	var title = document.getElementById('title_' + index);
-	var description = document.getElementById('descr_' + index);
-	var parent = description.parentElement;
-	parent.removeChild(title);
-	parent.removeChild(description);
-}
-
-function _replacePlaceholder(event) {
-
-	var placeholderImg = document.getElementById('placeholder');
-	var selectedImg = document.getElementById('selected');
-
-	selectedImg.setAttribute('src', event.target.src);
-	selectedImg.style.display = '';
-	placeholderImg.style.display = 'none';
-
+function _showSelectedImage(event) {
+	selected.src = event.target.src;
 }
 
 function _getCategoryFromIndex(index) {
@@ -180,40 +174,41 @@ function _updateCounter() {
 
 }
 
-function _test() {
-
-	var selected = document.getElementById('selected');
-	if (selected.hasAttribute('src')) {
-		var image = selected.cloneNode();
-		resultImages[imageIterator.getCurrentIndex()] = image;
-	}
+function _proceedToCompare() {
+	_storeImageSource();
 	var sources = [];
 	var titles = [];
 	var descriptions = [];
+	var origin_sources = [];
 	for (var i = 0; i < indexArray.length; i++) {
+
 		var title = '';
 		var descr = '';
-		if (resultImages[i]) {
-			sources.push('\'' + resultImages[i].src + '\'');
+		if (resultSources[i]) {
+			sources.push('\'' + resultSources[i] + '\'');
 
-			if (resultTitle[i].hasAttribute('value')) {
-				title = resultTitle[i].value;
+			if (resultTitles[i]) {
+				title = resultTitles[i];
 			}
 
-			if (resultDescription[i].hasAttribute('value')) {
-				descr = resultDescription[i].value
+			if (resultDescriptions[i]) {
+				descr = resultDescriptions[i];
 			}
 		} else {
-			sources.push('\'' + imageIterator.get(i).src + '\'');
+			sources.push('\'\'');
 		}
-		sources[i] = sources[i].replace(window.location.origin, "");
-
 		titles.push('\'' + title + '\'');
 		descriptions.push('\'' + descr + '\'');
+
+		origin_sources.push('\'' + imageIterator.get(i) + '\'');
+		origin_sources[i] = origin_sources[i].replace(window.location.origin, "");
+
+		sources[i] = sources[i].replace(window.location.origin, "");
 	}
 
 	var params = {
-		imgSources : sources,
+		img_sources : sources,
+		org_sources : origin_sources,
 		titles : titles,
 		descriptions : descriptions,
 		positions : indexArray,

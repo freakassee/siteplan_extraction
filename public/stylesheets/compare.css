@@ -17,10 +17,31 @@ body {
 	cursor: all-scroll;
 }
 
-/* #extracted {
-	width: 100%;
-} */
-#to_map_container {
+#drawOptions {
+	/* background-color: #ff8000; */
+	margin-top: 8px;
+}
+
+.drawing {
+	width: 40px;
+	margin: 30px
+}
+
+.col {
+	padding: .5em;
+	margin-right: .4em;
+	border: 1px solid #aaa;
+	border-radius: 3px;
+	width: 140px;
+}
+
+#preview {
+	padding: .5em;
+	margin-right: .4em;
+	width: 140px;
+}
+
+#siteplan_container {
 	/* position: relative; */
 	background-color: transparent;
 	background-color: #333333;
@@ -35,39 +56,56 @@ body {
 	border: 2px solid #999999;
 }
 
-#topDiv{
-	position:relative;
+.holderDiv {
+	position: relative;
+	display: inline-block;
 }
+
+/* .holderDiv.TB {
+	
+}
+
+.holderDiv.LR {
+	display: table-caption;
+	}
+ */
+#topDiv {
+	position: relative;
+}
+
 #centerDiv {
-	position:relative;
+	position: relative;
 	float: left;
 }
 
 #leftDiv {
-	position:relative;
+	position: relative;
 	float: left
 }
 
 #mapDiv {
-	position:relative;
-	float: left
+	position: relative;
+	float: left;
 }
+/* #to_map{
+	cursor: all-scroll;
 
+} */
 #rightDiv {
-	position:relative;
+	position: relative;
 	float: left;
 }
 
-#bottomDiv{
-	position:relative;
-	float:left;
+#bottomDiv {
+	position: relative;
+	float: left;
 }
 
 #vertical_handler {
 	display: inline-block;
 	float: left;
-	cursor: col-resize;
+	/* cursor: col-resize; */
 	top: -5px;
-	border: 1px solid #D6D6D6;
+	/* border: 1px solid #D6D6D6; */
 	background: /* url(/styles/img/handle-v.png) */ 50% 50% no-repeat #eee;
 }

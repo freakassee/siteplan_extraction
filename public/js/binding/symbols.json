@@ -729,10 +729,16 @@ var symbols = {
 					[
 						
 					]
+				},{
+					"name": "zu_transportierende_Person",
+					"additionalTags": 
+					[
+						
+					]
 				},
 
 				{
-					"name": "zu_transportierende_Person",
+					"name": "teilblockiert",
 					"additionalTags": 
 					[
 						

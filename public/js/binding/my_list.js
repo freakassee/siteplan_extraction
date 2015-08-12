@@ -12,7 +12,7 @@ function createList() {
 
 		link.setAttribute('href', cat_Id);
 		link.setAttribute('id', cat_Id);
-		link.innerText = category.title;
+		link.innerHTML = category.title;
 
 		tabElem.appendChild(link);
 		tabList.appendChild(tabElem);
@@ -32,7 +32,7 @@ function createList() {
 			imgElem.setAttribute('class', 'img');
 			imgElem.setAttribute('id', cat_Id + '_' + j);
 
-			filterElem.innerText = cat_Id;
+			filterElem.innerHTML = cat_Id;
 
 			tagsElem.hidden = true;
 
@@ -40,7 +40,7 @@ function createList() {
 
 			for (var tagIndex = 0; tagIndex < tags.length; tagIndex++) {
 				var concatStr = tags[tagIndex] + ';';
-				tagsElem.innerText = tagsElem.innerText.concat(concatStr);
+				tagsElem.innerHTML = tagsElem.innerHTML.concat(concatStr);
 			}
 
 			listElement.appendChild(imgElem);
@@ -50,7 +50,7 @@ function createList() {
 			imgList.appendChild(listElement);
 
 			imgElem.onclick = function(event) {
-				_replacePlaceholder(event);
+				_showSelectedImage(event);
 			}
 
 			imgElem.ondblclick = function(event) {
@@ -141,8 +141,8 @@ function _search() {
 	for (var i = 0; i < imgList.children.length; i++) {
 		var listElem = imgList.children[i];
 		var tag = tags[i];
-		var tagText = tag.innerText.toLowerCase();
-		var filter = listElem.getElementsByTagName('filter')[0].innerText;
+		var tagText = tag.innerHTML.toLowerCase();
+		var filter = listElem.getElementsByTagName('filter')[0].innerHTML;
 		listElem.style.display = 'none';
 		;
 		if (!checkbox.checked) {
@@ -169,7 +169,7 @@ function _onlyShowSelectedTab(clickedTab) {
 	var target = document.getElementById(clickedTab);
 	var HTMLStr = 'Suche nur in Kategorie: <b>'
 	var labelFor = document.getElementById('checkboxLabel');
-	var targetText = target.innerText;
+	var targetText = target.innerHTML;
 
 	var selectedElements = document.getElementsByTagName('filter');
 
@@ -184,7 +184,7 @@ function _onlyShowSelectedTab(clickedTab) {
 	for (var i = 0; i < imgList.children.length; i++) {
 		imgList.children[i].style.display = 'none';
 		selectedElem = selectedElements[i];
-		if (selectedElem.innerText == clickedTab) {
+		if (selectedElem.innerHTML == clickedTab) {
 			selectedElem.parentElement.style.display = '';
 		}
 	}

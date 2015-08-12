@@ -1,69 +1,28 @@
 function create(handlerPosition) {
-	var to_map_Width;
-	var to_map_Height
+	var siteplan_Width;
+	var siteplan_Height;
 
 	setHandlerPosition(handlerPosition);
 	create_from();
 	create_vertical();
 	createSitePlan();
-}
-function create_from(widthPercentage, heightPercentage) {
-	var from_map_url = '/images/' + imageId + '/transformed/' + imageId
-			+ '.jpg';
-	var extent = [ 0, 0, 3400, 2633 ];
-	var projection = new ol.proj.Projection({
-		code : 'xkcd-image',
-		units : 'pixels',
-		extent : extent
-	});
 
-	var imageLayer = new ol.layer.Image({
-		source : new ol.source.ImageStatic({
-			url : from_map_url,
-			projection : projection,
-			imageExtent : extent
-		})
-	});
+	lineWidth.onchange = function() {
+		changePreview();
+	}
+	lineWidth.onkeyup = function() {
+		changePreview();
+	}
 
-	var map = new ol.Map({
-		layers : [ imageLayer ],
-		target : 'from_map',
-		view : new ol.View({
-			projection : projection,
-			center : ol.extent.getCenter(extent),
-			zoom : 1
-		})
-	});
+	colPicker.changeInputValue = function() {
+		changePreview();
+	}
+	
+	preview.style.borderBottom = lineWidth.value +'px solid ' + colPicker.value
 }
 
-function create_to(widthPercentage, heightPercentage) {
-
-	var münster = ol.proj.fromLonLat([ 7.624, 51.961 ]);
-	var osm = new ol.layer.Tile({
-		preload : 4,
-		source : new ol.source.OSM()
-	});
-	var map = new ol.Map({
-		layers : [ osm ],
-		target : 'mapDiv',
-		renderer : 'canvas',
-		view : new ol.View({
-			center : münster,
-			zoom : 14
-		})
-	});
-	osm.on('postcompose', function(event) {
-		var context = event.context;
-		var canvas = context.canvas;
-		var image = context.getImageData(0, 0, canvas.width, canvas.height);
-		var data = image.data;
-		for (var i = 0, ii = data.length; i < ii; i += 4) {
-			data[i] = data[i + 1] = data[i + 2] = (3 * data[i] + 4
-					* data[i + 1] + data[i + 2]) / 8;
-		}
-		context.putImageData(image, 0, 0);
-	});
-
+function changePreview() {
+	preview.style.borderBottom = lineWidth.value +'px solid ' + colPicker.value
 }
 
 function create_vertical(widthPercentage, heightPercentage) {
@@ -74,96 +33,140 @@ function create_vertical(widthPercentage, heightPercentage) {
 }
 
 function createSitePlan() {
-	// var topDiv = document.getElementById('topDiv');
-	// var leftDiv = document.getElementById('leftDiv');
-	// var rightDiv = document.getElementById('rightDiv');
-	// var bottomDiv = document.getElementById('bottomDiv');
-	// var mapDiv = document.getElementById('mapDiv');
 
-	var mar = 4;
-	var holder_Width = to_map_Width / 11 - mar;
-	var holder_Height = maxH / 8 - mar;
-	var topBotWidths = to_map_Width + 'px';
-	var topBotHeights = holder_Height + mar + 'px';
-	var centerWidths = holder_Width + 1.5 * mar + 'px';
-	var centerHeights = 6 * (holder_Height + mar) - mar + 'px'
-	var tmpBot = 0;
-	var tmpLeft = 0;
-	topDiv.style.width = topBotWidths;
-	topDiv.style.height = topBotHeights;
+	var horizontal_section = roundDown(siteplan_Width / 11);
+	var vertical_section = roundDown(maxH / 8);
+	var div_H = vertical_section - dft_mar * 2;
+	var div_W = horizontal_section - dft_mar * 2;
+	var div_size;
 
-	centerDiv.style.width = topBotWidths;
-	centerDiv.style.height = centerHeights;
-	centerDiv.style.marginTop = mar / 2 + 'px';
+	if (div_W < div_H) {
+		div_size = div_W;
+		add_mar_vert = (div_H - div_size) / 2;
+	} else {
+		div_size = div_H;
+		add_mar_hor = (div_W - div_size) / 2;
+	}
 
-	leftDiv.style.width = centerWidths;
-	leftDiv.style.height = centerHeights;
+	topDiv.style.height = vertical_section + 'px';
+	centerDiv.style.height = 6 * vertical_section + 'px';
+	leftDiv.style.height = 6 * vertical_section + 'px';
+	mapDiv.style.height = 6 * vertical_section + 'px';
+	rightDiv.style.height = 6 * vertical_section + 'px';
+	bottomDiv.style.height = vertical_section + 'px';
 
-	mapDiv.style.width = 9 * (holder_Width + mar) - mar + 'px';
-	mapDiv.style.height = centerHeights;
+	centerDiv.style.width = 11 * horizontal_section + 'px';
+	leftDiv.style.width = horizontal_section + 'px';
+	mapDiv.style.width = 9 * horizontal_section + 'px';
+	rightDiv.style.width = horizontal_section + 'px';
 
-	rightDiv.style.width = centerWidths;
-	rightDiv.style.height = centerHeights;
+	to_map.style.marginTop = dft_mar + add_mar_vert + 'px';
+	to_map.style.marginLeft = dft_mar + add_mar_hor + 'px';
+	to_map.style.marginBottom = dft_mar + add_mar_vert + 'px';
+	to_map.style.marginRight = dft_mar + add_mar_hor + 'px';
 
-	bottomDiv.style.width = topBotWidths;
-	bottomDiv.style.height = topBotHeights;
+	to_map.style.width = 9 * horizontal_section - 2 * (dft_mar + add_mar_hor) + 'px';
+	to_map.style.height = 6 * vertical_section - 2 * (dft_mar + add_mar_vert) + 'px';
 
+	var bttmIn = 0;
+	var lftIn = 1;
+	var rghtIn = 1;
 	for (var i = 0; i < 34; i++) {
+		var holderDiv = document.createElement('div');
+		var tacticalSign = document.createElement('img');
+		var index = positions.lastIndexOf(i);
+		if (index >= 0) {
+			if (img_sources[index]) {
+				tacticalSign.src = img_sources[index];
+			} else {
+				tacticalSign.src = org_sources[index]
+			}
 
-		var holder = document.createElement('img');
-		if (positions.lastIndexOf(i) >= 0) {
-
-			holder.setAttribute('src', imgSources[positions.lastIndexOf(i)]);
-			
-			if (titles[i]) {
+			if (titles[positions.lastIndexOf(i)]) {
 				var input = document.createElement('input');
-				input.setAttribute('type', 'text');
-				input.setAttribute('id', 'textText_'+i);
-
+				input.type = 'text';
+				input.value = titles[positions.lastIndexOf(i)];
+				input.id = 'title_' + positions.lastIndexOf(i);
 				input.style.position = 'absolute';
-				input.style.width = holder_Width - mar / 2 + 'px';
-				input.style.height = holder_Width * 0.17 +'px';
-				input.style.marginLeft = 3 / 4 * mar + 'px';
-				input.style.marginTop = 3 / 4 * mar + 'px';
+				input.style.width = div_size + 'px';
+				input.style.height = div_size * 0.16 + 'px';
 				input.style.top = 0 + 'px';
-				input.style.left = 0 +'px';
+				input.style.left = 0 + 'px';
 				input.style.border = '0px';
 				input.style.textAlign = 'center';
-				input.style.fontSize= holder_Width * 0.17 +'px';
-				//input.style.backgroundColor = 'red';
-				input.setAttribute('value', titles[i]);
+				input.style.fontSize = div_size * 0.16 + 'px';
+
+				holderDiv.appendChild(input);
 
 			}
+
+			if (descriptions[positions.lastIndexOf(i)]) {
+				var description = document.createElement('input');
+				description.type = 'text';
+				description.id = 'description_' + positions.lastIndexOf(i);
+				description.value = descriptions[positions.lastIndexOf(i)];
+				description.style.position = 'absolute';
+				description.style.width = div_size + 'px';
+				description.style.bottom = 0 + 'px';
+				description.style.left = 0 + 'px';
+				description.style.border = '0px';
+				description.style.textAlign = 'center';
+				description.style.height = div_size * 0.16 + 'px';
+				description.style.fontSize = div_size * 0.16 + 'px';
+
+				holderDiv.appendChild(description);
+
+			}
+
 		} else {
 
-			holder.setAttribute('src',
-					'/styles/img/symbols/universal/universal.jpg');
+			tacticalSign.src = '/styles/img/symbols/universal/universal.jpg';
 		}
-		holder.style.width = holder_Width + 'px';
-		holder.style.height = holder_Height + 'px';
+
+		holderDiv.style.width = div_size + 'px';
+		holderDiv.style.height = div_size + 'px';
+		holderDiv.className = 'holderDiv';
+
+		holderDiv.style.marginTop = dft_mar + add_mar_vert + 'px';
+		holderDiv.style.marginLeft = dft_mar + add_mar_hor + 'px';
+		holderDiv.style.marginBottom = dft_mar + add_mar_vert + 'px';
+		holderDiv.style.marginRight = dft_mar + add_mar_hor + 'px';
+
+		// holderDiv.style.background = getRandomColor();
+
+		holderDiv.onclick = function() {
+			_reference();
+			t_map.getViewport().addEventListener('click', onmapclick, true);
+
+		}
+		
+		holderDiv.ondblclick = function(){
+			_removeReference();
+		}
+
+		tacticalSign.style.width = div_size + 'px';
+		holderDiv.appendChild(tacticalSign);
 
 		if (i < 11) {
-			holder.setAttribute('id', 'img_' + (i + 1));
-			holder.style.margin = mar / 2 + 'px';
-			topDiv.appendChild(holder);
-			if(i == 0){
-				topDiv.appendChild(input);
-			}
+			holderDiv.group = 'top';
+			holderDiv.id = holderDiv.group + i;
+			topDiv.appendChild(holderDiv);
 		} else if (i >= 11 && i < 17) {
-			holder.setAttribute('id', 'img_' + (i + 1));
-			holder.style.marginLeft = mar + 'px';
-			rightDiv.appendChild(holder);
-
+			holderDiv.group = 'right';
+			holderDiv.id = holderDiv.group + rghtIn;
+			rightDiv.appendChild(holderDiv);
+			rghtIn++;
 		} else if (i >= 17 && i < 28) {
-			// holder.setAttribute('id', 'img_' + (i + (28 - i) - tmpBot));
-			holder.style.margin = mar / 2 + 'px';
-			bottomDiv.appendChild(holder);
-			tmpBot++;
+
+			holderDiv.group = 'bottom';
+			holderDiv.id = holderDiv.group + bttmIn;
+			bottomDiv.appendChild(holderDiv);
+			bttmIn++;
 		} else {
-			// holder.setAttribute('id', 'img_' + (i + (34 - i) - tmpLeft));
-			holder.style.marginLeft = mar / 2 + 'px';
-			leftDiv.appendChild(holder);
-			tmpLeft++;
+			holderDiv.group = 'left';
+			holderDiv.id = holderDiv.group + lftIn;
+			leftDiv.appendChild(holderDiv);
+			lftIn++;
 		}
 	}
 	create_to();
@@ -174,12 +177,16 @@ function setHandlerPosition(percentage) {
 	maxW = window.innerWidth - 2 * (margin + 2 * borderW);
 	maxH = window.innerHeight - 2 * (margin + borderW);
 
-	from_map.style.width = maxW * percentage - 1 / 2 * verticalW + 'px'
-	from_map.style.height = maxH + 'px';
+	from_map_W = roundDown(maxW * percentage - 1 / 2 * verticalW) - 10;
+	from_map.style.width = from_map_W + 'px'
+	from_map.style.height = maxH / 3 + 'px';
 
-	to_map_Width = maxW * (1 - percentage) - 1 / 2 * verticalW;
-	to_map_Height = maxH;
+	drawOptions.style.width = from_map_W + 'px';
+	drawOptions.style.height = maxH / 3 + 'px';
 
-	to_map.style.width = to_map_Width + 'px'
-	to_map.style.height = to_map_Height + 'px';
+	siteplan_Width = roundDown(maxW * (1 - percentage) - 1 / 2 * verticalW) - 10;
+	siteplan_Height = maxH;
+
+	siteplan.style.width = siteplan_Width + 'px'
+	siteplan.style.height = siteplan_Height + 'px';
 }

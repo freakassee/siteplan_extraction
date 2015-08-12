@@ -3,35 +3,55 @@ html
 	head
 		link(rel='stylesheet', href='/openlayers/ol.css')
 		link(rel='stylesheet', href='/styles/compare.css')
-		script(type='text/javascript' src='/openlayers/ol.js')
+		link(href="/js/colorpicker/index.css" media="all" rel="stylesheet" type="text/css")
+		link(href="/js/colorpicker/javascript_implementation/jsColor.css" media="all" rel="stylesheet" type="text/css")
+		script(type='text/javascript' src='/openlayers/ol-debug.js')
 		script(type='text/javascript' src='/js/util.js')
 		script(type='text/javascript' src='/js/compare/compare.js')
-		
+		script(type='text/javascript' src='/js/compare/map_operations.js')
+		//script(type='text/javascript' src='/js/jscolor/jscolor.js')
 		body
 			#topLayer
-				#from_map_container.map-off
-					#from_map 
+				#from_map_container
+					#from_map.map-off
+					#drawOptions.map-off
+						.drawing
+							label Farbe: 
+							input(id='colPicker' class='color' value='#E4FF00')
+						.drawing
+							label Dicke:
+							input(id='lineWidth' type='number' value='2').col
+						.drawing
+							label Vorschau:
+							#preview
 				#vertical_handler
-				#to_map_container.map-off
-					#to_map
+				#siteplan_container.map-off
+					#siteplan
 						#topDiv
 						#centerDiv
 							#leftDiv
 							#mapDiv
+								#to_map
 							#rightDiv
 						#bottomDiv
 		script(type='text/javascript').
-			var imageId = #{img_id}
+			var imageId = #{img_id};
 			var positions = [#{positions}];
-			var imgSources = [#{imgSources}];
+			var img_sources = [#{img_sources}];
+			var org_sources = [#{org_sources}];
 			var titles = [#{titles}];
 			var descriptions = [#{descriptions}];
-			console.log(positions);
-			console.log(imgSources);
-			console.log(titles);
-			console.log(descriptions);
+			var t_map;
+			var draw;
+			var add_mar_vert = 0;
+			var add_mar_hor = 0;
+			var dft_mar = 2;
+			var linesArray = [];
+			var startPoints= [];
+			var endPoints = [];
+			var colorValues = [];
+			var widthValues = [];
 			
-
 			var mouseIn = false;
 			var maxW;
 			var maxH;
@@ -39,6 +59,19 @@ html
 			var verticalW = 22;
 			var borderW = 2;
 			document.addEventListener('DOMContentLoaded',function(){
-				create(0.3);
-				
+				create(0.25);
 			});
+		script(type="text/javascript" src="/js/colorpicker/colors.js")
+		script(type="text/javascript" src="/js/colorpicker/colorPicker.data.js")
+		script(type="text/javascript" src="/js/colorpicker/colorPicker.js")
+		script(type='text/javascript' src='/js/colorpicker/javascript_implementation/jsColor.js')
+		script(type="text/javascript").
+			var colors = jsColorPicker('input.color', {
+				customBG: '#222',
+				readOnly: true,
+				// patch: false,
+				init: function(elm, colors) { // colors is a different instance (not connected to colorPicker)
+					elm.style.backgroundColor = elm.value;
+					elm.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#222' : '#ddd';
+					}
+				});

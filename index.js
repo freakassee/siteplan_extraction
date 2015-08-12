@@ -13,8 +13,7 @@ var uploadsWebDir = '/uploads';
 app.use('/', express.static(__dirname + '/public'));
 app.use('/styles', express.static(__dirname + '/public/stylesheets'));
 app.use('/model', express.static(__dirname + '/model'));
-app.use('/openlayers', express.static(__dirname
-		+ '/node_modules/openlayers/dist'));
+app.use('/openlayers', express.static(__dirname + '/node_modules/openlayers/dist'));
 app.use(uploadsWebDir, express.static(uploadServDir));
 
 app.use(bodyParser.json());
@@ -38,16 +37,16 @@ app.get('/start', function(req, res) {
 });
 
 app.use(multer({
-	// dest : './uploads',
+
 	dest : uploadServDir,
 	rename : function(fieldname, filename) {
 		return Date.now();
 	},
 	onFileUploadStart : function(file) {
-		// console.log(file.originalname + ' is starting ...');
+
 	},
 	onFileUploadComplete : function(file) {
-		// console.log(file.fieldname + ' uploaded to ' + file.path);
+
 		done = true;
 	}
 }));
@@ -66,49 +65,38 @@ app.post('/upload', function(req, res) {
 
 		var image_Id = image_name.replace('.' + image_format, '');
 
-		// console.log(name);
-
 		sizeOf(uploadServDir + '/' + image_name, function(err, dimensions) {
 			if (!err) {
-				res.redirect('/showmap?imageId=' + image_Id + '&format='
-						+ image_format + '&width=' + dimensions.width
-						+ '&height=' + dimensions.height);
+				res.redirect('/showmap?imageId=' + image_Id + '&format=' + image_format + '&width=' + dimensions.width + '&height='
+						+ dimensions.height);
 			} else {
 				res.send(err.toString());
 			}
 		});
 	}
-	// TODO try out
-	// res.end();
+
 });
 
-app
-		.get(
-				'/showmap',
-				function(req, res) {
-					var query = req.query;
-					if (query.imageId && query.format && query.width
-							&& query.height) {
-						res.render('map', {
-							url : uploadsWebDir + '/',
-							img_id : query.imageId,
-							img_file : query.imageId + '.' + query.format,
-							img_width : query.width,
-							img_height : query.height
-						});
+app.get('/showmap', function(req, res) {
+	var query = req.query;
+	if (query.imageId && query.format && query.width && query.height) {
+		res.render('map', {
+			url : uploadsWebDir + '/',
+			img_id : query.imageId,
+			img_file : query.imageId + '.' + query.format,
+			img_width : query.width,
+			img_height : query.height
+		});
 
-					} else {
-						/**
-						 * TODO send back error message and status code (see
-						 * examples)
-						 */
-						res
-								.send('One Parameter is missing. Verify that "imageId",'
-										+ '"format", "width", as well as "height" are deed correctly.');
-					}
-					res.end();
+	} else {
+		/**
+		 * TODO send back error message and status code (see examples)
+		 */
+		res.send('One Parameter is missing. Verify that "imageId",' + '"format", "width", as well as "height" are deed correctly.');
+	}
+	res.end();
 
-				});
+});
 
 /** Talking to MatLabs Section */
 app.post('/process', function(req, res) {
@@ -120,10 +108,8 @@ app.post('/process', function(req, res) {
 	// console.log(req.body.Y);
 	// console.log(req.body.img_id);
 
-	exec('cd model && matlab -nodisplay -nosplash -nodesktop -r image_name=\''
-			+ req.body.img_id + '.jpg\';process_image(image_name,['
-			+ req.body.X + '],[' + req.body.Y + ']);exit;', function(error,
-			stdout, stderr) {
+	exec('cd model && matlab -nodisplay -nosplash -nodesktop -r image_name=\'' + req.body.img_id + '.jpg\';process_image(image_name,['
+			+ req.body.X + '],[' + req.body.Y + ']);exit;', function(error, stdout, stderr) {
 
 		var errorWatcher = fs.watch('./model/' + errorLog, function(event) {
 			fs.readFile('./model/' + errorLog, function(err, data) {
@@ -135,8 +121,7 @@ app.post('/process', function(req, res) {
 			errorWatcher.close();
 		});
 
-		var successWatcher = fs.watch('./model/' + successLog, function(event,
-				next) {
+		var successWatcher = fs.watch('./model/' + successLog, function(event, next) {
 			fs.readFile('./model/' + successLog, function(err, data) {
 				res.redirect('/extracted_trn?imageId=' + req.body.img_id);
 			});
@@ -179,8 +164,7 @@ function prepare(req, res, jadeFile) {
 	var catIndex_loaded = false;
 
 	if (query.imageId) {
-		fs.readFile('./public/images/' + query.imageId
-				+ '/data/catIndex_values.txt', function(err, data) {
+		fs.readFile('./public/images/' + query.imageId + '/data/catIndex_values.txt', function(err, data) {
 			if (!err) {
 				_parser(catIndex_values, data);
 				catIndex_loaded = true;
@@ -198,47 +182,42 @@ function prepare(req, res, jadeFile) {
 			}
 		});
 
-		fs.readFile('./public/images/' + query.imageId + '/data/x_values.txt',
-				function(err, data) {
-					if (!err) {
-						_parser(x_values, data);
-						x_loaded = true;
-						if (catIndex_loaded && x_loaded && y_loaded
-								&& symbol_loaded) {
-							res.render(jadeFile, {
-								img_id : query.imageId,
-								x_values : x_values,
-								y_values : y_values,
-								isSymbol_values : isSymbol_values,
-								catIndex_values : catIndex_values
-							});
-						}
-					} else {
-						console.log(err.toString());
-					}
-				});
-		fs.readFile('./public/images/' + query.imageId + '/data/y_values.txt',
-				function(err, data) {
-					if (!err) {
-						_parser(y_values, data);
-						y_loaded = true;
-						if (catIndex_loaded && x_loaded && y_loaded
-								&& symbol_loaded) {
-							res.render(jadeFile, {
-								img_id : query.imageId,
-								x_values : x_values,
-								y_values : y_values,
-								isSymbol_values : isSymbol_values,
-								catIndex_values : catIndex_values
-							});
-						}
-					} else {
-						console.log(err.toString());
-					}
-				});
+		fs.readFile('./public/images/' + query.imageId + '/data/x_values.txt', function(err, data) {
+			if (!err) {
+				_parser(x_values, data);
+				x_loaded = true;
+				if (catIndex_loaded && x_loaded && y_loaded && symbol_loaded) {
+					res.render(jadeFile, {
+						img_id : query.imageId,
+						x_values : x_values,
+						y_values : y_values,
+						isSymbol_values : isSymbol_values,
+						catIndex_values : catIndex_values
+					});
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+		fs.readFile('./public/images/' + query.imageId + '/data/y_values.txt', function(err, data) {
+			if (!err) {
+				_parser(y_values, data);
+				y_loaded = true;
+				if (catIndex_loaded && x_loaded && y_loaded && symbol_loaded) {
+					res.render(jadeFile, {
+						img_id : query.imageId,
+						x_values : x_values,
+						y_values : y_values,
+						isSymbol_values : isSymbol_values,
+						catIndex_values : catIndex_values
+					});
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
 
-		fs.readFile('./public/images/' + query.imageId
-				+ '/data/isSymbol_values.txt', function(err, data) {
+		fs.readFile('./public/images/' + query.imageId + '/data/isSymbol_values.txt', function(err, data) {
 			if (!err) {
 				_parser(isSymbol_values, data);
 				symbol_loaded = true;
@@ -267,8 +246,7 @@ app.post('/resize', function(req, res) {
 	string = string.replace(re, '\n');
 	string = string + '\n';
 
-	fs.writeFile('./public/images/' + query.img_id
-			+ '/data/isSymbol_values.txt', string, 'utf-8', function(err) {
+	fs.writeFile('./public/images/' + query.img_id + '/data/isSymbol_values.txt', string, 'utf-8', function(err) {
 		if (err) {
 			throw err;
 		}
@@ -279,24 +257,324 @@ app.post('/resize', function(req, res) {
 
 app.post('/bind', function(req, res) {
 	var query = req.body;
+	if (query.img_id && query.isSymbol_values) {
+		var filePath = './public/images/' + query.img_id + '/data/';
+		var content = _replaceCommaByLineBreak(query.isSymbol_values);
 
-	res.render('bind', {
-		isSymbol_values : query.isSymbol_values,
-		catIndex_values : query.catIndex_values,
-		img_id : query.img_id
-	});
+		fs.writeFile(filePath + 'isSymbol_values.txt', content, 'utf-8', function(err) {
+			if (err) {
+				throw err;
+			}
+			res.redirect(query.pathname + '?imageId=' + query.img_id);
+		});
+	} else {
+
+		if (req.headers.referer) {
+			res.redirect(req.headers.referer);
+		} else {
+			console.log(req.headers);
+			res.status('404');
+			res.send('Hier ist ein Fehler aufgetreten! Bitte starten Sie den Vorgang erneut, '
+					+ 'indem Sie folgende URL in den Browser eingeben: \"' + req.headers.host + '/start\" ');
+		}
+	}
+});
+
+app.get('/bind', function(req, res) {
+	var query = req.query;
+	var isSymbol_values = [];
+	var catIndex_values = [];
+
+	var symbol_loaded = false;
+	var catIndex_loaded = false;
+	var proceedAdvanced = false;
+	if (query.imageId) {
+		var filePath = './public/images/' + query.imageId + '/data/';
+
+		fs.readFile(filePath + 'catIndex_values.txt', function(err, data) {
+			if (!err) {
+				_parser(catIndex_values, data);
+				catIndex_loaded = true;
+				if (catIndex_loaded && symbol_loaded) {
+					res.render('bind', {
+						advanced : false,
+						img_id : query.imageId,
+						isSymbol_values : isSymbol_values,
+						catIndex_values : catIndex_values
+					});
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+
+		// filePath Array for advanced route
+
+		proceedAdvanced = _doFilesExist([ filePath + '_positions.txt', filePath + '_img_sources.txt', filePath + '_org_sources.txt',
+				filePath + '_titles.txt', filePath + '_descriptions.txt' ]);
+
+		// proceed with advanced
+		if (proceedAdvanced) {
+			var positions = [];
+			var img_sources = [];
+			var org_sources = [];
+			var titles = [];
+			var descriptions = [];
+			var renderingJson = {
+				catIndex_values : catIndex_values,
+				advanced : true,
+				img_id : query.imageId,
+				positions : positions,
+				img_sources : img_sources,
+				org_sources : org_sources,
+				titles : titles,
+				descriptions : descriptions
+			};
+			var pos_loaded = false;
+			var img_s_loaded = false;
+			var org_s_loaded = false;
+			var titles_loaded = false;
+			var descr_loaded = false;
+
+			fs.readFile(filePath + '_positions.txt', function(err, data) {
+				if (!err) {
+					_parser(positions, data);
+					pos_loaded = true;
+					renderingJson.positions = positions;
+//					console.log(positions);
+					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+						res.render('bind', renderingJson);
+					}
+				} else {
+					console.log(err.toString());
+				}
+			});
+			fs.readFile(filePath + '_img_sources.txt', function(err, data) {
+				if (!err) {
+					_parser(img_sources, data);
+					img_s_loaded = true;
+					renderingJson.img_sources = img_sources;
+//					console.log(img_sources);
+					if (catIndex_loaded && catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+						res.render('bind', renderingJson);
+					}
+				} else {
+					console.log(err.toString());
+				}
+			});
+			fs.readFile(filePath + '_org_sources.txt', function(err, data) {
+				if (!err) {
+					_parser(org_sources, data);
+					org_s_loaded = true;
+					renderingJson.org_sources = org_sources;
+//					console.log(org_sources);
+					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+						res.render('bind', renderingJson);
+					}
+				} else {
+//					console.log(err.toString());
+				}
+			});
+			fs.readFile(filePath + '_titles.txt', function(err, data) {
+				if (!err) {
+					_parser(titles, data);
+					titles_loaded = true;
+					renderingJson.titles = titles;
+					//console.log(titles);
+					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+						res.render('bind', renderingJson);
+					}
+				} else {
+//					console.log(err.toString());
+				}
+			});
+			fs.readFile(filePath + '_descriptions.txt', function(err, data) {
+				if (!err) {
+					_parser(descriptions, data);
+					descr_loaded = true;
+					renderingJson.descriptions = descriptions;
+					//console.log(descriptions);
+					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+						res.render('bind', renderingJson);
+					}
+				} else {
+//					console.log(err.toString());
+				}
+			});
+		}
+		// end of advanced proceeding
+		// start of normal proceeding
+
+		else {
+
+			fs.readFile(filePath + 'isSymbol_values.txt', function(err, data) {
+				if (!err) {
+					_parser(isSymbol_values, data);
+					symbol_loaded = true;
+					if (catIndex_loaded && symbol_loaded) {
+						res.render('bind', {
+							advanced : false,
+							img_id : query.imageId,
+							isSymbol_values : isSymbol_values,
+							catIndex_values : catIndex_values
+						});
+					}
+				} else {
+					console.log(err.toString());
+				}
+			});
+		}
+
+	}
+});
+
+app.post('/compare', function(req, res) {
+	var query = req.body;
+	var isWrittenArray = [];
+	// var arePositionsWritten = false;
+	// var areSourcesWritten = false;
+	// var areTitlesWritten = false;
+	// var areDescriptionsWritten = false;
+	isWrittenArray.push(false, false, false, false);
+
+	if (query.img_id && query.positions && query.img_sources && query.titles && query.descriptions) {
+		var filePath = './public/images/' + query.img_id + '/data/';
+		var path = '/compare/?imageId=' + query.img_id;
+		fs.writeFile(filePath + '_positions.txt', _replaceCommaByLineBreak(query.positions), 'utf-8', function(err) {
+			if (err) {
+				throw err;
+			}
+			isWrittenArray[0] = true;
+			_redirect(res, path, isWrittenArray);
+
+		});
+		fs.writeFile(filePath + '_img_sources.txt', _replaceCommaByLineBreak(query.img_sources), 'utf-8', function(err) {
+			if (err) {
+				throw err;
+			}
+			isWrittenArray[1] = true;
+			_redirect(res, path, isWrittenArray);
+
+		});
+		fs.writeFile(filePath + '_titles.txt', _replaceCommaByLineBreak(query.titles), 'utf-8', function(err) {
+			if (err) {
+				throw err;
+			}
+			isWrittenArray[2] = true;
+			_redirect(res, path, isWrittenArray);
+
+		});
+		fs.writeFile(filePath + '_descriptions.txt', _replaceCommaByLineBreak(query.descriptions), 'utf-8', function(err) {
+			if (err) {
+				throw err;
+			}
+			isWrittenArray[3] = true;
+			_redirect(res, path, isWrittenArray);
+		});
+		if (query.org_sources) {
+			//console.log('test2');
+			fs.writeFile(filePath + '_org_sources.txt', _replaceCommaByLineBreak(query.org_sources), 'utf-8', function(err) {
+				if (err) {
+					throw err;
+				}
+			});
+		}
+	}
 
 });
 
-app.all('/compare', function(req, res) {
-	var query = req.body;
-	res.render('compare', {
-		imgSources : query.imgSources,
-		titles : query.titles,
-		descriptions : query.descriptions,
-		positions : query.positions,
-		img_id : query.img_id
-	});
+app.get('/compare', function(req, res) {
+	var query = req.query;
+
+	if (query.imageId) {
+		var filePath = './public/images/' + query.imageId + '/data/';
+
+		var positions = [];
+		var img_sources = [];
+		var org_sources = [];
+		var titles = [];
+		var descriptions = [];
+		var renderingJson = {
+			img_id : query.imageId,
+			positions : positions,
+			img_sources : img_sources,
+			org_sources : org_sources,
+			titles : titles,
+			descriptions : descriptions
+		};
+		var pos_loaded = false;
+		var img_s_loaded = false;
+		var org_s_loaded = false;
+		var titles_loaded = false;
+		var descr_loaded = false;
+
+		fs.readFile(filePath + '_positions.txt', function(err, data) {
+			if (!err) {
+				_parser(positions, data);
+				pos_loaded = true;
+				renderingJson.positions = positions;
+				//console.log(positions);
+				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+					res.render('compare', renderingJson);
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+		fs.readFile(filePath + '_img_sources.txt', function(err, data) {
+			if (!err) {
+				_parser(img_sources, data);
+				img_s_loaded = true;
+				renderingJson.img_sources = img_sources;
+//				console.log(img_sources);
+				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+					res.render('compare', renderingJson);
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+		fs.readFile(filePath + '_org_sources.txt', function(err, data) {
+			if (!err) {
+				_parser(org_sources, data);
+				org_s_loaded = true;
+				renderingJson.org_sources = org_sources;
+				//console.log(org_sources);
+				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+					res.render('compare', renderingJson);
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+		fs.readFile(filePath + '_titles.txt', function(err, data) {
+			if (!err) {
+				_parser(titles, data);
+				titles_loaded = true;
+				renderingJson.titles = titles;
+				//console.log(titles);
+				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+					res.render('compare', renderingJson);
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+		fs.readFile(filePath + '_descriptions.txt', function(err, data) {
+			if (!err) {
+				_parser(descriptions, data);
+				descr_loaded = true;
+				renderingJson.descriptions = descriptions;
+				//console.log(descriptions);
+				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
+					res.render('compare', renderingJson);
+				}
+			} else {
+				console.log(err.toString());
+			}
+		});
+
+	}
 
 });
 
@@ -317,5 +595,39 @@ function _parser(arrayToFill, content) {
 		arrayToFill[i] = lines[i];
 
 	}
-	// console.log(arrayToFill);
+}
+
+function _redirect(response, redirectPath, boolArray) {
+	if (boolArray instanceof Array && boolArray.length > 0 && boolArray.indexOf(false) === -1) {
+		//console.log('test');
+		response.redirect(redirectPath);
+	}
+}
+
+function _replaceCommaByLineBreak(queryString) {
+	var string = '' + queryString;
+	var find = ',';
+	var re = new RegExp(find, 'g');
+
+	string = string.replace(re, '\n');
+	string = string + '\n';
+
+	return string;
+}
+
+function _doFilesExist(pathToFilesArray) {
+	var returnValue = true;
+	for (var i = 0; i < pathToFilesArray.length; i++) {
+		try {
+			fs.statSync(pathToFilesArray[i]);
+
+		} catch (err) {
+			returnValue = false;
+		}
+		if (!returnValue) {
+			break;
+		}
+
+	}
+	return returnValue;
 }
