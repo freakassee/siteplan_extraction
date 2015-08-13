@@ -1,13 +1,14 @@
 function createNextButton(pathname, imageId, left, top, text) {
 	var textNode = document.createTextNode(text);
 	var button = document.createElement('button');
-	button.setAttribute('id', 'button');
+	button.id = 'button';
 	button.style.position = 'absolute';
 	button.style.width = '150px';
 	button.style.height = '30px';
 	button.style.left = left + 'px';
 	button.style.top = top + 'px';
 	button.appendChild(textNode);
+
 	var params = {
 		x_values : x_values,
 		y_values : y_values,
@@ -16,33 +17,39 @@ function createNextButton(pathname, imageId, left, top, text) {
 		img_id : imageId,
 		pathname : pathname
 	}
+
 	button.onclick = function() {
 		createHiddenFormAndSubmit(pathname, imageId, params);
 	}
 
 	mainDiv.appendChild(button);
+
 }
 
 function createHiddenFormAndSubmit(pathname, imageId, params) {
-	var form = document.createElement('form');
-	form.setAttribute('method', 'post');
-	form.setAttribute('id', 'hiddenForm');
+
 	var actionPath = '/resize';
+	var form = document.createElement('form');
+
 	if (pathname == '/bind') {
 		actionPath = '/bind';
 	}
+
 	if (pathname == '/compare') {
 		actionPath = '/compare'
 	}
-	form.setAttribute('action', actionPath);
-	form.setAttribute('enctype', 'application/x-www-form-urlencoded');
+
+	form.action = actionPath;
+	form.enctype = 'application/x-www-form-urlencoded';
+	form.method = 'post';
+	form.id = 'hiddenForm';
 
 	for ( var key in params) {
 		if (params.hasOwnProperty(key)) {
 			var hiddenField = document.createElement('input');
-			hiddenField.setAttribute('type', 'hidden');
-			hiddenField.setAttribute('name', key);
-			hiddenField.setAttribute('value', params[key]);
+			hiddenField.type = 'hidden';
+			hiddenField.name = key;
+			hiddenField.value = params[key];
 			form.appendChild(hiddenField);
 		}
 	}
@@ -52,12 +59,13 @@ function createHiddenFormAndSubmit(pathname, imageId, params) {
 }
 
 function createOverlayDiv(index, color) {
-	margin = 8;
 	var div = document.createElement('div');
-	div.setAttribute('id', 'ovrDiv_' + index);
+
+	div.id = 'ovrDiv_' + index;
 	div.style.backgroundColor = color;
 	div.style.position = 'absolute';
 
+	margin = 8;
 	d_left = (x_values[index] - x_values[0]) / scalingFactor + +ovr_W - margin;
 	d_top = (y_values[index] - y_values[0]) / scalingFactor + ovr_H;
 
@@ -89,16 +97,20 @@ function createOverlayDiv(index, color) {
 
 function setStyleAccordingToSymbolValue(id, element, opacity, isInverted) {
 	if (isInverted) {
+
 		if (!isSymbol_values[id]) {
 			element.style.opacity = 0.0;
 		} else {
 			element.style.opacity = opacity;
 		}
+
 	} else {
+
 		if (!isSymbol_values[id]) {
 			element.style.opacity = opacity;
 		} else {
 			element.style.opacity = 0.0;
 		}
 	}
+
 }

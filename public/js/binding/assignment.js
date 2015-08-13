@@ -4,18 +4,21 @@ function getExtractedImages(isSymbol_vals, imageId, catIndex_vals) {
 	var isFirst = true;
 	_createTitleAndDescr(_createOriginAndSelected());
 	selected.src = symbols.root + '/universal/universal.jpg';
+
 	for (var i = 1; i <= isSymbol_vals.length; i++) {
 		if (isSymbol_vals[i - 1] == true) {
+
 			if (isFirst) {
 				origin.src = rootOrigin + i + '.jpg';
 				isFirst = false;
 			}
+
 			categoryIndices.push(catIndex_vals[i - 1])
 			original_sources.push(rootOrigin + i + '.jpg');
 			indexArray.push(i - 1);
 		}
-
 	}
+
 	imageIterator = createIteratorFor(original_sources);
 
 	_updateCounter();
@@ -31,12 +34,13 @@ function getExtractedImagesAdvanced(catIndex_vals) {
 		categoryIndices.push(catIndex_vals[indexArray[i]]);
 
 	}
-	//debugger;
+
 	if (!resultSources[index]) {
 		selected.src = symbols.root + '/universal/universal.jpg';
 	} else {
 		selected.src = resultSources[index];
 	}
+
 	origin.src = imageIterator.current();
 
 }
@@ -55,21 +59,24 @@ function _createOriginAndSelected() {
 	originalPicture.appendChild(origin);
 
 	selectedPicture.appendChild(selected);
-	
+
 	origin.onload = function() {
 		changeTitleAndDescription();
 	}
-	selected.onload  =function(){
+	selected.onload = function() {
+
 		if (selected.src.indexOf('universal') == -1) {
-		title.hidden = false;
-		description.hidden = false;
+			title.hidden = false;
+			description.hidden = false;
+		}
 	}
-	}
+	
 }
 
 function _createTitleAndDescr() {
 	var title = document.createElement('input');
 	var description = document.createElement('input');
+
 	title.type = 'text';
 	title.id = 'title';
 	title.className = 'titleDescr top';
@@ -84,18 +91,19 @@ function _createTitleAndDescr() {
 	description.style.height = selected.width * 0.17 + 'px';
 	description.hidden = true;
 
-
 	selectedPicture.appendChild(title);
 	selectedPicture.appendChild(description);
+
 }
 
-
 function onNextClick(event) {
+
 	_storeImageSource();
 	imageIterator.next()
 	changeImage();
 	_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndices[imageIterator.getCurrentIndex()]));
 	_updateCounter();
+
 }
 
 function onPreviousClick(event) {
@@ -110,80 +118,89 @@ function onPreviousClick(event) {
 
 function changeImage() {
 	origin.src = imageIterator.current();
+
 	if (resultSources[imageIterator.getCurrentIndex()]) {
 		selected.src = resultSources[imageIterator.getCurrentIndex()];
 	} else {
 		selected.src = symbols.root + '/universal/universal.jpg';
-		
 	}
+
 }
 
 function changeTitleAndDescription() {
 	var index = imageIterator.getCurrentIndex();
-	if(resultTitles[index]){
-		title.value = resultTitles[index];}
-		else{
+
+	if (resultTitles[index]) {
+		title.value = resultTitles[index];
+	} else {
 		resultTitles[index] = title.value;
-	
 	}
 
-	if(resultDescriptions[index]){
+	if (resultDescriptions[index]) {
 		description.value = resultDescriptions[index];
-	}else{
+	} else {
 		resultDescriptions[index] = description.value;
 	}
 
-	
-
-
 }
 
-// krisenstab und einstazleitung symbologie
-
 function _storeImageSource() {
-	
+
 	if (selected.src.indexOf('universal') == -1) {
 		resultSources[imageIterator.getCurrentIndex()] = selected.src;
-		resultTitles[imageIterator.getCurrentIndex()] = ''+imageIterator.getCurrentIndex();//title.value;
+		resultTitles[imageIterator.getCurrentIndex()] = '' + imageIterator.getCurrentIndex();
 		title.hidden = true;
 		title.value = '';
-		resultDescriptions[imageIterator.getCurrentIndex()] =''+ imageIterator.getCurrentIndex();//description.value;
+		resultDescriptions[imageIterator.getCurrentIndex()] = '' + imageIterator.getCurrentIndex();
 		description.hidden = true;
 		description.value = '';
 
 	}
+
 }
 
 function _showSelectedImage(event) {
+
 	selected.src = event.target.src;
+
 }
 
 function _getCategoryFromIndex(index) {
+
 	var categories = [ 'empty', 'sonstige', 'fuehrung', 'feuerwehr', 'thw' ];
+
 	return categories[index];
+
 }
 
 function _updateCounter() {
+
 	var index = imageIterator.getCurrentIndex() + 1;
 	var counter = document.getElementById('counter');
 	var indexStr = '' + index;
+
 	if (index < 10) {
 		indexStr = 0 + indexStr;
 	}
+
 	counter.innerText = indexStr + ' / ' + imageIterator.length();
 
 }
 
 function _proceedToCompare() {
+
 	_storeImageSource();
+
 	var sources = [];
 	var titles = [];
 	var descriptions = [];
 	var origin_sources = [];
+
 	for (var i = 0; i < indexArray.length; i++) {
 
 		var title = '';
 		var descr = '';
+
 		if (resultSources[i]) {
 			sources.push('\'' + resultSources[i] + '\'');
 
@@ -194,9 +211,11 @@ function _proceedToCompare() {
 			if (resultDescriptions[i]) {
 				descr = resultDescriptions[i];
 			}
+
 		} else {
 			sources.push('\'\'');
 		}
+
 		titles.push('\'' + title + '\'');
 		descriptions.push('\'' + descr + '\'');
 
@@ -204,6 +223,7 @@ function _proceedToCompare() {
 		origin_sources[i] = origin_sources[i].replace(window.location.origin, "");
 
 		sources[i] = sources[i].replace(window.location.origin, "");
+
 	}
 
 	var params = {

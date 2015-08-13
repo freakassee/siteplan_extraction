@@ -7,35 +7,38 @@ html
 		script(type='text/javascript' src='/js/commonElements.js')
 		body
 			#container 
-				#main
+				#mainDiv
 					// - TODO: button for more and less contrast
 				script(type='text/javascript').
-					// img(src='/images/#{img_id}/transformed/#{img_id}.jpg'
-					// id='transformedImage'/*,style='opacity:0.0'*/)
 					var trImg = document.createElement('img');
-					trImg.setAttribute('src','/images/#{img_id}/transformed/#{img_id}.jpg');
-					trImg.setAttribute('id','transformedImage');
-					var mainDiv = document.getElementById('main');
-					var origin_W =0;
-					var origin_H = 0;
-					var x_values = [#{x_values}];
-					var y_values = [#{y_values}];
-					var isSymbol_values = [#{isSymbol_values}];
-					var originIsSymbol = [#{isSymbol_values}];
-					var catIndex_values = [#{catIndex_values}];
+					
+					trImg.src= '/images/#{img_id}/transformed/#{img_id}.jpg';
+					trImg.id ='transformedImage';
+					
+					var x_values = [#{x_values}],
+						y_values = [#{y_values}],
+						isSymbol_values = [#{isSymbol_values}], 
+						originIsSymbol = [#{isSymbol_values}],
+						catIndex_values = [#{catIndex_values}];
+					
+					var scalingFactor,
+						scr_W,
+						scr_H, 
+						ovr_W, 
+						ovr_H;
+					
 					var ovr_list = [];
-					var scalingFactor;
-					var scr_W;
-					var scr_H;
-					var extracted_W = x_values[1] - 2 * x_values[0];
-					var extracted_H = y_values[11] - 2 * y_values[0];
-					var extracted_W2 = x_values[1] - x_values[0];
-					var extracted_H2 = y_values[11] - y_values[0];
-					var ovr_W;
-					var ovr_H;
-					var pathname = window.location.pathname;
-					var inverted = false;
-					var margin = 8;
+					
+					var origin_W =0, 
+						origin_H = 0,extracted_W = x_values[1] - 2 * x_values[0],
+						extracted_H = y_values[11] - 2 * y_values[0],
+						extracted_W2 = x_values[1] - x_values[0],
+						extracted_H2 = y_values[11] - y_values[0];
+					
+					var pathname = window.location.pathname, 
+						inverted = false, 
+						margin = 8;
+					
 					document.addEventListener('mousedown', function(e) {
 						e.preventDefault();
 					});

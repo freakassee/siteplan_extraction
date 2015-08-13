@@ -40,23 +40,27 @@ html
 								li Weder Titel noch Beschreibung müssen übertragen werden? Klicken Sie doppelt auf das zugewiesene Symbol, um fortzufahren.
 				#vertical_handler.handler
 				#rightContainer
-					#searchContainer
+					#search
 					#tabContainer
 						ul(id='tabList')
 					#imgContainer
 						ul(id='imgList')
 			script(type='text/javascript').
+				var imageId = #{img_id}, 
+					advanced = #{advanced};
+				
 				var imageIterator;
-				var imageId = #{img_id};
-				var advanced = #{advanced};
-				var categoryIndices = [];
+				
 				// identified images will be stored in here
-				var resultSources= [];
-				var resultTitles = [];
-				var resultDescriptions = [];
+				var resultSources= [],
+					categoryIndices = [],
+					resultTitles = [],
+					resultDescriptions = [],
+					indexArray = [];
+				
 				// indexArray describes, where an image is placed (possibilities
 				// 1-34)
-				var indexArray = [];
+				
 				if(advanced){
 					resultSources = [#{img_sources}];
 					resultTitles = [#{titles}];

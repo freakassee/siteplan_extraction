@@ -15,16 +15,18 @@ body {
 
 #from_map {
 	cursor: all-scroll;
+	position: relative;
+	height: 75%;
 }
 
 #drawOptions {
-	/* background-color: #ff8000; */
 	margin-top: 8px;
 }
 
 .drawing {
-	width: 40px;
-	margin: 30px
+	width: 200px;
+	margin-left: 8px;
+	margin-top: 8px;
 }
 
 .col {
@@ -41,14 +43,23 @@ body {
 	width: 140px;
 }
 
+#rotate {
+	width: 140px;
+	border-radius: 3px;
+	margin-top: 4px;
+	border: 1px solid black;
+}
+
 #siteplan_container {
-	/* position: relative; */
-	background-color: transparent;
 	background-color: #333333;
 	float: left;
 }
 
 #map {
+	cursor: all-scroll;
+}
+
+#to_map {
 	cursor: all-scroll;
 }
 
@@ -61,14 +72,6 @@ body {
 	display: inline-block;
 }
 
-/* .holderDiv.TB {
-	
-}
-
-.holderDiv.LR {
-	display: table-caption;
-	}
- */
 #topDiv {
 	position: relative;
 }
@@ -87,10 +90,7 @@ body {
 	position: relative;
 	float: left;
 }
-/* #to_map{
-	cursor: all-scroll;
 
-} */
 #rightDiv {
 	position: relative;
 	float: left;

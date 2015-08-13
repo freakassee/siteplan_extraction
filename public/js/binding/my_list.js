@@ -1,6 +1,4 @@
 function createList() {
-	var tabList = document.getElementById('tabList');
-	var imgList = document.getElementById('imgList');
 
 	for (var i = 0; i < symbols.categories.length; i++) {
 		var category = symbols.categories[i];
@@ -10,8 +8,8 @@ function createList() {
 		var tabElem = document.createElement('li');
 		var link = document.createElement('a');
 
-		link.setAttribute('href', cat_Id);
-		link.setAttribute('id', cat_Id);
+		link.href = cat_Id;
+		link.id = cat_Id;
 		link.innerHTML = category.title;
 
 		tabElem.appendChild(link);
@@ -28,9 +26,9 @@ function createList() {
 
 			listElement.className = 'listElem';
 
-			imgElem.setAttribute('src', path + file);
-			imgElem.setAttribute('class', 'img');
-			imgElem.setAttribute('id', cat_Id + '_' + j);
+			imgElem.src = path + file;
+			imgElem.className = 'img';
+			imgElem.id = cat_Id + '_' + j;
 
 			filterElem.innerHTML = cat_Id;
 
@@ -54,7 +52,7 @@ function createList() {
 			}
 
 			imgElem.ondblclick = function(event) {
-				
+
 				onNextClick(event);
 
 			}
@@ -62,13 +60,11 @@ function createList() {
 		}
 
 		tabElem.onclick = function(event) {
-			var input = document.getElementById('inputSearch');
-
 			if (!input.value == '') {
 				checkbox.checked = true;
 			}
 			event.preventDefault();
-			_onlyShowSelectedTab(event.target.id)
+			_onlyShowSelectedTab(event.target.id);
 		}
 
 	}
@@ -78,30 +74,29 @@ function createList() {
 function createRightContainerContent() {
 
 	var HTMLStr = 'Suche nur in Kategorie: <b>'
-	var search = document.getElementById('searchContainer');
+
 	var form = document.createElement('form');
 	var searchBoxDiv = document.createElement('div');
 	var surrounding = document.createElement('div');
 	var input = document.createElement('input');
 	var checkbox = document.createElement('input');
 	var labelFor = document.createElement('label');
-	var activeTab = document.getElementsByClassName('active')
 
-	input.setAttribute('type', 'search');
-	input.setAttribute('id', 'inputSearch');
+	input.type = 'search';
+	input.id = 'input';
 	input.className = 'clearable';
 
-	searchBoxDiv.setAttribute('class', 'searchBoxDiv');
+	searchBoxDiv.className = 'searchBoxDiv';
 	searchBoxDiv.appendChild(input);
 
-	checkbox.setAttribute('type', 'checkbox');
-	checkbox.setAttribute('id', 'checkbox');
-	checkbox.setAttribute('value', 'false');
+	checkbox.type = 'checkbox';
+	checkbox.id = 'checkbox';
+	checkbox.value = 'false';
 
 	labelFor.setAttribute('for', 'checkbox');
-	labelFor.setAttribute('id', 'checkboxLabel')
+	labelFor.id = 'labelFor';
 
-	surrounding.setAttribute('class', 'surrounding');
+	surrounding.className = 'surrounding';
 	surrounding.appendChild(checkbox);
 	surrounding.appendChild(labelFor);
 
@@ -129,10 +124,8 @@ function createRightContainerContent() {
 }
 
 function _search() {
-	var input = document.getElementById('inputSearch');
+
 	var searchWord = input.value.toLowerCase();
-	var checkbox = document.getElementById('checkbox');
-	var imgList = document.getElementById('imgList');
 
 	var activeTab = document.getElementsByClassName('active')[0];
 	var activeTab_val = activeTab.children[0].getAttribute('href');
@@ -168,7 +161,7 @@ function _search() {
 function _onlyShowSelectedTab(clickedTab) {
 	var target = document.getElementById(clickedTab);
 	var HTMLStr = 'Suche nur in Kategorie: <b>'
-	var labelFor = document.getElementById('checkboxLabel');
+
 	var targetText = target.innerHTML;
 
 	var selectedElements = document.getElementsByTagName('filter');

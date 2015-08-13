@@ -16,13 +16,16 @@ html
 					#drawOptions.map-off
 						.drawing
 							label Farbe: 
-							input(id='colPicker' class='color' value='#E4FF00')
+							input(id='colPicker' class='color' value='#000000')
 						.drawing
 							label Dicke:
 							input(id='lineWidth' type='number' value='2').col
 						.drawing
 							label Vorschau:
 							#preview
+						.drawing
+							label Ausgangskarte rotieren:
+							button(id='rotate' value='Rotieren') Rotieren
 				#vertical_handler
 				#siteplan_container.map-off
 					#siteplan
@@ -34,42 +37,42 @@ html
 							#rightDiv
 						#bottomDiv
 		script(type='text/javascript').
-			var imageId = #{img_id};
-			var positions = [#{positions}];
-			var img_sources = [#{img_sources}];
-			var org_sources = [#{org_sources}];
-			var titles = [#{titles}];
-			var descriptions = [#{descriptions}];
-			var t_map;
-			var draw;
-			var add_mar_vert = 0;
-			var add_mar_hor = 0;
-			var dft_mar = 2;
-			var linesArray = [];
-			var startPoints= [];
-			var endPoints = [];
-			var colorValues = [];
-			var widthValues = [];
+			var t_map,f_map,draw,maxW, maxH;
 			
-			var mouseIn = false;
-			var maxW;
-			var maxH;
-			var margin = 8;
-			var verticalW = 22;
-			var borderW = 2;
+							var imageId = #{img_id},
+				positions = [#{positions}],
+				img_sources = [#{img_sources}],
+				org_sources = [#{org_sources}],
+				titles = [#{titles}],
+				descriptions = [#{descriptions}];
+			
+			
+			var add_mar_vert = 0,
+				add_mar_hor = 0,
+				dft_mar = 2,
+				margin = 8,
+				verticalW = 22,
+				borderW = 2;
+			
+			var linesArray = [],
+				startPoints= [],
+				endPoints = [],
+				colorValues = [],
+				widthValues = [];
+				
 			document.addEventListener('DOMContentLoaded',function(){
-				create(0.25);
+				create(0.35);
 			});
 		script(type="text/javascript" src="/js/colorpicker/colors.js")
 		script(type="text/javascript" src="/js/colorpicker/colorPicker.data.js")
 		script(type="text/javascript" src="/js/colorpicker/colorPicker.js")
 		script(type='text/javascript' src='/js/colorpicker/javascript_implementation/jsColor.js')
+		
 		script(type="text/javascript").
 			var colors = jsColorPicker('input.color', {
 				customBG: '#222',
 				readOnly: true,
-				// patch: false,
-				init: function(elm, colors) { // colors is a different instance (not connected to colorPicker)
+				init: function(elm, colors) {
 					elm.style.backgroundColor = elm.value;
 					elm.style.color = colors.rgbaMixCustom.luminance > 0.22 ? '#222' : '#ddd';
 					}

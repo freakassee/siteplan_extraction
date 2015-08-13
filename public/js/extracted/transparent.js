@@ -17,16 +17,14 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 
 		trImg.style.height = scr_H + 'px';
 
-		createNextButton('/bind', image_Id, origin_W / scalingFactor + 20,
-				scr_H / 2, 'Weiter zur Zuordnung');
+		createNextButton('/bind', image_Id, origin_W / scalingFactor + 20, scr_H / 2, 'Weiter zur Zuordnung');
 
 	} else {
 		scalingFactor = origin_W / scr_W;
 
 		trImg.style.width = scr_W + 'px';
 
-		createNextButton('/bind', image_Id, 50, origin_H / scalingFactor + 20,
-				'Weiter zur Zuordnung');
+		createNextButton('/bind', image_Id, 50, origin_H / scalingFactor + 20, 'Weiter zur Zuordnung');
 
 	}
 
@@ -54,17 +52,14 @@ function onDivClick(event) {
 
 function createInnerDiv(scalingFactor) {
 	var innerDiv = document.createElement('div');
-	innerDiv.setAttribute('id', 'innerDiv');
+	innerDiv.id = 'innerDiv';
 	innerDiv.style.position = 'absolute';
 	innerDiv.style.backgroundColor = 'black';
 	innerDiv.style.opacity = 0.8;
-	innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W - margin
-			+ 'px';
-	innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H
-			+ /* margin + */'px';
+	innerDiv.style.left = (extracted_W2) / scalingFactor + ovr_W - margin + 'px';
+	innerDiv.style.top = (extracted_H2) / scalingFactor + ovr_H + /* margin + */'px';
 	innerDiv.style.width = (x_values[10] - x_values[1]) / scalingFactor + 'px';
-	innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor
-			+ 'px';
+	innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor + 'px';
 
 	mainDiv.appendChild(innerDiv);
 }

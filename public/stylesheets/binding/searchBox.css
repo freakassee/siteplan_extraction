@@ -1,4 +1,4 @@
-#searchContainer {
+#search {
 	border-color: #dedede #bababa #aaa #bababa;
 	border-radius: 10px;
 	background-color: #f6f6f6;
@@ -16,7 +16,7 @@
 	margin: 4% 2% 4% 3%;
 }
 
-#inputSearch {
+#input {
 	width: 100%;
 	font: bold 1vmax 'lucida sans', 'trebuchet MS', 'Tahoma';
 	border: 1px solid #ccc;
@@ -25,7 +25,7 @@
 	height: 100%;
 }
 
-#inputSearch:focus {
+#input:focus {
 	outline: 0;
 	border-color: #aaa;
 	box-shadow: 0 1px 1px #bbb inset;
@@ -43,7 +43,7 @@
 	vertical-align: -webkit-baseline-middle;
 }
 
-#checkboxLabel {
+#labelFor {
 	font-size: 1.1vmax;
 	margin-left: 1%;
 	vertical-align: -webkit-baseline-middle;

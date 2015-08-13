@@ -17,16 +17,16 @@ function create(handlerPosition) {
 	colPicker.changeInputValue = function() {
 		changePreview();
 	}
-	
-	preview.style.borderBottom = lineWidth.value +'px solid ' + colPicker.value
+
+	preview.style.borderBottom = lineWidth.value + 'px solid ' + colPicker.value
 }
 
 function changePreview() {
-	preview.style.borderBottom = lineWidth.value +'px solid ' + colPicker.value
+	preview.style.borderBottom = lineWidth.value + 'px solid ' + colPicker.value
 }
 
 function create_vertical(widthPercentage, heightPercentage) {
-	vertical_handler.style.height = maxH + borderW + 'px';
+	vertical_handler.style.height = maxH + 2 * borderW + 'px';
 	vertical_handler.style.width = '8px';
 	vertical_handler.style.marginLeft = '6px';
 	vertical_handler.style.marginRight = '6px';
@@ -135,12 +135,17 @@ function createSitePlan() {
 		// holderDiv.style.background = getRandomColor();
 
 		holderDiv.onclick = function() {
-			_reference();
-			t_map.getViewport().addEventListener('click', onmapclick, true);
+
+			if (event.target.src.indexOf('universal') < 0) {
+				to_map.style.cursor = 'pointer';
+				_reference();
+
+				t_map.getViewport().addEventListener('click', onmapclick, true);
+			}
 
 		}
-		
-		holderDiv.ondblclick = function(){
+
+		holderDiv.ondblclick = function() {
 			_removeReference();
 		}
 
@@ -179,14 +184,34 @@ function setHandlerPosition(percentage) {
 
 	from_map_W = roundDown(maxW * percentage - 1 / 2 * verticalW) - 10;
 	from_map.style.width = from_map_W + 'px'
-	from_map.style.height = maxH / 3 + 'px';
+	from_map.style.height = 2 * maxH / 3 + 'px';
 
 	drawOptions.style.width = from_map_W + 'px';
-	drawOptions.style.height = maxH / 3 + 'px';
+	drawOptions.style.height = maxH / 3 - 11 + 'px';
 
 	siteplan_Width = roundDown(maxW * (1 - percentage) - 1 / 2 * verticalW) - 10;
 	siteplan_Height = maxH;
 
 	siteplan.style.width = siteplan_Width + 'px'
 	siteplan.style.height = siteplan_Height + 'px';
+
+	// _updateAll()
+}
+
+function _updateAll() {
+
+	if (f_map && t_map) {
+		f_map.updateSize();
+		for (var i = topDiv.children.length - 1; i >= 0; i--) {
+			topDiv.children[i].remove();
+			bottomDiv.children[i].remove();
+			if (i < leftDiv.children.length) {
+				leftDiv.children[i].remove();
+				rightDiv.children[i].remove();
+			}
+		}
+		to_map.children[0].remove();
+		createSitePlan()
+		t_map.updateSize();
+	}
 }
