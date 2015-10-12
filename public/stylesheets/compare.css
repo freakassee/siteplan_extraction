@@ -70,6 +70,7 @@ body {
 .holderDiv {
 	position: relative;
 	display: inline-block;
+	cursor: pointer;
 }
 
 #topDiv {

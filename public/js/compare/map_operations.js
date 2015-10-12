@@ -38,6 +38,18 @@ function create_to(widthPercentage, heightPercentage) {
 	t_map.on("moveend", function(e) {
 		drawLines();
 	});
+	
+	rotate.addEventListener('click', function() {
+		var view = t_map.getView();
+		var currentRotation = view.getRotation();
+		var rotate = ol.animation.rotate({
+			anchor : view.getCenter(),
+			duration : 500,
+			rotation : currentRotation
+		});
+		t_map.beforeRender(rotate);
+		view.rotate(currentRotation + (Math.PI / 2), view.getCenter());
+	}, false);
 
 }
 
@@ -186,7 +198,7 @@ function create_from(widthPercentage, heightPercentage) {
 		})
 	});
 
-	view = new ol.View({
+	var view = new ol.View({
 		projection : projection,
 		center : ol.extent.getCenter(extent),
 		zoom : 0
@@ -198,16 +210,6 @@ function create_from(widthPercentage, heightPercentage) {
 		view : view
 	});
 
-	rotate.addEventListener('click', function() {
-
-		var currentRotation = view.getRotation();
-		var rotate = ol.animation.rotate({
-			anchor : center,
-			duration : 500,
-			rotation : currentRotation
-		});
-		f_map.beforeRender(rotate);
-		view.rotate(currentRotation + (Math.PI / 2), center);
-	}, false);
+	
 
 }

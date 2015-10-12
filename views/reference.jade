@@ -1,0 +1,81 @@
+doctype html5
+html
+	head
+		link(rel='stylesheet', href='/styles/reference/reference.css')
+		link(rel='stylesheet', href='/styles/reference/assignment.css')
+		link(rel='stylesheet', href='/styles/vertical_handler.css')
+		link(rel='stylesheet', href='/styles/reference/searchBox.css')
+		link(rel='stylesheet', href='/styles/reference/tabs.css')
+		link(rel='stylesheet', href='/styles/reference/imageList.css')
+		body
+			script(type='text/javascript' src='/js/iterator.js')
+			script(type='text/javascript' src='/js/commonElements.js')
+			script(type='text/javascript' src='/js/reference/my_list.js')
+			script(type='text/javascript' src='/js/reference/assignment.js')
+			script(type='text/javascript' src='/js/reference/vertical_handler.js')
+			script(type='text/javascript' src='/js/reference/symbols.json')
+			#container.containerCss
+				#leftContainer
+					#topContainer
+						h2 Zuweisung
+						.text Die nächste Aufgabe besteht darin, den erkannten Symbolen die identischen taktischen Symbol zuzuweisen. <br> <br>
+						|Mit Hilfe der Pfeile können Sie zwischen den erkannten Symbolen wechseln. Eine Zuweisung findet mit einem Klick auf ein Symbol auf der rechten Seite statt. <br><br>
+						| Außerdem können Titel und Beschreibung übertragen werden. <br>
+					#contentContainer
+						#pictureContainer.con.left
+							#originalPicture
+							#buttonContainer
+								img(src='/styles/img/arrow_left.png' id='prevBtn' value='' onclick='onPreviousClick()').btn.left
+								#counter
+								img(src='/styles/img/arrow_right.png' id='nextBtn' value='' onclick='onNextClick()').btn.right
+						#selectedPicture.con.right
+						.finishDiv 
+							img(src='/styles/img/beenden.png' id='finish' value='' onclick='_proceedToCompare()')
+					#bottom
+						h3 Allgemeine Tipps
+						.text.tipps 
+							ul.t
+								li Die taktischen Symbole sind unterteilt in verschiedene Kategorien. 
+								li Finden Sie Symbole schneller mit Hilfe der Suche.
+								li Weder Titel noch Beschreibung müssen übertragen werden? Klicken Sie doppelt auf das zugewiesene Symbol, um fortzufahren.
+				#vertical_handler.handler
+				#rightContainer
+					#search
+					#tabContainer
+						ul(id='tabList')
+					#imgContainer
+						ul(id='imgList')
+			script(type='text/javascript').
+				var imageId = #{img_id}, 
+					advanced = #{advanced};
+				
+				var imageIterator;
+				
+				// identified images will be stored in here
+				var resultSources= [],
+					categoryIndices = [],
+					resultTitles = [],
+					resultDescriptions = [],
+					indexArray = [];
+				
+				// indexArray describes, where an image is placed (possibilities
+				// 1-34)
+				
+				if(advanced){
+					resultSources = [#{img_sources}];
+					resultTitles = [#{titles}];
+					resultDescriptions = [#{descriptions}];
+					indexArray = [#{positions}];
+					imageIterator = createIteratorFor([#{org_sources}]);
+					
+					getExtractedImagesAdvanced([#{catIndex_values}]);
+					
+				}else{
+					getExtractedImages([#{isSymbol_values}],#{img_id},[#{catIndex_values}]);
+					
+				}
+				_onlyShowSelectedTab(_getCategoryFromIndex(categoryIndices[imageIterator.getCurrentIndex()]),createList(createRightContainerContent()));
+				document.addEventListener('DOMContentLoaded',function(){
+					addListeners();
+				});
+				

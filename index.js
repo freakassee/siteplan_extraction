@@ -1,20 +1,15 @@
 var express = require('express');
 var fs = require('fs');
-var multer = require('multer');
-var sizeOf = require('image-size');
+
 var bodyParser = require('body-parser');
-var exec = require('child_process').exec;
 
 var app = express();
-var done = false;
-var uploadServDir = __dirname + '/uploads';
-var uploadsWebDir = '/uploads';
 
 app.use('/', express.static(__dirname + '/public'));
 app.use('/styles', express.static(__dirname + '/public/stylesheets'));
 app.use('/model', express.static(__dirname + '/model'));
 app.use('/openlayers', express.static(__dirname + '/node_modules/openlayers/dist'));
-app.use(uploadsWebDir, express.static(uploadServDir));
+// app.use(uploadsWebDir, express.static(uploadServDir));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -28,123 +23,25 @@ app.set('view engine', 'jade');
 
 /** Openlayers Section */
 
-/** Upload Section */
-app.get('/start', function(req, res) {
-	res.render('upload', {
-		content : 'Laden Sie hier bitte das Foto hoch'
-	});
-	res.end();
-});
+app.use('/', require('./routes/uploadRouter'))
 
-app.use(multer({
-
-	dest : uploadServDir,
-	rename : function(fieldname, filename) {
-		return Date.now();
-	},
-	onFileUploadStart : function(file) {
-
-	},
-	onFileUploadComplete : function(file) {
-
-		done = true;
-	}
-}));
-
-app.post('/upload', function(req, res) {
-	if (done) {
-
-		/**
-		 * TODO Catch wrong Extensions Only .JPG and .PNG should be allowed
-		 * Otherwise redirect to Upload Page
-		 */
-
-		var image_file = req.files.userImage;
-		var image_name = image_file.name;
-		var image_format = image_file.extension;
-
-		var image_Id = image_name.replace('.' + image_format, '');
-
-		sizeOf(uploadServDir + '/' + image_name, function(err, dimensions) {
-			if (!err) {
-				res.redirect('/showmap?imageId=' + image_Id + '&format=' + image_format + '&width=' + dimensions.width + '&height='
-						+ dimensions.height);
-			} else {
-				res.send(err.toString());
-			}
-		});
-	}
-
-});
-
-app.get('/showmap', function(req, res) {
-	var query = req.query;
-	if (query.imageId && query.format && query.width && query.height) {
-		res.render('map', {
-			url : uploadsWebDir + '/',
-			img_id : query.imageId,
-			img_file : query.imageId + '.' + query.format,
-			img_width : query.width,
-			img_height : query.height
-		});
-
-	} else {
-		/**
-		 * TODO send back error message and status code (see examples)
-		 */
-		res.send('One Parameter is missing. Verify that "imageId",' + '"format", "width", as well as "height" are deed correctly.');
-	}
-	res.end();
-
-});
+app.use('/', require('./routes/showImageRouter'));
 
 /** Talking to MatLabs Section */
-app.post('/process', function(req, res) {
 
-	var errorLog = 'error.log';
-	var successLog = 'success.log';
-
-	// console.log(req.body.X);
-	// console.log(req.body.Y);
-	// console.log(req.body.img_id);
-
-	exec('cd model && matlab -nodisplay -nosplash -nodesktop -r image_name=\'' + req.body.img_id + '.jpg\';process_image(image_name,['
-			+ req.body.X + '],[' + req.body.Y + ']);exit;', function(error, stdout, stderr) {
-
-		var errorWatcher = fs.watch('./model/' + errorLog, function(event) {
-			fs.readFile('./model/' + errorLog, function(err, data) {
-				var dataString = data.toString();
-				console.error(dataString);
-				res.end(dataString);
-			});
-			successWatcher.close();
-			errorWatcher.close();
-		});
-
-		var successWatcher = fs.watch('./model/' + successLog, function(event, next) {
-			fs.readFile('./model/' + successLog, function(err, data) {
-				res.redirect('/extracted_trn?imageId=' + req.body.img_id);
-			});
-			errorWatcher.close();
-			successWatcher.close();
-
-			// res.end('success');
-		});
-		if (error !== null) {
-			console.log('exec error: ' + error);
-		}
-	});
-});
+app.use('/', require('./routes/processRouter'))
 
 app.get('/extracted_rg', function(req, res) {
 	prepare(req, res, 'extracted_rg');
 });
 
 app.get('/extracted_mt', function(req, res) {
+
 	prepare(req, res, 'extracted_mt');
 });
 
 app.get('/extracted_trn', function(req, res) {
+
 	prepare(req, res, 'extracted_trn');
 });
 app.get('/extracted_og', function(req, res) {
@@ -255,7 +152,7 @@ app.post('/resize', function(req, res) {
 
 });
 
-app.post('/bind', function(req, res) {
+app.post('/reference', function(req, res) {
 	var query = req.body;
 	if (query.img_id && query.isSymbol_values) {
 		var filePath = './public/images/' + query.img_id + '/data/';
@@ -280,7 +177,7 @@ app.post('/bind', function(req, res) {
 	}
 });
 
-app.get('/bind', function(req, res) {
+app.get('/reference', function(req, res) {
 	var query = req.query;
 	var isSymbol_values = [];
 	var catIndex_values = [];
@@ -296,7 +193,7 @@ app.get('/bind', function(req, res) {
 				_parser(catIndex_values, data);
 				catIndex_loaded = true;
 				if (catIndex_loaded && symbol_loaded) {
-					res.render('bind', {
+					res.render('reference', {
 						advanced : false,
 						img_id : query.imageId,
 						isSymbol_values : isSymbol_values,
@@ -341,9 +238,8 @@ app.get('/bind', function(req, res) {
 					_parser(positions, data);
 					pos_loaded = true;
 					renderingJson.positions = positions;
-//					console.log(positions);
 					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
-						res.render('bind', renderingJson);
+						res.render('reference', renderingJson);
 					}
 				} else {
 					console.log(err.toString());
@@ -354,9 +250,8 @@ app.get('/bind', function(req, res) {
 					_parser(img_sources, data);
 					img_s_loaded = true;
 					renderingJson.img_sources = img_sources;
-//					console.log(img_sources);
 					if (catIndex_loaded && catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
-						res.render('bind', renderingJson);
+						res.render('reference', renderingJson);
 					}
 				} else {
 					console.log(err.toString());
@@ -367,12 +262,10 @@ app.get('/bind', function(req, res) {
 					_parser(org_sources, data);
 					org_s_loaded = true;
 					renderingJson.org_sources = org_sources;
-//					console.log(org_sources);
 					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
-						res.render('bind', renderingJson);
+						res.render('reference', renderingJson);
 					}
 				} else {
-//					console.log(err.toString());
 				}
 			});
 			fs.readFile(filePath + '_titles.txt', function(err, data) {
@@ -380,12 +273,11 @@ app.get('/bind', function(req, res) {
 					_parser(titles, data);
 					titles_loaded = true;
 					renderingJson.titles = titles;
-					//console.log(titles);
 					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
-						res.render('bind', renderingJson);
+						res.render('reference', renderingJson);
 					}
 				} else {
-//					console.log(err.toString());
+					// console.log(err.toString());
 				}
 			});
 			fs.readFile(filePath + '_descriptions.txt', function(err, data) {
@@ -393,12 +285,10 @@ app.get('/bind', function(req, res) {
 					_parser(descriptions, data);
 					descr_loaded = true;
 					renderingJson.descriptions = descriptions;
-					//console.log(descriptions);
 					if (catIndex_loaded && pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
-						res.render('bind', renderingJson);
+						res.render('reference', renderingJson);
 					}
 				} else {
-//					console.log(err.toString());
 				}
 			});
 		}
@@ -412,7 +302,7 @@ app.get('/bind', function(req, res) {
 					_parser(isSymbol_values, data);
 					symbol_loaded = true;
 					if (catIndex_loaded && symbol_loaded) {
-						res.render('bind', {
+						res.render('reference', {
 							advanced : false,
 							img_id : query.imageId,
 							isSymbol_values : isSymbol_values,
@@ -431,13 +321,10 @@ app.get('/bind', function(req, res) {
 app.post('/compare', function(req, res) {
 	var query = req.body;
 	var isWrittenArray = [];
-	// var arePositionsWritten = false;
-	// var areSourcesWritten = false;
-	// var areTitlesWritten = false;
-	// var areDescriptionsWritten = false;
 	isWrittenArray.push(false, false, false, false);
 
 	if (query.img_id && query.positions && query.img_sources && query.titles && query.descriptions) {
+
 		var filePath = './public/images/' + query.img_id + '/data/';
 		var path = '/compare/?imageId=' + query.img_id;
 		fs.writeFile(filePath + '_positions.txt', _replaceCommaByLineBreak(query.positions), 'utf-8', function(err) {
@@ -448,6 +335,7 @@ app.post('/compare', function(req, res) {
 			_redirect(res, path, isWrittenArray);
 
 		});
+
 		fs.writeFile(filePath + '_img_sources.txt', _replaceCommaByLineBreak(query.img_sources), 'utf-8', function(err) {
 			if (err) {
 				throw err;
@@ -472,7 +360,6 @@ app.post('/compare', function(req, res) {
 			_redirect(res, path, isWrittenArray);
 		});
 		if (query.org_sources) {
-			//console.log('test2');
 			fs.writeFile(filePath + '_org_sources.txt', _replaceCommaByLineBreak(query.org_sources), 'utf-8', function(err) {
 				if (err) {
 					throw err;
@@ -513,7 +400,6 @@ app.get('/compare', function(req, res) {
 				_parser(positions, data);
 				pos_loaded = true;
 				renderingJson.positions = positions;
-				//console.log(positions);
 				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
 					res.render('compare', renderingJson);
 				}
@@ -526,7 +412,6 @@ app.get('/compare', function(req, res) {
 				_parser(img_sources, data);
 				img_s_loaded = true;
 				renderingJson.img_sources = img_sources;
-//				console.log(img_sources);
 				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
 					res.render('compare', renderingJson);
 				}
@@ -539,7 +424,6 @@ app.get('/compare', function(req, res) {
 				_parser(org_sources, data);
 				org_s_loaded = true;
 				renderingJson.org_sources = org_sources;
-				//console.log(org_sources);
 				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
 					res.render('compare', renderingJson);
 				}
@@ -552,7 +436,6 @@ app.get('/compare', function(req, res) {
 				_parser(titles, data);
 				titles_loaded = true;
 				renderingJson.titles = titles;
-				//console.log(titles);
 				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
 					res.render('compare', renderingJson);
 				}
@@ -565,7 +448,6 @@ app.get('/compare', function(req, res) {
 				_parser(descriptions, data);
 				descr_loaded = true;
 				renderingJson.descriptions = descriptions;
-				//console.log(descriptions);
 				if (pos_loaded && img_s_loaded && org_s_loaded && titles_loaded && descr_loaded) {
 					res.render('compare', renderingJson);
 				}
@@ -599,7 +481,6 @@ function _parser(arrayToFill, content) {
 
 function _redirect(response, redirectPath, boolArray) {
 	if (boolArray instanceof Array && boolArray.length > 0 && boolArray.indexOf(false) === -1) {
-		//console.log('test');
 		response.redirect(redirectPath);
 	}
 }

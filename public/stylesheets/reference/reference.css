@@ -1,0 +1,30 @@
+.containerCss {
+	height: 100%;
+	width: 100%;
+}
+
+#leftContainer {
+	width: 30%;
+	min-height: 100%; 
+	background-color: #c0c0c0;
+	background-color: lightyellow;
+	float: left;
+}
+
+
+#rightContainer {
+	background-color: #333333;
+	background-color: transparent;
+	width: 100%;
+	width: 65%;
+	height: 100%;
+	float: left;
+}
+
+#headerContainer {
+	height: 10vh;
+}
+
+ul {
+	list-style-type: none;
+}

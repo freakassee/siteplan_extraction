@@ -1,0 +1,32 @@
+body {
+	/*padding: 50px;*/
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	
+}	
+
+a {
+	color: #00B7FF;
+}
+
+#map {
+	
+	background-color: transparent;
+	text-align:center;
+	width: 75%;
+		
+}
+
+.ol-viewport{
+  	overflow: visible !important;
+}
+
+canvas.ol-unselectable{	
+	border-radius: 25px;
+    /*border: 1px solid #D3D3D3;*/
+	background-color: gainsboro;
+}
+#placeholder{
+	padding-left: 25%;
+	padding-right: 25%;
+	
+}

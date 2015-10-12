@@ -17,14 +17,14 @@ function createDocument(image_Id, x_values, y_values, isSymbol_values) {
 
 		trImg.style.height = scr_H + 'px';
 
-		createNextButton('/bind', image_Id, origin_W / scalingFactor + 20, scr_H / 2, 'Weiter zur Zuordnung');
+		createNextButton('/reference', image_Id, origin_W / scalingFactor + 20, scr_H / 2, 'Weiter zur Zuordnung');
 
 	} else {
 		scalingFactor = origin_W / scr_W;
 
 		trImg.style.width = scr_W + 'px';
 
-		createNextButton('/bind', image_Id, 50, origin_H / scalingFactor + 20, 'Weiter zur Zuordnung');
+		createNextButton('/reference', image_Id, 50, origin_H / scalingFactor + 20, 'Weiter zur Zuordnung');
 
 	}
 
@@ -62,8 +62,4 @@ function createInnerDiv(scalingFactor) {
 	innerDiv.style.height = (y_values[17] - y_values[11]) / scalingFactor + 'px';
 
 	mainDiv.appendChild(innerDiv);
-}
-
-transparent.prototype.test = function() {
-	return 123;
 }

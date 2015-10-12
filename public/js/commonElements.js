@@ -31,8 +31,8 @@ function createHiddenFormAndSubmit(pathname, imageId, params) {
 	var actionPath = '/resize';
 	var form = document.createElement('form');
 
-	if (pathname == '/bind') {
-		actionPath = '/bind';
+	if (pathname == '/reference') {
+		actionPath = '/reference';
 	}
 
 	if (pathname == '/compare') {

@@ -137,7 +137,7 @@ function createSitePlan() {
 		holderDiv.onclick = function() {
 
 			if (event.target.src.indexOf('universal') < 0) {
-				to_map.style.cursor = 'pointer';
+				to_map.style.cursor = 'crosshair';
 				_reference();
 
 				t_map.getViewport().addEventListener('click', onmapclick, true);
