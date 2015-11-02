@@ -1,0 +1,96 @@
+include layout_extracted
+block content
+	script(type='text/javascript' src='/js/extracted/marker.js')
+	script(type='text/javascript').
+		var mrk_list = [];
+		var targetStr = 'markerDiv_'
+		inverted = true;	
+		trImg.onload = function(){
+			marker('#{img_id}');
+		}
+		
+		/*init('#{img_id}');
+		
+		function createDocument(x_values,y_values,isSymbol_values){
+			scr_W 	= window.innerWidth-20;
+			scr_H 	= window.innerHeight-20;
+			
+			if(trImg.height / scr_H > trImg.width / scr_W){	
+				scalingFactor = trImg.height / scr_H;
+				trImg.style.height = scr_H+'px';
+				
+				// Right Version
+				//createNextButton('/extracted_og', #{img_id}, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_og', 3, trImg.width + 20, scr_H/2,'Weiter zu Variante C');
+				
+			} else {
+				scalingFactor = trImg.width / scr_W;
+				trImg.style.width = scr_W+'px';
+				
+				// Right Version
+				//createNextButton('/extracted_og',#{img_id}, 50, trImg.height + 20,'Weiter zu Variante C');
+				// version below is for questionnaire only
+				//TO DELETE
+				createNextButton('/extracted_og',3, 50, trImg.height + 20,'Weiter zu Variante C');
+				
+			}
+			
+			trImg.style.opacity=1.0;	
+			ovr_W = roundDown(extracted_W/5/scalingFactor);
+			ovr_H = ovr_W;
+			
+			for (var i = 0; i <  x_values.length; i++) {
+				ovr_list[i] = createOverlayDiv(i,'transparent');
+				mrk_list[i] = createMarkerDiv(i,'orange');
+			}
+		}
+		
+		
+		function onDivClick(event) {
+			var targetID = event.target.id;
+			var id = targetID.split('_')[1];
+			isSymbol_values[id] = !isSymbol_values[id];
+			var target = document.getElementById(targetStr + id);
+			setStyleAccordingToSymbolValue(id, target, 1.0, inverted);
+
+		}
+		
+		
+		function createMarkerDiv(index, color){
+			var markerDiv = document.createElement('div');
+			markerDiv.setAttribute('id','markerDiv_'+index);
+			markerDiv.style.backgroundColor = color;
+			markerDiv.style.position='absolute';
+			
+			if(index < 11 || (index>16 && index<28)){
+				markerDiv.style.left = d_left + margin +'px';
+				markerDiv.style.width = d_width + 'px';
+				markerDiv.style.height =  -y_values[0]/scalingFactor + 'px';
+				
+				if(index<11){
+					markerDiv.style.top = d_top + y_values[0]/scalingFactor + 'px';
+					
+				}else{
+					markerDiv.style.top = d_top + d_height  + 'px';
+				}
+			}else{
+				markerDiv.style.top = d_top + 'px';
+				markerDiv.style.width = -y_values[0]/scalingFactor + 'px';
+				markerDiv.style.height = d_height + 'px';					
+				if(index<28){
+					markerDiv.style.left = d_left + margin +d_width +'px';
+				} else {
+					markerDiv.style.left = d_left+ margin +y_values[0]/scalingFactor + 'px';
+				}
+			}
+			markerDiv.style.zIndex=2;
+						
+			markerDiv.addEventListener('click',function(event){
+				onDivClick(event)
+			});
+			
+			setStyleAccordingToSymbolValue(index,markerDiv,1.0,true);
+			mainDiv.appendChild(markerDiv);
+		}*/

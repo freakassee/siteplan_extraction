@@ -1,9 +1,18 @@
 var express = require('express');
 var fs = require('fs');
 
+
+
 var bodyParser = require('body-parser');
 
 var app = express();
+
+//var router = express.Router();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+	extended : true
+}));
 
 app.use('/', express.static(__dirname + '/public'));
 app.use('/styles', express.static(__dirname + '/public/stylesheets'));
@@ -11,10 +20,7 @@ app.use('/model', express.static(__dirname + '/model'));
 app.use('/openlayers', express.static(__dirname + '/node_modules/openlayers/dist'));
 // app.use(uploadsWebDir, express.static(uploadServDir));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended : true
-}));
+
 
 app.use('/image', express.static(__dirname + '/model/images'));
 
@@ -31,22 +37,21 @@ app.use('/', require('./routes/showImageRouter'));
 
 app.use('/', require('./routes/processRouter'))
 
-app.get('/extracted_rg', function(req, res) {
-	prepare(req, res, 'extracted_rg');
+//app.get('/extracted_rg', function(req, res) {
+//	prepare(req, res, 'extracted_rg');
+//});
+//
+//app.get('/extracted_mt', function(req, res) {
+//	prepare(req, res, 'extracted_mt');
+//});
+
+app.get('/extracted', function(req, res) {
+	prepare(req, res, 'extracted');
 });
 
-app.get('/extracted_mt', function(req, res) {
-
-	prepare(req, res, 'extracted_mt');
-});
-
-app.get('/extracted_trn', function(req, res) {
-
-	prepare(req, res, 'extracted_trn');
-});
-app.get('/extracted_og', function(req, res) {
-	prepare(req, res, 'extracted_og');
-});
+//app.get('/extracted_og', function(req, res) {
+//	prepare(req, res, 'extracted_og');
+//});
 
 function prepare(req, res, jadeFile) {
 	var query = req.query;

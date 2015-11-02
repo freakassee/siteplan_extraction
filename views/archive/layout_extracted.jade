@@ -1,0 +1,45 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/styles/extracted_style.css')
+		script(type='text/javascript' src='/js/util.js')
+		script(type='text/javascript' src='/js/commonElements.js')
+		body
+			#container 
+				#mainDiv
+					// - TODO: button for more and less contrast
+				script(type='text/javascript').
+					var trImg = document.createElement('img');
+					
+					trImg.src= '/images/#{img_id}/transformed/#{img_id}.jpg';
+					trImg.id ='transformedImage';
+					
+					var x_values = [#{x_values}],
+						y_values = [#{y_values}],
+						isSymbol_values = [#{isSymbol_values}], 
+						originIsSymbol = [#{isSymbol_values}],
+						catIndex_values = [#{catIndex_values}];
+					
+					var scalingFactor,
+						scr_W,
+						scr_H, 
+						ovr_W, 
+						ovr_H;
+					
+					var ovr_list = [];
+					
+					var origin_W =0, 
+						origin_H = 0,extracted_W = x_values[1] - 2 * x_values[0],
+						extracted_H = y_values[11] - 2 * y_values[0],
+						extracted_W2 = x_values[1] - x_values[0],
+						extracted_H2 = y_values[11] - y_values[0];
+					
+					var pathname = window.location.pathname, 
+						inverted = false, 
+						margin = 8;
+					
+					document.addEventListener('mousedown', function(e) {
+						e.preventDefault();
+					});
+				block content
