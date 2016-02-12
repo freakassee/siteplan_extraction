@@ -1,0 +1,6 @@
+each value in fileList
+	div(style="width:210px;float:left") 
+		a(href="./files/thumbnails/"+value, target="_blank")
+			img(src="./files/thumbnails/"+value, width=200)
+		span #{value} 
+				a(href="javascript:void(0)",file=value, id="delete") Delete

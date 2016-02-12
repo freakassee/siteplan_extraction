@@ -1,0 +1,55 @@
+doctype html
+html
+	head
+		title File upload in nodejs with progress bar
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/styles/upload/component_extracted.css')
+		link(rel='stylesheet', href='/styles/upload/upload.css')
+		//link(rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+		script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+		//script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+	body
+		script(type='text/javascript' src='/js/upload/upload.js')
+		script(type='text/javascript' src='/js/notifier/notifier.js')
+		h1 Lageplan Auswahl und Upload
+		.context
+			button(id = 'add' class='bttn green-base green-spec icon-cog green-icon-cog' onclick = 'add();') Auswählen
+			button(id = 'upl' class='bttn blue-base blue-spec icon-cog blue-icon-cog' onclick = 'uploadImage();') Hochladen
+			button(id = 'abort' class='bttn orange-base orange-spec icon-cog orange-icon-cog' ) Abbrechen
+			button(id = 'close' class='bttn red-base red-spec icon-cog red-icon-cog' onclick = 'cancelUpload();').hidden Entfernen
+			form( id = 'uploadForm'  enctype = 'multipart/form-data' /*action = '/upload'*/ action='/fileUpload' method = 'post')
+				input(type = 'file'   accept = '.jpg' id = 'addFileButton' onchange = 'fileChange();').hidden
+				input(type = 'submit' id = 'submit' ).hidden
+		br
+		.bottom
+			//#thumbnail
+			//#info
+			//div(id='progress' class='progress',style='/*display:none;*/opacity: 0;margin-top:10px;')
+				//div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
+			table
+				tr
+					td
+					td
+						div(id = 'thumbnail')
+						span(id = 'info')
+					td(id='right')
+						div(id='progress' class='progress',style='/*display:none;*/opacity: 0;margin-top:10px;')
+							div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
+						
+		//form(name='fileUpload', action='/fileUpload',enctype='multipart/form-data', method='post',role='form', class='form-inline')
+		//.form-group
+				//label Choose image to upload: 
+				//input(name='uploadfile', type='file', id='myFile')
+				//span(style='color:red') Upload only image file (PNG, JPEG, GIF)
+		//.form-group
+			//input(value='UPLOAD', type='button', class='btn btn-primary')
+		//div(id='progress' class='progress',style='/*display:none;*/opacity: 0;margin-top:10px;')
+			//div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
+		button(id='button' onclick='toggleDisplay()') Toogle
+		#prev
+			div
+			h3 Liste aller zuvor hochgeladener Lagepläne  
+			#test
+			p(id='msg' style="background: grey;opacity: 0;height: 50px;")
+			#files
+		

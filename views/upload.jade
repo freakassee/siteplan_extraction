@@ -1,10 +1,26 @@
 html
 	head
 		title Image Upload
+		link(rel='stylesheet', href='/styles/upload/component_extracted.css')
+		//link(rel='stylesheet', href='/styles/upload/component.css')
+		link(rel='stylesheet', href='/styles/upload/upload.css')
+		
+		
 	body
+		script(type='text/javascript' src='/js/upload.js')
 		h1 Lageplan Auswahl und Upload
-		form( id = 'uploadForm'  enctype = 'multipart/form-data' 
-			| action = '/upload' method = 'post')
-
-			input(type = 'file' name = 'userImage' accept = '.jpg')
-			input(type = 'submit' value = 'Upload image' name = 'submit')
+		//button(id = 'upload' class='btn btn-3 btn-3d icon-cog') Hochladen
+		//button(id = 'reset' class='btn btn-3 btn-3d icon-cog') Reset
+		.context
+			button(id = 'add' class='btn green-base green-spec icon-cog green-icon-cog' onclick = 'add();') Hinzufügen
+			button(id = 'upl' class='btn blue-base blue-spec icon-cog blue-icon-cog' onclick = 'uploadImage();') Hochladen
+			button(id = 'abort' class='btn orange-base orange-spec icon-cog green-icon-cog' ) Abbrechen
+			button(id = 'close' class='btn red-base red-spec icon-cog red-icon-cog' onclick = 'cancelUpload();') Entfernen
+			form( id = 'uploadForm'  enctype = 'multipart/form-data' action = '/upload' method = 'post')
+				input(type = 'file'   accept = '.jpg' id = 'addFileButton' onchange = 'fileChange();').hidden
+				input(type = 'submit' id = 'submit' ).hidden
+		br
+		.bottom
+			#info  
+			//span(id = 'span')
+			#thumbnail
