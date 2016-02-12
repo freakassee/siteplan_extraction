@@ -17,17 +17,16 @@ router.use(multer({
 
 	dest : uploadsServDir,
 	rename : function(fieldname, filename) {
-		console.log(fieldname);
 		return Date.now();
 	},
 	onFileUploadComplete : function(file) {
-		
+
 		done = true;
 	}
 }));
 
 /** Upload Section */
-router.get('/upload', function(req, res) {
+router.get('/start', function(req, res) {
 	res.render('upload', {
 		content : 'Laden Sie hier bitte das Foto hoch'
 	});
@@ -36,7 +35,7 @@ router.get('/upload', function(req, res) {
 
 router.post('/upload', function(req, res) {
 	if (done) {
-		
+
 		/**
 		 * TODO Catch wrong Extensions Only .JPG and .PNG should be allowed
 		 * Otherwise redirect to Upload Page

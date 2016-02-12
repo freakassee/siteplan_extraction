@@ -1,11 +1,9 @@
-var express = require('express');
 var sizeOf = require('image-size');
 
-
-
+var express = require('express');
 var router = express.Router();
-var variables = require('../model/variables');
 
+var variables = require('../model/variables');
 var uploadsWebDir = variables.uwd;
 var uploadsServDir = variables.usd;
 
