@@ -1,9 +1,10 @@
 var express = require('express');
 var fs = require('fs');
 var exec = require('child_process').exec;
-var variables = require('../model/variables');
+
 
 var router = express.Router();
+var variables = require('../model/variables');
 
 router.post('/process', function(req, res) {
 
@@ -32,8 +33,6 @@ router.post('/process', function(req, res) {
 				});
 				errorWatcher.close();
 				successWatcher.close();
-
-				// res.end('success');
 			});
 			if (error !== null) {
 				console.log('exec error: ' + error);
@@ -42,29 +41,6 @@ router.post('/process', function(req, res) {
 	} else {
 		res.end('Wrong Input');
 	}
-	// exec('cd model', function(error, stdout, stderr){
-	//	
-	//    
-	//   
-	// var successWatcher = fs.watch('./model/' + successLog, function(event,
-	// next) {
-	// console.log('test');
-	// console.log('test2');
-	// console.log(req);
-	// console.log('test2');
-	// fs.readFile('./model/' + successLog, function(err, data) {
-	// res.redirect('/extracted_trn?imageId=' + req.body.img_id);
-	// });
-	// //errorWatcher.close();
-	// successWatcher.close();
-	//
-	// });
-	// if (error !== null) {
-	// console.log('exec error: ' + error);
-	// }
-	//
-	// });
-
 });
 
 module.exports = router;
