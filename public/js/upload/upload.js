@@ -1,15 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-	loadAvailableFiles();
+	_loadAvailableFiles();
 });
 
 function fileChange() {
 	var fileList = addFileButton.files;
 	var file = fileList[0];
+	if (document.getElementById('thumb')) {
+		var thumb_temp = document.getElementById('thumb');
+		thumb_temp.remove();
+		info.innerHTML = '';
+	}
+
 	var thumb = document.createElement('img');
-	var reader = new FileReader();
-	// setting..set
 	thumb.id = 'thumb';
 	thumb.hidden = true;
+	var reader = new FileReader();
 
 	if (!file) {
 		return;
@@ -17,29 +22,25 @@ function fileChange() {
 
 	if (!file.type.match('image.jpeg')) {
 		Notifier.error('Datei ist nicht vom Typ', 'Achtung');
-
-		debugger;
 		uploadForm.reset();
-
 		return;
 	}
 
 	fadeEffect.init('progress', null, 1);
-
-	
+	progressbar.style.color = '#000'
 
 	reader.onload = (function(tImg) {
 		return function(e) {
-			// debugger;
+
 			tImg.src = e.target.result;
-			
+
 		};
 	})(thumb);
-	/**/
+
 	thumb.onload = (function(event) {
-		//debugger;
-		var percent_w = 250;
-		var percent_h = 250;
+
+		var percent_w = 500;
+		var percent_h = 500;
 		var w = thumb.width;
 		var h = thumb.height;
 		var factor = percent_h / h;
@@ -47,19 +48,35 @@ function fileChange() {
 			factor = percent_w / w;
 		}
 		
-
 		thumb.style.width = thumb.width * factor + 'px';
 		thumb.style.height = thumb.height * factor + 'px';
 		thumb.hidden = false;
-		info.innerHTML = 'Datei: <b>' + file.name
-		+ '</b>. Größe: <b>' + file.size + '</b> Bytes. ';
+		info.innerHTML = 'Datei: <b>' + file.name + '</b>. Größe: <b>'
+				+ file.size + '</b> Bytes. ';
+		
+		var percent_w2 = window.innerWidth*0.85;
+		var percent_h2 = window.innerHeight*0.85;
+
+		var factor2 = percent_h2 / h;
+		if (w * factor2 > percent_w2) {
+			factor2 = percent_w2 / w;
+		}
+		overlayIMG.style.width= w * factor2 + 'px';
+ 	 	overlayIMG.style.height= h * factor2 + 'px';
+  		
+  		overlayIMG.src = thumb.src;
+  		_myCallback();
 	});
-
+	
+	
 	reader.readAsDataURL(file);
-	 thumbnail.innerHtml = '';
-	 thumbnail.appendChild(thumb);
-	 info.style.display = 'inline-block';
+	wrapper.innerHtml = '';
+	wrapper.appendChild(thumb);
+	info.style.display = 'inline-block';
 
+}
+function _myCallback(){
+	upl.disabled = !upl.disabled;
 }
 
 function add() {
@@ -68,24 +85,29 @@ function add() {
 }
 
 function uploadImage() {
-
 	var formData = new FormData();
 	if (addFileButton.value == '') {
-		alert("Please choose file!");
+		alert('Please choose file!');
 		return false;
 	}
 
 	var file = document.getElementById('addFileButton').files[0];
 	formData.append('uploadfile', file);
 	var xhr = new XMLHttpRequest();
-
+	progressbar.style.color = '#fff'
 	xhr.open('post', 'fileUpload/', true);
+	
+	xhr.onloadstart = function(e){
+	 	_myCallback();	
+	};
 	xhr.upload.onprogress = function(e) {
+		
 		if (e.lengthComputable) {
 			var percentage = (e.loaded / e.total) * 100;
 			progressbar.style.width = percentage.toFixed(0) + '%';
 			progressbar.innerHTML = percentage.toFixed(0) + '%';
 		}
+
 	};
 	xhr.onerror = function(e) {
 		alert('An error occurred while submitting the form. Maybe your file is too big');
@@ -93,32 +115,36 @@ function uploadImage() {
 
 	xhr.onload = function(e) {
 		var file = xhr.responseText;
-		Notifier.success("File uploaded successfully!");
+		Notifier.success('File uploaded successfully!');
+
 	};
 
 	xhr.onloadend = function(event) {
 		var target = event.target.responseText;
+		// console.log(new Date().toTimeString());
 		httpGetAsync('createThumbnail?target=' + target, function() {
 			setTimeout(function() {
 				progressbar.style.width = 0 + '%';
 				progressbar.innerHTML = 0 + '%';
-			}, 1500);
+				// console.log(new Date().toTimeString());
+			}, 2500);
 		});
 	}
-
+	addFileButton.value='';
 	xhr.send(formData);
+	
 }
 
 function showMsg(className, msg) {
 
-	// $("#msg").fadeIn();
-	// showMsg("alert alert-success", "File uploaded successfully!")
-	// $("#msg").addClass(className);
-	// $("#msg").html(msg);
-	// $("#msg").fadeOut(3000, function() {
-	// $("#msg").removeClass(className);
+	// $('#msg').fadeIn();
+	// showMsg('alert alert-success', 'File uploaded successfully!')
+	// $('#msg').addClass(className);
+	// $('#msg').html(msg);
+	// $('#msg').fadeOut(3000, function() {
+	// $('#msg').removeClass(className);
 	// });
-	$("#files").load("filelist");
+	$('#files').load('filelist');
 
 }
 
@@ -132,7 +158,7 @@ function cancelUpload() {
 	// }
 }
 
-function loadAvailableFiles() {
+function _loadAvailableFiles() {
 	var xhttpr = new XMLHttpRequest();
 	xhttpr.onload = function() {
 		files.innerHTML = this.responseText;
@@ -142,15 +168,15 @@ function loadAvailableFiles() {
 
 	$(document).on('click', '#delete', function() {
 		$(this).attr('href', 'javascript:void(0)');
-		$(this).html("deleting..");
+		$(this).html('deleting..');
 		;
-		var file = $(this).attr("file");
+		var file = $(this).attr('file');
 		$.ajax({
 			url : 'deleteFile/' + file,
 			type : 'GET',
 			data : {},
 			success : function(res) {
-				showMsg("alert alert-danger", "File deleted successfully!")
+				showMsg('alert alert-danger', 'File deleted successfully!')
 			}
 		});
 	});
@@ -202,10 +228,10 @@ function httpGetAsync(theUrl, callback) {
 			callback();
 		}
 	}
-	xmlHttp.open("GET", theUrl, true);
+	xmlHttp.open('GET', theUrl, true);
 	xmlHttp.send(null);
 	xmlHttp.onload = function(e) {
-		$("#files").load("filelist");
+		$('#files').load('filelist');
 
 		setTimeout(function() {
 			fadeEffect.init('progress', null, 0);
@@ -213,12 +239,46 @@ function httpGetAsync(theUrl, callback) {
 	}
 }
 
+function toggleDisplay() {
+	var hide = 'toggle-icon-cog-hide';
+	var show =  'toggle-icon-cog'; 
+	if (prev.style.display !== 'none') {
+		prev.style.display = 'none';
+		toggle_btn.innerText = 'Lagepläne anzeigen';
+	} else {
+		prev.style.display = 'block';
+		
+		toggle_btn.innerText = 'Lagepläne ausblenden';
+	}
 
-function toggleDisplay(){
-	    if (prev.style.display !== 'none') {
-	    	prev.style.display = 'none';
-	    }
-	    else {
-	    	prev.style.display = 'block';
-	    }
+	if(toggle_btn.classList.contains(show)){
+			 toggle_btn.className = toggle_btn.className.replace(show, hide);
+		}else if(toggle_btn.classList.contains(hide)){
+			 toggle_btn.className = toggle_btn.className.replace(hide,show);
+
+		}
+}
+
+function toggleOverlay() {
+	
+ 	if (overlay.style.visibility == 'visible') {
+ 		overlay.style.visibility = 'hidden';
+ 		document.removeEventListener('click',_hideOverlayAfterOutsideClick);
+ 	} else {
+ 		
+ 		
+ 		overlay.style.visibility = 'visible';
+ 		document.addEventListener('click',_hideOverlayAfterOutsideClick);
+
+ 	}
+	
+	
+}
+
+function _hideOverlayAfterOutsideClick(event){
+	console.warn(event);
+	if(event.target === overlay){
+		toggleOverlay()
+	}
+
 }

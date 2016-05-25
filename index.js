@@ -33,6 +33,8 @@ app.use('/', require('./routes/uploadRouter'))
 
 app.use('/', require('./routes/showImageRouter'));
 
+app.use('/', require('./routes/fileUpload'));
+
 /** Talking to MatLabs Section */
 
 app.use('/', require('./routes/processRouter'))
@@ -472,7 +474,7 @@ app.get('/close', function(req, res) {
 	res.end('Bitte jetzt den Browser schließen und dann auf Weiter klicken!');
 });
 
-app.listen(8080);
+app.listen(9090);
 
 function _parser(arrayToFill, content) {
 	var text = content.toString();

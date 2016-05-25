@@ -1,10 +1,8 @@
 var createIteratorFor = function(collection) {
-
 	var agg = (function(collection) {
 
 		var index = 0;
 		var length = collection.length;
-
 		return {
 
 			next : function() {
@@ -36,48 +34,48 @@ var createIteratorFor = function(collection) {
 			},
 
 			hasNext : function() {
-				
+
 				return index < length - 1;
-			
+
 			},
 
 			hasPrevious : function() {
-				
+
 				return index > 0;
-			
+
 			},
 
 			rewind : function() {
-				
+
 				index = 0;
-			
+
 			},
-			
+
 			current : function() {
-				
+
 				return collection[index];
-			
+
 			},
 
 			getCurrentIndex : function() {
-				
+
 				return index;
-			
+
 			},
 
 			get : function(ind) {
-				
+
 				return collection[ind];
-			
+
 			},
 
 			length : function() {
-				
+
 				return length;
-			
+
 			}
 		};
-		
+
 	})(collection);
 
 	return agg;

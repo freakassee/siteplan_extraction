@@ -14,8 +14,8 @@ html
 		h1 Lageplan Auswahl und Upload
 		.context
 			button(id = 'add' class='bttn green-base green-spec icon-cog green-icon-cog' onclick = 'add();') Auswählen
-			button(id = 'upl' class='bttn blue-base blue-spec icon-cog blue-icon-cog' onclick = 'uploadImage();') Hochladen
-			button(id = 'abort' class='bttn orange-base orange-spec icon-cog orange-icon-cog' ) Abbrechen
+			button(id = 'upl' class='bttn blue-base blue-spec icon-cog blue-icon-cog' onclick = 'uploadImage();' disabled=true) Hochladen
+			button(id = 'abort' class='bttn orange-base orange-spec icon-cog orange-icon-cog' disabled=true) Abbrechen
 			button(id = 'close' class='bttn red-base red-spec icon-cog red-icon-cog' onclick = 'cancelUpload();').hidden Entfernen
 			form( id = 'uploadForm'  enctype = 'multipart/form-data' /*action = '/upload'*/ action='/fileUpload' method = 'post')
 				input(type = 'file'   accept = '.jpg' id = 'addFileButton' onchange = 'fileChange();').hidden
@@ -31,10 +31,11 @@ html
 					td
 					td
 						div(id = 'thumbnail')
+							a(href='#' id='wrapper' onclick='toggleOverlay()')
 						span(id = 'info')
-					td(id='right')
-						div(id='progress' class='progress',style='/*display:none;*/opacity: 0;margin-top:10px;')
-							div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
+		#right
+			div(id='progress' class='progress',style='/*display:none;*/opacity: 0;')
+				div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
 						
 		//form(name='fileUpload', action='/fileUpload',enctype='multipart/form-data', method='post',role='form', class='form-inline')
 		//.form-group
@@ -45,11 +46,16 @@ html
 			//input(value='UPLOAD', type='button', class='btn btn-primary')
 		//div(id='progress' class='progress',style='/*display:none;*/opacity: 0;margin-top:10px;')
 			//div(class='progress-bar progress-bar-striped active'  id='progressbar' role='progressbar' aria-valuenow='45' aria-valuemin='0' aria-valuemax='100') 0%
-		button(id='button' onclick='toggleDisplay()') Toogle
+		br
+		button(id='toggle_btn' class='bttn toggle-base toggle-spec icon-cog toggle-icon-cog' onclick='toggleDisplay()' ) Lagepläne ausblenden
 		#prev
 			div
 			h3 Liste aller zuvor hochgeladener Lagepläne  
 			#test
 			p(id='msg' style="background: grey;opacity: 0;height: 50px;")
 			#files
+		#overlay
+			div 
+				
+					img(id='overlayIMG')
 		

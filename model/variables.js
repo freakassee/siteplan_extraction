@@ -5,9 +5,13 @@ var root = process.cwd()
 
 
 
-module.exports.root = root;
-module.exports.usd = root + '/uploads';
-module.exports.uwd = '/uploads';
+exports.root = root;
+exports.usd = root + '/uploads';
+exports.uwd = '/uploads';
 
-module.exports.elog = 'error.log';
-module.exports.slog ='success.log'
+exports.elog = 'error.log';
+exports.slog ='success.log'
+
+exports.TEMPDIR = './public/temp';
+exports.UPLOADDIR = './public/files/';
+exports.THUMBNAILSDIR = './public/files/thumbnails/';

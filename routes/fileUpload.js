@@ -31,7 +31,7 @@ router.post('/fileUpload', function(req, res) {
 });
 
 router.get('/filelist', function(req, res) {
-	fs.readdir(vars.THUMBNAILSDIR, function(err, list) {
+	fs.readdir(config.THUMBNAILSDIR, function(err, list) {
 		if (err) {
 			throw err;
 		}
